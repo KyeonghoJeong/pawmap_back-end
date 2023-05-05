@@ -21,14 +21,14 @@ public class FacilityController {
 	@GetMapping("/single/emd")
 	public List<FacilityDto> getFacilityBySingleEmd(@RequestParam String emd){
 		List<FacilityDto> facilityDtoList = facilityService.getFacilityDtoBySingleEmd(emd);
-		System.out.println(emd);
+		
 		return facilityDtoList;
 	}
 	
 	@GetMapping("/single/cat")
 	public List<FacilityDto> getFacilityBySingleCat(@RequestParam String cat){
 		List<FacilityDto> facilityDtoList = facilityService.getFacilityDtoBySingleCat(cat);
-		System.out.println(cat);
+		
 		return facilityDtoList;
 	}
 	
