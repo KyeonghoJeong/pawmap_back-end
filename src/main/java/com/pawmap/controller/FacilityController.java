@@ -18,18 +18,42 @@ public class FacilityController {
 	@Autowired
 	private FacilityService facilityService;
 	
-	@GetMapping("/single/emd")
-	public List<FacilityDto> getFacilityBySingleEmd(@RequestParam String emd){
-		List<FacilityDto> facilityDtoList = facilityService.getFacilityDtoBySingleEmd(emd);
+	@GetMapping("/single")
+	public List<FacilityDto> getFacilityBySingleEmd(@RequestParam(required=false) String emd, @RequestParam(required=false) String cat){
+		List<FacilityDto> facilityDtoList = null;
+		
+		if(emd != null) {
+			facilityDtoList = facilityService.getFacilityDtoBySingleEmd(emd);
+		}else if(cat != null){
+			facilityDtoList = facilityService.getFacilityDtoBySingleCat(cat);
+		}
 		
 		return facilityDtoList;
 	}
 	
-	@GetMapping("/single/cat")
-	public List<FacilityDto> getFacilityBySingleCat(@RequestParam String cat){
-		List<FacilityDto> facilityDtoList = facilityService.getFacilityDtoBySingleCat(cat);
+	@GetMapping("/group")
+	public String getFacility(@RequestParam(required=false) String sido, 
+			@RequestParam(required=false) String sigungu, 
+			@RequestParam(required=false) String emd, 
+			@RequestParam(required=false) String cat){
 		
-		return facilityDtoList;
+		String result = "";
+		
+		if(sigungu == null) {
+			// only sido
+			result = "only sido " + sido;
+		}else if(emd == null) {
+			// sido and sigungu
+			result = "sido and sigungu " + sido + sigungu;
+		}else if(cat == null) {
+			// sido, sigungu and emd
+			result = "sido, sigungu and emd " + sido + sigungu + emd;
+		}else if(cat != null) {
+			// everything
+			result = "everything " + sido + sigungu + emd + cat;
+		}
+		
+		return result;
 	}
 	
 }
