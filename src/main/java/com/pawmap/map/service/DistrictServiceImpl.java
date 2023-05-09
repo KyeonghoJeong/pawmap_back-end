@@ -1,4 +1,4 @@
-package com.pawmap.service;
+package com.pawmap.map.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,13 +7,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pawmap.dao.DistrictDao;
-import com.pawmap.dto.EmdDto;
-import com.pawmap.dto.SidoDto;
-import com.pawmap.dto.SigunguDto;
-import com.pawmap.entity.EmdEntity;
-import com.pawmap.entity.SidoEntity;
-import com.pawmap.entity.SigunguEntity;
+import com.pawmap.map.dao.DistrictDao;
+import com.pawmap.map.dto.EmdDto;
+import com.pawmap.map.dto.SidoDto;
+import com.pawmap.map.dto.SigunguDto;
+import com.pawmap.map.entity.EmdEntity;
+import com.pawmap.map.entity.SidoEntity;
+import com.pawmap.map.entity.SigunguEntity;
 
 @Service
 public class DistrictServiceImpl implements DistrictService {
@@ -37,9 +37,9 @@ public class DistrictServiceImpl implements DistrictService {
 	}
 
 	@Override
-	public List<SigunguDto> getSigungu(Long sido_id) {
+	public List<SigunguDto> getSigungu(Long sidoId) {
 		// TODO Auto-generated method stub
-		List<SigunguEntity> sigunguEntity = districtDao.getSigungu(sido_id);
+		List<SigunguEntity> sigunguEntity = districtDao.getSigungu(sidoId);
 		
 		List<SigunguDto> sigunguDto = sigunguEntity.stream()
 				.map(SigunguEntity -> modelMapper.map(SigunguEntity, SigunguDto.class))
@@ -49,9 +49,9 @@ public class DistrictServiceImpl implements DistrictService {
 	}
 
 	@Override
-	public List<EmdDto> getEmd(Long sigungu_id) {
+	public List<EmdDto> getEmd(Long sigunguId) {
 		// TODO Auto-generated method stub
-		List<EmdEntity> emdEntity = districtDao.getEmd(sigungu_id);
+		List<EmdEntity> emdEntity = districtDao.getEmd(sigunguId);
 		
 		List<EmdDto> EmdDto = emdEntity.stream()
 				.map(EmdEntity -> modelMapper.map(EmdEntity, EmdDto.class))

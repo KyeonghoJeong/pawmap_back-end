@@ -1,5 +1,6 @@
-package com.pawmap.entity;
+package com.pawmap.map.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,7 +13,10 @@ import lombok.Getter;
 public class SidoEntity {
 	
 	@Id
-	private Long sido_id;
-	private String sido_name;
+	@Column(name = "sidoid")
+	private Long sidoId;
+	
+	@Column(name = "sidoname")
+	private String sidoName;
 
 }

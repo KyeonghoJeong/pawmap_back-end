@@ -1,10 +1,10 @@
-package com.pawmap.service;
+package com.pawmap.map.service;
 
 import java.util.List;
 
-import com.pawmap.dto.EmdDto;
-import com.pawmap.dto.SidoDto;
-import com.pawmap.dto.SigunguDto;
+import com.pawmap.map.dto.EmdDto;
+import com.pawmap.map.dto.SidoDto;
+import com.pawmap.map.dto.SigunguDto;
 
 public interface DistrictService {
 

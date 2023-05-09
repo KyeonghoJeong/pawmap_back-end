@@ -1,4 +1,4 @@
-package com.pawmap.controller;
+package com.pawmap.map.controller;
 
 import java.util.List;
 
@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pawmap.dto.EmdDto;
-import com.pawmap.dto.SidoDto;
-import com.pawmap.dto.SigunguDto;
-import com.pawmap.service.DistrictService;
+import com.pawmap.map.dto.EmdDto;
+import com.pawmap.map.dto.SidoDto;
+import com.pawmap.map.dto.SigunguDto;
+import com.pawmap.map.service.DistrictService;
 
 @RestController
 @RequestMapping("district")
@@ -28,15 +28,15 @@ public class DistrictController {
 	}
 	
 	@GetMapping("/sigungu")
-	public List<SigunguDto> getSigungu(@RequestParam Long sido_id){
-		List<SigunguDto> sigunguDto = districtService.getSigungu(sido_id);
+	public List<SigunguDto> getSigungu(@RequestParam Long sidoId){
+		List<SigunguDto> sigunguDto = districtService.getSigungu(sidoId);
 		
 		return sigunguDto;
 	}
 	
 	@GetMapping("/emd")
-	public List<EmdDto> getEmd(@RequestParam Long sigungu_id){
-		List<EmdDto> emdDto = districtService.getEmd(sigungu_id);
+	public List<EmdDto> getEmd(@RequestParam Long sigunguId){
+		List<EmdDto> emdDto = districtService.getEmd(sigunguId);
 		
 		return emdDto;
 	}

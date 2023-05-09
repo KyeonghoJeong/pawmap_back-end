@@ -1,4 +1,4 @@
-package com.pawmap.dto;
+package com.pawmap.map.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class SidoDto {
 
-	private Long sido_id;
-	private String sido_name;
+	private Long sidoId;
+	private String sidoName;
 	
 }
