@@ -22,4 +22,12 @@ public class LocationDaoImpl implements LocationDao {
 		return facilityEntities;
 	}
 
+	@Override
+	public List<FacilityEntity> getLocationBySingleCat(String cat) {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = facilityRepository.findByCat(cat);
+		
+		return facilityEntities;
+	}
+
 }

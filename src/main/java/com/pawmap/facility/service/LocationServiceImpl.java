@@ -32,4 +32,16 @@ public class LocationServiceImpl implements LocationService {
 		return LocationDtos;
 	}
 
+	@Override
+	public List<LocationDto> getLocationBySingleCat(String cat) {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = locationDao.getLocationBySingleCat(cat);
+		
+		List<LocationDto> LocationDtos = facilityEntities.stream()
+				.map(facilityEntity -> modelMapper.map(facilityEntity, LocationDto.class))
+				.collect(Collectors.toList());
+		
+		return LocationDtos;
+	}
+
 }

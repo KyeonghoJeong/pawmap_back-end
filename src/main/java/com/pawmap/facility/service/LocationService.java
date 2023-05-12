@@ -8,4 +8,6 @@ public interface LocationService {
 
 	List<LocationDto> getLocationBySingleEmd(String emd);
 
+	List<LocationDto> getLocationBySingleCat(String cat);
+
 }

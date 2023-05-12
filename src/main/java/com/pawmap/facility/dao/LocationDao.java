@@ -8,4 +8,6 @@ public interface LocationDao {
 
 	List<FacilityEntity> getLocationBySingleEmd(String emd);
 
+	List<FacilityEntity> getLocationBySingleCat(String cat);
+
 }

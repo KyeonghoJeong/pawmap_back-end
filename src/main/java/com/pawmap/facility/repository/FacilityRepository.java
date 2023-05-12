@@ -22,10 +22,11 @@ public interface FacilityRepository extends JpaRepository<FacilityEntity, Long> 
 			, nativeQuery=true)
 	Page<FacilityEntity> findByEmd(@Param("emd") String emd, Pageable pageable);
 
-	Page<FacilityEntity> findByCat(String cat, Pageable pageable);
+	@Query(value = "SELECT * FROM facility WHERE cat = ?1 ORDER BY POWER(?2 - lat, 2) + POWER(?3 - lng, 2)", nativeQuery=true)
+	Page<FacilityEntity> findByCat(String cat, double lat, double lng, Pageable pageable);
 
 	List<FacilityEntity> findByEmd(String emd);
 	
 	List<FacilityEntity> findByCat(String cat);
-
+	
 }

@@ -28,7 +28,7 @@ public class LocationController {
 		if(emd != null) {
 			LocationDtos = locationService.getLocationBySingleEmd(emd);
 		}else if(cat != null) {
-			
+			LocationDtos = locationService.getLocationBySingleCat(cat);
 		}
 
 		return LocationDtos;

@@ -1,7 +1,5 @@
 package com.pawmap.facility.dao;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,33 +17,17 @@ public class InfoDaoImpl implements InfoDao {
 	@Override
 	public Page<FacilityEntity> getInfoBySingleEmd(String emd, Pageable pageable) {
 		// TODO Auto-generated method stub
-		Page<FacilityEntity> InfoEntities = facilityRepository.findByEmd(emd, pageable);
+		Page<FacilityEntity> facilityEntities = facilityRepository.findByEmd(emd, pageable);
 
-		return InfoEntities;
+		return facilityEntities;
 	}
 
 	@Override
-	public Page<FacilityEntity> getFacilityBySingleCat(String cat, Pageable pageable) {
+	public Page<FacilityEntity> getInfoBySingleCat(String cat, double lat, double lng, Pageable pageable) {
 		// TODO Auto-generated method stub
-		Page<FacilityEntity> facilityEntityPage = facilityRepository.findByCat(cat, pageable);
-
-		return facilityEntityPage;
-	}
-
-	@Override
-	public List<FacilityEntity> getFacilityBySingleEmd(String emd) {
-		// TODO Auto-generated method stub
-		List<FacilityEntity> facilityEntityPage = facilityRepository.findByEmd(emd);
-
-		return facilityEntityPage;
-	}
-
-	@Override
-	public List<FacilityEntity> getFacilityBySingleCat(String cat) {
-		// TODO Auto-generated method stub
-		List<FacilityEntity> facilityEntityPage = facilityRepository.findByCat(cat);
-
-		return facilityEntityPage;
+		Page<FacilityEntity> facilityEntities = facilityRepository.findByCat(cat, lat, lng, pageable);
+		
+		return facilityEntities;
 	}
 
 }

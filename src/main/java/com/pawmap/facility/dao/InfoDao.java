@@ -1,7 +1,5 @@
 package com.pawmap.facility.dao;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,11 +9,6 @@ public interface InfoDao {
 
 	Page<FacilityEntity> getInfoBySingleEmd(String emd, Pageable pageable);
 
-	Page<FacilityEntity> getFacilityBySingleCat(String cat, Pageable pageable);
-
-	List<FacilityEntity> getFacilityBySingleEmd(String emd);
-
-	List<FacilityEntity> getFacilityBySingleCat(String cat);
-
+	Page<FacilityEntity> getInfoBySingleCat(String cat, double lat, double lng, Pageable pageable);
 
 }

@@ -18,20 +18,17 @@ public class InfoController {
 	@Autowired
 	private InfoService infoService;
 	
-	@GetMapping("/single")
-	public Page<InfoDto> getFacilityBySingle(
-			@RequestParam(required=false) String emd, 
-			@RequestParam(required=false) String cat,
-            Pageable pageable){
+	@GetMapping("/single/emd")
+	public Page<InfoDto> getInfoBySingleEmd(@RequestParam String emd, Pageable pageable){
+		Page<InfoDto> infoDtos = infoService.getInfoBySingleEmd(emd, pageable);
 		
-		Page<InfoDto> infoDtos = null;
+		return infoDtos;
+	}
+	
+	@GetMapping("/single/cat")
+	public Page<InfoDto> getInfoBySingleCat(@RequestParam String cat, @RequestParam double lat, @RequestParam double lng, Pageable pageable){
+		Page<InfoDto> infoDtos = infoService.getInfoBySingleCat(cat, lat, lng, pageable);
 		
-		if(emd != null) {
-			infoDtos = infoService.getInfoBySingleEmd(emd, pageable);
-		}else if(cat != null) {
-			infoDtos = infoService.getInfoBySingleCat(cat, pageable);
-		}
-
 		return infoDtos;
 	}
 	
