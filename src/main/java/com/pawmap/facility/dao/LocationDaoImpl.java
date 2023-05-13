@@ -30,4 +30,12 @@ public class LocationDaoImpl implements LocationDao {
 		return facilityEntities;
 	}
 
+	@Override
+	public List<FacilityEntity> getLocations() {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = facilityRepository.findByLocation();
+		
+		return facilityEntities;
+	}
+
 }

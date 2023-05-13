@@ -23,9 +23,17 @@ public class InfoDaoImpl implements InfoDao {
 	}
 
 	@Override
-	public Page<FacilityEntity> getInfoBySingleCat(String cat, double lat, double lng, Pageable pageable) {
+	public Page<FacilityEntity> getInfoBySingleCat(String cat, Double lat, Double lng, Pageable pageable) {
 		// TODO Auto-generated method stub
 		Page<FacilityEntity> facilityEntities = facilityRepository.findByCat(cat, lat, lng, pageable);
+		
+		return facilityEntities;
+	}
+
+	@Override
+	public Page<FacilityEntity> getInfoAll(Double lat, Double lng, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<FacilityEntity> facilityEntities = facilityRepository.findAll(lat, lng, pageable);
 		
 		return facilityEntities;
 	}

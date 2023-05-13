@@ -10,4 +10,6 @@ public interface LocationDao {
 
 	List<FacilityEntity> getLocationBySingleCat(String cat);
 
+	List<FacilityEntity> getLocations();
+
 }

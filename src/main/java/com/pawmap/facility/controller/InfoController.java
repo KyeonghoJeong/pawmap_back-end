@@ -12,24 +12,39 @@ import com.pawmap.facility.dto.InfoDto;
 import com.pawmap.facility.service.InfoService;
 
 @RestController
-@RequestMapping("facility/info")
+@RequestMapping("api")
 public class InfoController {
 	
 	@Autowired
 	private InfoService infoService;
 	
-	@GetMapping("/single/emd")
-	public Page<InfoDto> getInfoBySingleEmd(@RequestParam String emd, Pageable pageable){
-		Page<InfoDto> infoDtos = infoService.getInfoBySingleEmd(emd, pageable);
+	@GetMapping("/facilities")
+	public Page<InfoDto> getInfo(
+			@RequestParam(required=false) String cat,
+			@RequestParam(required=false) String sido,
+			@RequestParam(required=false) String sigungu,
+			@RequestParam(required=false) String emd, 
+			@RequestParam(required=false) Double lat, 
+			@RequestParam(required=false) Double lng,
+			Pageable pageable){
+		
+		Page<InfoDto> infoDtos = null;
+		
+		if(lat != null && lng != null) {
+			if(cat != null) {
+				infoDtos = infoService.getInfoBySingleCat(cat, lat, lng, pageable);
+			}else {
+				infoDtos = infoService.getInfoAll(lat, lng, pageable);
+			}
+		}else {
+			if(cat != null) {
+				
+			}else {
+				infoDtos = infoService.getInfoBySingleEmd(emd, pageable);
+			}
+		}
 		
 		return infoDtos;
 	}
-	
-	@GetMapping("/single/cat")
-	public Page<InfoDto> getInfoBySingleCat(@RequestParam String cat, @RequestParam double lat, @RequestParam double lng, Pageable pageable){
-		Page<InfoDto> infoDtos = infoService.getInfoBySingleCat(cat, lat, lng, pageable);
-		
-		return infoDtos;
-	}
-	
+
 }

@@ -44,4 +44,16 @@ public class LocationServiceImpl implements LocationService {
 		return LocationDtos;
 	}
 
+	@Override
+	public List<LocationDto> getLocations() {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = locationDao.getLocations();
+		
+		List<LocationDto> LocationDtos = facilityEntities.stream()
+				.map(facilityEntity -> modelMapper.map(facilityEntity, LocationDto.class))
+				.collect(Collectors.toList());
+		
+		return LocationDtos;
+	}
+
 }

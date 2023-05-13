@@ -10,4 +10,6 @@ public interface LocationService {
 
 	List<LocationDto> getLocationBySingleCat(String cat);
 
+	List<LocationDto> getLocations();
+
 }

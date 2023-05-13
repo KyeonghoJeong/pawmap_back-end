@@ -12,25 +12,31 @@ import com.pawmap.facility.dto.LocationDto;
 import com.pawmap.facility.service.LocationService;
 
 @RestController
-@RequestMapping("facility/location")
+@RequestMapping("api/facilities")
 public class LocationController {
 	
 	@Autowired
 	private LocationService locationService;
 
-	@GetMapping("/single")
+	@GetMapping("/locations")
 	public List<LocationDto> getFacilityLocation(
-			@RequestParam(required=false) String emd,
-			@RequestParam(required=false) String cat){
+			@RequestParam(required=false) String cat,
+			@RequestParam(required=false) String sido,
+			@RequestParam(required=false) String sigungu,
+			@RequestParam(required=false) String emd, 
+			@RequestParam(required=false) Double lat, 
+			@RequestParam(required=false) Double lng){
 		
 		List<LocationDto> LocationDtos = null;
 		
-		if(emd != null) {
+		if(cat == null && sido == null && sigungu == null && emd != null && lat == null && lng == null) {
 			LocationDtos = locationService.getLocationBySingleEmd(emd);
-		}else if(cat != null) {
+		}else if(cat != null && sido == null && sigungu == null && emd == null && lat == null && lng == null) {
 			LocationDtos = locationService.getLocationBySingleCat(cat);
+		}else if(cat == null && sido == null && sigungu == null && emd == null && lat == null && lng == null) {
+			LocationDtos = locationService.getLocations();
 		}
-
+		
 		return LocationDtos;
 	}
 	
