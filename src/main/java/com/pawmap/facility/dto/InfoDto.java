@@ -31,8 +31,8 @@ public class InfoDto {
 	private String petRestrictions;
 	private String indoorAvail;
 	private String outdoorAvail;
-	private double lat;
-	private double lng;
+	private Double lat;
+	private Double lng;
 	
 	public InfoDto(FacilityEntity facilityEntity) {
 		this.facilityId = facilityEntity.getFacilityId();

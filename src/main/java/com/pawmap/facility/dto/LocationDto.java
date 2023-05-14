@@ -8,7 +8,7 @@ import lombok.Setter;
 public class LocationDto {
 
 	private String facilityName;
-	private double lat;
-	private double lng;
+	private String lat;
+	private String lng;
 	
 }

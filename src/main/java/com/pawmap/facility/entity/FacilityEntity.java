@@ -80,9 +80,9 @@ public class FacilityEntity {
 	private String outdoorAvail;
 	
 	@Column(name = "lat")
-	private double lat;
+	private Double lat;
 	
 	@Column(name = "lng")
-	private double lng;
+	private Double lng;
 	
 }
