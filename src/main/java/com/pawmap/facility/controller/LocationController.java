@@ -31,10 +31,10 @@ public class LocationController {
 		
 		if(cat == null && sido == null && sigungu == null && emd != null && lat == null && lng == null) {
 			LocationDtos = locationService.getLocationBySingleEmd(emd);
-		}else if(cat != null && sido == null && sigungu == null && emd == null && lat == null && lng == null) {
+		}	
+		
+		if(cat != null && sido == null && sigungu == null && emd == null && lat == null && lng == null) {
 			LocationDtos = locationService.getLocationBySingleCat(cat);
-		}else if(cat == null && sido == null && sigungu == null && emd == null && lat == null && lng == null) {
-			LocationDtos = locationService.getLocations();
 		}
 		
 		return LocationDtos;

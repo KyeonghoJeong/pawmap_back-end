@@ -24,22 +24,12 @@ public class InfoServiceImpl implements InfoService{
 		
 		return infoDtos;
 	}
-
+	
 	@Override
 	public Page<InfoDto> getInfoBySingleCat(String cat, Double lat, Double lng, Pageable pageable) {
 		// TODO Auto-generated method stub
 		Page<FacilityEntity> facilityEntities = infoDao.getInfoBySingleCat(cat, lat, lng, pageable);
-		
-		Page<InfoDto> infoDtos = facilityEntities.map(InfoDto::new);
-		
-		return infoDtos;
-	}
 
-	@Override
-	public Page<InfoDto> getInfoAll(Double lat, Double lng, Pageable pageable) {
-		// TODO Auto-generated method stub
-		Page<FacilityEntity> facilityEntities = infoDao.getInfoAll(lat, lng, pageable);
-		
 		Page<InfoDto> infoDtos = facilityEntities.map(InfoDto::new);
 		
 		return infoDtos;

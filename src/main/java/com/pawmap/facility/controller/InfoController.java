@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pawmap.facility.dto.InfoDto;
+import com.pawmap.facility.repository.InfoRepository;
 import com.pawmap.facility.service.InfoService;
 
 @RestController
@@ -17,6 +18,9 @@ public class InfoController {
 	
 	@Autowired
 	private InfoService infoService;
+	
+	@Autowired
+	private InfoRepository infoRepository;
 	
 	@GetMapping("/facilities")
 	public Page<InfoDto> getInfo(
@@ -30,21 +34,24 @@ public class InfoController {
 		
 		Page<InfoDto> infoDtos = null;
 		
-		if(lat != null && lng != null) {
-			if(cat != null) {
-				infoDtos = infoService.getInfoBySingleCat(cat, lat, lng, pageable);
-			}else {
-				infoDtos = infoService.getInfoAll(lat, lng, pageable);
-			}
-		}else {
-			if(cat != null) {
-				
-			}else {
-				infoDtos = infoService.getInfoBySingleEmd(emd, pageable);
-			}
+		// 메인 페이지에서 동 이름 검색 시
+		if(cat == null && sido == null && sigungu == null && emd != null && lat == null && lng == null) {
+			infoDtos = infoService.getInfoBySingleEmd(emd, pageable);
+		}	
+		
+		// 메인 페이지에서 카테고리 클릭 시
+		if(cat != null && sido == null && sigungu == null && emd == null && lat != null && lng != null) {
+			infoDtos = infoService.getInfoBySingleCat(cat, lat, lng, pageable);
 		}
 		
 		return infoDtos;
+	}
+	
+	@GetMapping("/facilities/availability")
+	public Long checkFacilityAvailable(@RequestParam String emd) {
+		Long count = infoRepository.countByEmd(emd);
+		
+		return count;
 	}
 
 }

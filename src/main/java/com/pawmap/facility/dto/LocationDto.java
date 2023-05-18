@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class LocationDto {
 
+	private Long facilityId;
 	private String facilityName;
 	private String lat;
 	private String lng;

@@ -8,9 +8,7 @@ import com.pawmap.facility.dto.InfoDto;
 public interface InfoService {
 	
 	Page<InfoDto> getInfoBySingleEmd(String emd, Pageable pageable);
-
+	
 	Page<InfoDto> getInfoBySingleCat(String cat, Double lat, Double lng, Pageable pageable);
-
-	Page<InfoDto> getInfoAll(Double lat, Double lng, Pageable pageable);
 
 }

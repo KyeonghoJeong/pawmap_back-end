@@ -6,18 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.pawmap.facility.entity.FacilityEntity;
-import com.pawmap.facility.repository.FacilityRepository;
+import com.pawmap.facility.repository.LocationRepository;
 
 @Repository
 public class LocationDaoImpl implements LocationDao {
 
 	@Autowired
-	private FacilityRepository facilityRepository;
+	private LocationRepository locationRepository;
 	
 	@Override
 	public List<FacilityEntity> getLocationBySingleEmd(String emd) {
 		// TODO Auto-generated method stub
-		List<FacilityEntity> facilityEntities = facilityRepository.findByEmd(emd);
+		List<FacilityEntity> facilityEntities = locationRepository.findByEmd(emd);
 		
 		return facilityEntities;
 	}
@@ -25,15 +25,7 @@ public class LocationDaoImpl implements LocationDao {
 	@Override
 	public List<FacilityEntity> getLocationBySingleCat(String cat) {
 		// TODO Auto-generated method stub
-		List<FacilityEntity> facilityEntities = facilityRepository.findByCat(cat);
-		
-		return facilityEntities;
-	}
-
-	@Override
-	public List<FacilityEntity> getLocations() {
-		// TODO Auto-generated method stub
-		List<FacilityEntity> facilityEntities = facilityRepository.findByLocation();
+		List<FacilityEntity> facilityEntities = locationRepository.findByCat(cat);
 		
 		return facilityEntities;
 	}

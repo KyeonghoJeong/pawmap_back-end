@@ -7,9 +7,7 @@ import com.pawmap.facility.entity.FacilityEntity;
 public interface LocationDao {
 
 	List<FacilityEntity> getLocationBySingleEmd(String emd);
-
+	
 	List<FacilityEntity> getLocationBySingleCat(String cat);
-
-	List<FacilityEntity> getLocations();
 
 }
