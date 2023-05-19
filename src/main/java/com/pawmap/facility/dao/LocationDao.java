@@ -10,4 +10,10 @@ public interface LocationDao {
 	
 	List<FacilityEntity> getLocationBySingleCat(String cat);
 
+	List<FacilityEntity> getLocationByGroupSido(String cat, String sido);
+
+	List<FacilityEntity> getLocationByGroupSigungu(String cat, String sido, String sigungu);
+
+	List<FacilityEntity> getLocationByGroupEmd(String cat, String sido, String sigungu, String emd);
+
 }

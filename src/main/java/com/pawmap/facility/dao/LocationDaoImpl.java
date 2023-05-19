@@ -30,4 +30,28 @@ public class LocationDaoImpl implements LocationDao {
 		return facilityEntities;
 	}
 
+	@Override
+	public List<FacilityEntity> getLocationByGroupSido(String cat, String sido) {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = locationRepository.findByCatAndSido(cat, sido);
+		
+		return facilityEntities;
+	}
+
+	@Override
+	public List<FacilityEntity> getLocationByGroupSigungu(String cat, String sido, String sigungu) {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = locationRepository.findByCatAndSidoAndSigungu(cat, sido, sigungu);
+		
+		return facilityEntities;
+	}
+
+	@Override
+	public List<FacilityEntity> getLocationByGroupEmd(String cat, String sido, String sigungu, String emd) {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = locationRepository.findByCatAndSidoAndSigunguAndEmd(cat, sido, sigungu, emd);
+		
+		return facilityEntities;
+	}
+
 }

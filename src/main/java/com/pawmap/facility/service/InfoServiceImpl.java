@@ -34,5 +34,35 @@ public class InfoServiceImpl implements InfoService{
 		
 		return infoDtos;
 	}
+
+	@Override
+	public Page<InfoDto> getInfoByGroupSido(String cat, String sido, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<FacilityEntity> facilityEntities = infoDao.getInfoByGroupSido(cat, sido, pageable);
+		
+		Page<InfoDto> infoDtos = facilityEntities.map(InfoDto::new);
+		
+		return infoDtos;
+	}
+
+	@Override
+	public Page<InfoDto> getInfoByGroupSigungu(String cat, String sido, String sigungu, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<FacilityEntity> facilityEntities = infoDao.getInfoByGroupSigungu(cat, sido, sigungu, pageable);
+		
+		Page<InfoDto> infoDtos = facilityEntities.map(InfoDto::new);
+		
+		return infoDtos;
+	}
+
+	@Override
+	public Page<InfoDto> getInfoByGroupEmd(String cat, String sido, String sigungu, String emd, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<FacilityEntity> facilityEntities = infoDao.getInfoByGroupEmd(cat, sido, sigungu, emd, pageable);
+		
+		Page<InfoDto> infoDtos = facilityEntities.map(InfoDto::new);
+		
+		return infoDtos;
+	}
 	
 }

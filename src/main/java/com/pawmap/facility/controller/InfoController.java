@@ -22,6 +22,13 @@ public class InfoController {
 	@Autowired
 	private InfoRepository infoRepository;
 	
+	@GetMapping("/facilities/availability")
+	public Long checkFacilityAvailable(@RequestParam String emd) {
+		Long count = infoRepository.countByEmd(emd);
+		
+		return count;
+	}
+	
 	@GetMapping("/facilities")
 	public Page<InfoDto> getInfo(
 			@RequestParam(required=false) String cat,
@@ -44,14 +51,22 @@ public class InfoController {
 			infoDtos = infoService.getInfoBySingleCat(cat, lat, lng, pageable);
 		}
 		
-		return infoDtos;
-	}
-	
-	@GetMapping("/facilities/availability")
-	public Long checkFacilityAvailable(@RequestParam String emd) {
-		Long count = infoRepository.countByEmd(emd);
+		// 시도 선택 시
+		if(cat != null && sido != null && sigungu == null && emd == null && lat == null && lng == null) {
+			infoDtos = infoService.getInfoByGroupSido(cat, sido, pageable);
+		}
 		
-		return count;
+		// 시군구 선택 시
+		if(cat != null && sido != null && sigungu != null && emd == null && lat == null && lng == null) {
+			infoDtos = infoService.getInfoByGroupSigungu(cat, sido, sigungu, pageable);
+		}
+		
+		// 읍면동 선택 시
+		if(cat != null && sido != null && sigungu != null && emd != null && lat == null && lng == null) {
+			infoDtos = infoService.getInfoByGroupEmd(cat, sido, sigungu, emd, pageable);
+		}
+		
+		return infoDtos;
 	}
 
 }

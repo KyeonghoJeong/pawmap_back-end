@@ -29,12 +29,24 @@ public class LocationController {
 		
 		List<LocationDto> LocationDtos = null;
 		
-		if(cat == null && sido == null && sigungu == null && emd != null && lat == null && lng == null) {
+		if(cat == null && sido == null && sigungu == null && emd != null) {
 			LocationDtos = locationService.getLocationBySingleEmd(emd);
 		}	
 		
-		if(cat != null && sido == null && sigungu == null && emd == null && lat == null && lng == null) {
+		if(cat != null && sido == null && sigungu == null && emd == null) {
 			LocationDtos = locationService.getLocationBySingleCat(cat);
+		}
+		
+		if(cat != null && sido != null && sigungu == null && emd == null) {
+			LocationDtos = locationService.getLocationByGroupSido(cat, sido);
+		}
+		
+		if(cat != null && sido != null && sigungu != null && emd == null) {
+			LocationDtos = locationService.getLocationByGroupSigungu(cat, sido, sigungu);
+		}
+		
+		if(cat != null && sido != null && sigungu != null && emd != null) {
+			LocationDtos = locationService.getLocationByGroupEmd(cat, sido, sigungu, emd);
 		}
 		
 		return LocationDtos;

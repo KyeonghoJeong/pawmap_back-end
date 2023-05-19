@@ -11,4 +11,10 @@ public interface InfoDao {
 
 	Page<FacilityEntity> getInfoBySingleCat(String cat, Double lat, Double lng, Pageable pageable);
 
+	Page<FacilityEntity> getInfoByGroupSido(String cat, String sido, Pageable pageable);
+
+	Page<FacilityEntity> getInfoByGroupSigungu(String cat, String sido, String sigungu, Pageable pageable);
+
+	Page<FacilityEntity> getInfoByGroupEmd(String cat, String sido, String sigungu, String emd, Pageable pageable);
+
 }

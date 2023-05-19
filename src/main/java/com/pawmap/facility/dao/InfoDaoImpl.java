@@ -17,7 +17,7 @@ public class InfoDaoImpl implements InfoDao {
 	@Override
 	public Page<FacilityEntity> getInfoBySingleEmd(String emd, Pageable pageable) {
 		// TODO Auto-generated method stub
-		Page<FacilityEntity> facilityEntities = infoRepository.findByEmdOrderBySigungu(emd, pageable);
+		Page<FacilityEntity> facilityEntities = infoRepository.findByEmdOrderBySidoAscSigunguAscCatAsc(emd, pageable);
 
 		return facilityEntities;
 	}
@@ -26,6 +26,30 @@ public class InfoDaoImpl implements InfoDao {
 	public Page<FacilityEntity> getInfoBySingleCat(String cat, Double lat, Double lng, Pageable pageable) {
 		// TODO Auto-generated method stub
 		Page<FacilityEntity> facilityEntities = infoRepository.getInfoBySingleCat(cat, lat, lng, pageable);
+
+		return facilityEntities;
+	}
+
+	@Override
+	public Page<FacilityEntity> getInfoByGroupSido(String cat, String sido, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<FacilityEntity> facilityEntities = infoRepository.findByCatAndSidoOrderBySigunguAscEmdAsc(cat, sido, pageable);
+
+		return facilityEntities;
+	}
+
+	@Override
+	public Page<FacilityEntity> getInfoByGroupSigungu(String cat, String sido, String sigungu, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<FacilityEntity> facilityEntities = infoRepository.findByCatAndSidoAndSigunguOrderByEmd(cat, sido, sigungu, pageable);
+
+		return facilityEntities;
+	}
+
+	@Override
+	public Page<FacilityEntity> getInfoByGroupEmd(String cat, String sido, String sigungu, String emd, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<FacilityEntity> facilityEntities = infoRepository.findByCatAndSidoAndSigunguAndEmd(cat, sido, sigungu, emd, pageable);
 
 		return facilityEntities;
 	}

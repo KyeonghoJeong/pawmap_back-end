@@ -43,5 +43,41 @@ public class LocationServiceImpl implements LocationService {
 		
 		return LocationDtos;
 	}
+
+	@Override
+	public List<LocationDto> getLocationByGroupSido(String cat, String sido) {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = locationDao.getLocationByGroupSido(cat, sido);
+		
+		List<LocationDto> LocationDtos = facilityEntities.stream()
+				.map(facilityEntity -> modelMapper.map(facilityEntity, LocationDto.class))
+				.collect(Collectors.toList());
+		
+		return LocationDtos;
+	}
+
+	@Override
+	public List<LocationDto> getLocationByGroupSigungu(String cat, String sido, String sigungu) {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = locationDao.getLocationByGroupSigungu(cat, sido, sigungu);
+		
+		List<LocationDto> LocationDtos = facilityEntities.stream()
+				.map(facilityEntity -> modelMapper.map(facilityEntity, LocationDto.class))
+				.collect(Collectors.toList());
+		
+		return LocationDtos;
+	}
+
+	@Override
+	public List<LocationDto> getLocationByGroupEmd(String cat, String sido, String sigungu, String emd) {
+		// TODO Auto-generated method stub
+		List<FacilityEntity> facilityEntities = locationDao.getLocationByGroupEmd(cat, sido, sigungu, emd);
+		
+		List<LocationDto> LocationDtos = facilityEntities.stream()
+				.map(facilityEntity -> modelMapper.map(facilityEntity, LocationDto.class))
+				.collect(Collectors.toList());
+		
+		return LocationDtos;
+	}
 	
 }

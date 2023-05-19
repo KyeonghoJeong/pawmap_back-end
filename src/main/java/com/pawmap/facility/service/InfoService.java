@@ -11,4 +11,10 @@ public interface InfoService {
 	
 	Page<InfoDto> getInfoBySingleCat(String cat, Double lat, Double lng, Pageable pageable);
 
+	Page<InfoDto> getInfoByGroupSido(String cat, String sido, Pageable pageable);
+
+	Page<InfoDto> getInfoByGroupSigungu(String cat, String sido, String sigungu, Pageable pageable);
+
+	Page<InfoDto> getInfoByGroupEmd(String cat, String sido, String sigungu, String emd, Pageable pageable);
+
 }

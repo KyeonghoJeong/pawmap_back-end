@@ -12,4 +12,10 @@ public interface LocationRepository extends JpaRepository<FacilityEntity, Long>{
 
 	List<FacilityEntity> findByCat(String cat);
 
+	List<FacilityEntity> findByCatAndSido(String cat, String sido);
+
+	List<FacilityEntity> findByCatAndSidoAndSigungu(String cat, String sido, String sigungu);
+
+	List<FacilityEntity> findByCatAndSidoAndSigunguAndEmd(String cat, String sido, String sigungu, String emd);
+
 }
