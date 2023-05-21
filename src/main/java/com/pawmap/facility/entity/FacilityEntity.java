@@ -61,9 +61,6 @@ public class FacilityEntity {
 	@Column(name = "petfee")
 	private String petFee;
 	
-	@Column(name = "petavail")
-	private String petAvail;
-	
 	@Column(name = "petexclusive")
 	private String petExclusive;
 	
