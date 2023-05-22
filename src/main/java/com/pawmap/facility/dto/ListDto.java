@@ -16,6 +16,7 @@ public class ListDto {
 	private String roadAddr;
 	private String landAddr;
 	private String phoneNum;
+	private String businessHr;
 	private Double lat;
 	private Double lng;
 	
@@ -27,6 +28,7 @@ public class ListDto {
 		this.roadAddr = facilityEntity.getRoadAddr();
 		this.landAddr = facilityEntity.getLandAddr();
 		this.phoneNum = facilityEntity.getPhoneNum();
+		this.businessHr = facilityEntity.getBusinessHr();
 		this.lat = facilityEntity.getLat();
 		this.lng = facilityEntity.getLng();
 	}
