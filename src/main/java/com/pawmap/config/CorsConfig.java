@@ -1,4 +1,4 @@
-package com.pawmap;
+package com.pawmap.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

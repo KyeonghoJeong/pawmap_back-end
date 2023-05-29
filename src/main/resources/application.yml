@@ -1,0 +1,16 @@
+server:
+  port: 8090
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    password: 1234
+    url: jdbc:oracle:thin:@localhost:1521/xepdb1
+    username: JEONG
+  mail:
+    host: smtp.naver.com
+    port: 587
+    username: kyeonghojeong@naver.com
+    password: admin007^
+    properties:
+        mail.smtp.auth: true
+        mail.smtp.starttls.enable: true

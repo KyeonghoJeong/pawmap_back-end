@@ -1,15 +1,15 @@
-package com.pawmap.user.dto;
+package com.pawmap.member.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDto {
-	
-	private String userId;
+public class MemberDto {
+
+	private String memberId;
 	private String pw;
 	private String nickname;
 	private String email;
-
+	
 }

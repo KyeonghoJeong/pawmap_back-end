@@ -14,7 +14,7 @@ import com.pawmap.facility.dto.SigunguDto;
 import com.pawmap.facility.service.DistrictService;
 
 @RestController
-@RequestMapping("district")
+@RequestMapping("api/districts")
 public class DistrictController {
 	
 	@Autowired

@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pawmap.facility.repository.AvailabilityRepository;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/facilities")
 public class AvailabilityController {
 	
 	@Autowired
 	private AvailabilityRepository avaiabilityRepository;
 	
-	@GetMapping("/facilities/availability")
+	@GetMapping("/availability")
 	public Long checkFacilityAvailable(
 			@RequestParam(required=false) String cat,
 			@RequestParam(required=false) String sido,
