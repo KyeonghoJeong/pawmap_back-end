@@ -25,15 +25,19 @@ public class MemberEntity {
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "auth")
+	private String role;
+	
 	public MemberEntity() {
 		
 	}
 
-	public MemberEntity(String memberId, String pw, String nickname, String email) {
+	public MemberEntity(String memberId, String pw, String nickname, String email, String role) {
 		this.memberId = memberId;
 		this.pw = pw;
 		this.nickname = nickname;
 		this.email = email;
+		this.role = role;
 	}
 	
 }
