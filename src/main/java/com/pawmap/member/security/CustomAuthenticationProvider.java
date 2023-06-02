@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	@Autowired
@@ -29,13 +32,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	    	UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 	    	
 			if(!passwordEncoder.matches(password, userDetails.getPassword())) {
+				log.info("password is not matched");
 				throw new BadCredentialsException("password is not matched");
 			}
 			
-			Authentication authenticatedUser = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+			Authentication authenticatedMember = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 			
-		    return authenticatedUser;
+		    return authenticatedMember;
 	    } catch (UsernameNotFoundException e) {
+	    	log.info("username is not found");
 	        throw new BadCredentialsException("username is not found");
 	    }
 	}

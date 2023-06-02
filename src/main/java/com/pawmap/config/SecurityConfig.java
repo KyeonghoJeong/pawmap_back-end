@@ -22,11 +22,15 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http
 			.csrf().disable()
+			.formLogin().disable()
+			.httpBasic().disable()
 			.authorizeRequests()
 				.antMatchers("/api/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and();
+			//.addFilterAfter(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 			
 		return http.build();
 	}

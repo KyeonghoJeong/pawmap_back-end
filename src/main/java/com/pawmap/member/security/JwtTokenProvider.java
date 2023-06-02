@@ -14,8 +14,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.pawmap.member.dto.JwtTokenDto;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -38,30 +36,36 @@ public class JwtTokenProvider {
 		this.key = Keys.hmacShaKeyFor(byteKey);
 	}
 	
-	public JwtTokenDto generateToken(Authentication authentication) {
-		String authorities = authentication.getAuthorities().stream()
+	public String generateAccessToken(Authentication authenticatedMember) {
+		// JWT Token 구조
+		// Header => Jwts.builder()에 의해 기본적으로 생성되며 보통 token 유형, SignatureAlgorithm.HS256과 같은 signing 알고리즘 등이 사용됨
+		// .Payload => setSubject, claim, setExpiration 등의 메소드로 만들어짐
+		// .Signature => .signWith에 의해 signing key를 이용 token에 sign되어 만들어짐
+		
+		String authorities = authenticatedMember.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
 		
 		String accessToken = Jwts.builder()
-				.setSubject(authentication.getName())
+				.setSubject(authenticatedMember.getName())
 				.claim("auth", authorities)
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60)) // 테스트를 위해 1분으로 설정
 				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
-		
+	
+		return accessToken;
+	}
+	
+	public String generateRefreshToken(Authentication authenticatedMember) {
 		String refreshToken = Jwts.builder()
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 3)) // 테스트를 위해 3분으로 설정
 				.signWith(key, SignatureAlgorithm.HS256)
-				.compact();	
-		
-		return JwtTokenDto.builder()
-				.grantType("Bearer")
-				.accessToken(accessToken)
-				.refreshToken(refreshToken)
-				.build();
+				.compact();
+	
+		return refreshToken;
 	}
 
+	// With Filter
 	public boolean validateToken(String jwtToken) {
 		// TODO Auto-generated method stub
 		try {
@@ -81,6 +85,7 @@ public class JwtTokenProvider {
 		return false;
 	}
 
+	// With Filter
 	public Authentication getAuthentication(String jwtToken) {
 		// TODO Auto-generated method stub
 		Claims claims  = parseClaims(jwtToken);

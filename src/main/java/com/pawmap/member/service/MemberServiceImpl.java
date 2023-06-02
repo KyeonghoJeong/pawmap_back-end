@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pawmap.member.dao.MemberDao;
-import com.pawmap.member.dto.JwtTokenDto;
 import com.pawmap.member.dto.MemberDto;
 import com.pawmap.member.entity.MemberEntity;
 import com.pawmap.member.security.JwtTokenProvider;
@@ -50,15 +49,18 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public JwtTokenDto signIn(String username, String password) {
+	public String[] signIn(String username, String password) {
 		// TODO Auto-generated method stub
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);
 		
-		Authentication authentication = authenticationManager.authenticate(token);
+		// CustomAuthenticationProvider 회원 유효성 검사
+		Authentication authenticatedMember = authenticationManager.authenticate(authentication);
 		
-		JwtTokenDto jwtTokenDto = jwtTokenProvider.generateToken(authentication);
+		String tokens[] = new String[2];
+		tokens[0] = jwtTokenProvider.generateAccessToken(authenticatedMember);
+		tokens[1] = jwtTokenProvider.generateRefreshToken(authenticatedMember);
 		
-		return jwtTokenDto;
+		return tokens;
 	}
 
 }
