@@ -65,17 +65,18 @@ public class JwtTokenProvider {
 		return refreshToken;
 	}
 
-	// With Filter
+	// With JwtAutheticationFilter
 	public boolean validateToken(String jwtToken) {
 		// TODO Auto-generated method stub
 		try {
 			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwtToken);
-			
+
 			return true;
 		}catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
 			log.info("Invalid JWT Token", e);
 		}catch (ExpiredJwtException e) {
 			log.info("Expired JWT Token", e);
+			// refreshToken으로 accessToken 재발급
 		}catch (UnsupportedJwtException e) {
 			log.info("Unsupported JWT Token", e);
 		}catch (IllegalArgumentException e){
@@ -85,7 +86,7 @@ public class JwtTokenProvider {
 		return false;
 	}
 
-	// With Filter
+	// With JwtAutheticationFilter
 	public Authentication getAuthentication(String jwtToken) {
 		// TODO Auto-generated method stub
 		Claims claims  = parseClaims(jwtToken);

@@ -3,17 +3,14 @@ package com.pawmap.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pawmap.member.dto.MemberDto;
@@ -46,25 +43,18 @@ public class MemberController {
 		
 		ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
 				.maxAge(7 * 24 * 60 * 60)
+				.path("/")
 				.secure(true)
 				.sameSite("None")
 				.httpOnly(true)
 				.build();
-		
+
 		response.setHeader("Set-cookie", cookie.toString());
 		
 		Map<String, String> responseBody = new HashMap<>();
 		responseBody.put("accessToken", accessToken);
 		
 		return ResponseEntity.ok(responseBody);
-	}
-
-	@GetMapping("/bookmark")
-	public ResponseEntity<?> addBookmark(@RequestParam String facilityId, HttpServletRequest request){
-		System.out.println("facilityId: "+facilityId);
-		System.out.println("accessToken: "+request.getHeader("Authorization").replace("Bearer ", ""));
-		
-		return ResponseEntity.ok().build();
 	}
 	
 }

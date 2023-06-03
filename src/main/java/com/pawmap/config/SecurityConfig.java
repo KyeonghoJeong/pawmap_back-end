@@ -11,8 +11,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.pawmap.member.security.CustomAuthenticationProvider;
+import com.pawmap.member.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -29,8 +31,8 @@ public class SecurityConfig {
 				.anyRequest().authenticated()
 				.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and();
-			//.addFilterAfter(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+				.and()
+			.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 			
 		return http.build();
 	}
