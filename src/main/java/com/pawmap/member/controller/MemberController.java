@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +56,22 @@ public class MemberController {
 		responseBody.put("accessToken", accessToken);
 		
 		return ResponseEntity.ok(responseBody);
+	}
+	
+	@PostMapping("/reissuance")
+	public ResponseEntity<?> getAccessToken(@CookieValue("refreshToken") String refreshToken){
+		String accessToken;
+		
+		accessToken = memberService.getAccessToken(refreshToken);
+		
+		if(accessToken == null) {
+			return ResponseEntity.ok().body("Invalid");
+		}else {
+			Map<String, String> responseBody = new HashMap<>();
+			responseBody.put("accessToken", accessToken);
+			
+			return ResponseEntity.ok(responseBody);
+		}
 	}
 	
 }

@@ -24,8 +24,7 @@ public class BookmarkController {
 	@PostMapping("/bookmark")
 	public ResponseEntity<?> addBookmark(HttpServletRequest request, @RequestBody RequestDto requestDto){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			System.out.println("error");
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok().body("Invalid");
 		}else {
 			BookmarkDto bookmarkDto = new BookmarkDto();
 

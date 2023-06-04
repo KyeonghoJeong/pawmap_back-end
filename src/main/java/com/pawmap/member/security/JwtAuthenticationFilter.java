@@ -16,11 +16,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	
 	private final JwtTokenProvider jwtTokenProvider;
 	
-    public JwtAuthenticationFilter() {
-    	JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
-    	
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+	public JwtAuthenticationFilter() {
+		JwtTokenProvider jwtTokenProvider = new JwtTokenProvider();
+		
+		this.jwtTokenProvider = jwtTokenProvider;
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

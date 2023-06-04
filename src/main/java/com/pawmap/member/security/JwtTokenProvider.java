@@ -1,11 +1,13 @@
 package com.pawmap.member.security;
 
 import java.security.Key;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +15,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.pawmap.member.dao.RefreshTokenDao;
+import com.pawmap.member.entity.RefreshTokenEntity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -28,6 +33,9 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class JwtTokenProvider {
 	
+	@Autowired
+	private RefreshTokenDao refreshTokenDao;
+
 	private final Key key;
 	private final String jwtSecret = "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa";
 	
@@ -37,11 +45,6 @@ public class JwtTokenProvider {
 	}
 	
 	public String generateAccessToken(Authentication authenticatedMember) {
-		// JWT Token 구조
-		// Header => Jwts.builder()에 의해 기본적으로 생성되며 보통 token 유형, SignatureAlgorithm.HS256과 같은 signing 알고리즘 등이 사용됨
-		// .Payload => setSubject, claim, setExpiration 등의 메소드로 만들어짐
-		// .Signature => .signWith에 의해 signing key를 이용 token에 sign되어 만들어짐
-		
 		String authorities = authenticatedMember.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
@@ -49,7 +52,7 @@ public class JwtTokenProvider {
 		String accessToken = Jwts.builder()
 				.setSubject(authenticatedMember.getName())
 				.claim("auth", authorities)
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60)) // 테스트를 위해 1분으로 설정
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 30)) // 테스트를 위해 30초로 설정
 				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
 	
@@ -58,9 +61,18 @@ public class JwtTokenProvider {
 	
 	public String generateRefreshToken(Authentication authenticatedMember) {
 		String refreshToken = Jwts.builder()
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 3)) // 테스트를 위해 3분으로 설정
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 1)) // 테스트를 위해 1분으로 설정
 				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
+		
+		RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity(
+				null, 
+				authenticatedMember.getName(), 
+				refreshToken,
+				new Timestamp(System.currentTimeMillis() + 1000 * 60 * 1)
+		);
+		
+		refreshTokenDao.addRefreshToken(refreshTokenEntity);
 	
 		return refreshToken;
 	}
@@ -76,7 +88,6 @@ public class JwtTokenProvider {
 			log.info("Invalid JWT Token", e);
 		}catch (ExpiredJwtException e) {
 			log.info("Expired JWT Token", e);
-			// refreshToken으로 accessToken 재발급
 		}catch (UnsupportedJwtException e) {
 			log.info("Unsupported JWT Token", e);
 		}catch (IllegalArgumentException e){
@@ -113,5 +124,5 @@ public class JwtTokenProvider {
 			return e.getClaims();
 		}
 	}
-
+	
 }

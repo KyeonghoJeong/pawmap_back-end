@@ -8,4 +8,6 @@ public interface MemberService {
 
 	String[] signIn(String username, String password);
 
+	String getAccessToken(String refreshToken);
+
 }
