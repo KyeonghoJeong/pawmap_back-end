@@ -3,7 +3,6 @@ package com.pawmap.bookmark.service;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.config.Configuration.AccessLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +26,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 	@Override
 	public String addBookmark(BookmarkDto bookmarkDto) {
 		// TODO Auto-generated method stub
-		modelMapper.getConfiguration().setFieldAccessLevel(AccessLevel.PRIVATE);
+		//modelMapper.getConfiguration().setFieldAccessLevel(AccessLevel.PRIVATE);
 		BookmarkEntity bookmarkEntity = modelMapper.map(bookmarkDto, BookmarkEntity.class);
 		
 		String result = bookmarkDao.addBookmark(bookmarkEntity);
