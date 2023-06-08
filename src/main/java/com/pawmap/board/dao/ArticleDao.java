@@ -13,6 +13,8 @@ public interface ArticleDao {
 
 	ArticleEntity getArticles(Long articleId);
 
-	String deleteArticle(Long articleId, String memberId);
+	void deleteArticle(Long articleId, String memberId);
+
+	void putArticle(Long articleId, String title, String writing);
 
 }

@@ -24,7 +24,7 @@ public class ArticleDto {
 		this.articleId = articleEntity.getArticleId();
 		this.memberId = articleEntity.getMemberId();
 		this.nickname = articleEntity.getNickname();
-		this.title = articleEntity.getWriting();
+		this.title = articleEntity.getTitle();
 		this.writing = articleEntity.getWriting();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

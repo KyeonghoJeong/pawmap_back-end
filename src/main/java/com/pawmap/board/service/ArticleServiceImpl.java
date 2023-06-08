@@ -66,11 +66,19 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public String deleteArticle(Long articleId, String memberId) {
+	public void deleteArticle(Long articleId, String memberId) {
 		// TODO Auto-generated method stub
-		String result = articleDao.deleteArticle(articleId, memberId);
+		articleDao.deleteArticle(articleId, memberId);
+	}
+
+	@Override
+	public void putArticle(String memberId, Map<String, String> article) {
+		// TODO Auto-generated method stub
+		Long articleId = Long.parseLong(article.get("articleId"));
+		String title = article.get("title");
+		String writing = article.get("writing");
 		
-		return result;
+		articleDao.putArticle(articleId, title, writing);
 	}
 
 }

@@ -15,6 +15,8 @@ public interface ArticleService {
 
 	ArticleDto getArticles(Long articleId);
 
-	String deleteArticle(Long articleId, String memberId);
+	void deleteArticle(Long articleId, String memberId);
+
+	void putArticle(String memberId, Map<String, String> article);
 
 }

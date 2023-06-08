@@ -46,17 +46,15 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	@Override
-	public String deleteArticle(Long articleId, String memberId) {
+	public void deleteArticle(Long articleId, String memberId) {
 		// TODO Auto-generated method stub
-		Long count = articeRepository.getCount(articleId, memberId);
-		
-		if(count == 0) {
-			return "Failed";
-		}else {
-			articeRepository.deleteByArticleIdAndMemberId(articleId, memberId);
-			
-			return "Success";
-		}
+		articeRepository.deleteByArticleIdAndMemberId(articleId, memberId);
+	}
+
+	@Override
+	public void putArticle(Long articleId, String title, String writing) {
+		// TODO Auto-generated method stub
+		articeRepository.putArticle(articleId, title, writing);
 	}
 
 }
