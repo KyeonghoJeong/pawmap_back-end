@@ -46,9 +46,9 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public Page<ArticleDto> getArticles(Pageable pageable) {
+	public Page<ArticleDto> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable) {
 		// TODO Auto-generated method stub
-		Page<ArticleEntity> articleEntities = articleDao.getArticles(pageable);
+		Page<ArticleEntity> articleEntities = articleDao.getArticles(title, writing, nickname, memberId, pageable);
 		
 		Page<ArticleDto> articleDtos = articleEntities.map(ArticleDto::new);
 		

@@ -34,8 +34,14 @@ public class ArticleController {
 	private ArticleRepository articleRepository;
 
 	@GetMapping("/board/articles")
-	public Page<ArticleDto> getArticles(Pageable pageable){
-		Page<ArticleDto> articleDtos = articleService.getArticles(pageable);
+	public Page<ArticleDto> getArticles(
+			@RequestParam("title") String title,
+			@RequestParam("writing") String writing,
+			@RequestParam("nickname") String nickname,
+			@RequestParam("memberId") String memberId,
+			Pageable pageable){
+		
+		Page<ArticleDto> articleDtos = articleService.getArticles(title, writing, nickname, memberId, pageable);
 		
 		return articleDtos;
 	}

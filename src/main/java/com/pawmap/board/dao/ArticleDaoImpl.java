@@ -23,9 +23,29 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	@Override
-	public Page<ArticleEntity> getArticles(Pageable pageable) {
+	public Page<ArticleEntity> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable) {
 		// TODO Auto-generated method stub
-		Page<ArticleEntity> articeEntities = articeRepository.findByOrderByPostDateDesc(pageable);
+		Page<ArticleEntity> articeEntities = null;
+		
+		if(title == "" && writing == "" && nickname == "" && memberId == "") {
+			articeEntities = articeRepository.findByOrderByPostDateDesc(pageable);
+		}else if(title != "" && writing != "" && nickname == "" && memberId == "") {
+			articeEntities = articeRepository.findByTitleLikeOrWritingLikeOrderByPostDateDesc(title, writing, pageable);
+		}else if(title != "" && writing == "" && nickname == "" && memberId == "") {
+			articeEntities = articeRepository.findByTitleLikeOrderByPostDateDesc(title, pageable);
+		}else if(title == "" && writing != "" && nickname == "" && memberId == "") {
+			articeEntities = articeRepository.findByWritingLikeOrderByPostDateDesc(writing, pageable);
+		}else if(title == "" && writing == "" && nickname != "" && memberId == "") {
+			articeEntities = articeRepository.findByNicknameOrderByPostDateDesc(nickname, pageable);
+		}else if(title == "" && writing == "" && nickname == "" && memberId != "") {
+			articeEntities = articeRepository.findByMemberIdOrderByPostDateDesc(memberId, pageable);
+		}else if(title != "" && writing != "" && nickname == "" && memberId != "") {
+			articeEntities = articeRepository.getArticles(title, writing, memberId, pageable);
+		}else if(title != "" && writing == "" && nickname == "" && memberId != "") {
+			articeEntities = articeRepository.getArticlesByTitle(title, memberId, pageable);
+		}else if(title == "" && writing != "" && nickname == "" && memberId != "") {
+			articeEntities = articeRepository.getArticlesByWriting(writing, memberId, pageable);
+		}
 		
 		return articeEntities;
 	}

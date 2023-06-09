@@ -9,7 +9,7 @@ public interface ArticleDao {
 
 	void postArticle(ArticleEntity articleEntity);
 
-	Page<ArticleEntity> getArticles(Pageable pageable);
+	Page<ArticleEntity> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable);
 
 	ArticleEntity getArticles(Long articleId);
 

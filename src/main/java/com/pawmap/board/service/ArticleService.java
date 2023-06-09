@@ -11,7 +11,7 @@ public interface ArticleService {
 
 	void postArticle(String memberId, Map<String, String> article);
 
-	Page<ArticleDto> getArticles(Pageable pageable);
+	Page<ArticleDto> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable);
 
 	ArticleDto getArticles(Long articleId);
 
