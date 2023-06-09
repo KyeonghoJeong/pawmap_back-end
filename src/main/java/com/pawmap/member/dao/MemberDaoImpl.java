@@ -43,4 +43,10 @@ public class MemberDaoImpl implements MemberDao {
 		memberRepository.putMember(memberInfo.getMemberId(), memberInfo.getPw());
 	}
 
+	@Override
+	public void deleteMember(String memberId) {
+		// TODO Auto-generated method stub
+		memberRepository.deleteByMemberId(memberId);
+	}
+
 }

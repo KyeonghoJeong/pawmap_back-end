@@ -11,6 +11,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -98,6 +99,16 @@ public class MemberController {
 
 			return ResponseEntity.ok("Success");
 		}
+	}
+	
+	@DeleteMapping("/member")
+	public ResponseEntity<?> deleteMember(@RequestBody Map<String, String> memberInfo){
+		String username = memberInfo.get("memberId");
+		String password = memberInfo.get("pw");
+
+		memberService.deleteMember(username, password);
+		
+		return ResponseEntity.ok().body("Success");
 	}
 	
 }

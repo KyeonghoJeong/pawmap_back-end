@@ -19,4 +19,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>{
 	@Query(value="UPDATE memberInfo SET pw = :pw WHERE memberId = :memberId", nativeQuery=true)
 	void putMember(@Param("memberId") String memberId, @Param("pw") String pw);
 
+	void deleteByMemberId(String memberId);
+
 }

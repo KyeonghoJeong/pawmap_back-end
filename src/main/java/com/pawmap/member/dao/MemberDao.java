@@ -11,4 +11,6 @@ public interface MemberDao {
 
 	void putMember(SignInDto memberInfo);
 
+	void deleteMember(String memberId);
+
 }

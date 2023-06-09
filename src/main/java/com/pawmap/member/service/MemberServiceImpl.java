@@ -119,4 +119,15 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.putMember(memberInfo);
 	}
 
+	@Override
+	public void deleteMember(String username, String password) {
+		// TODO Auto-generated method stub
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);
+		
+		// CustomAuthenticationProvider 회원 유효성 검사
+		Authentication authenticatedMember = authenticationManager.authenticate(authentication);
+		
+		memberDao.deleteMember(authenticatedMember.getName());
+	}
+
 }

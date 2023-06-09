@@ -15,4 +15,6 @@ public interface MemberService {
 
 	void putMember(SignInDto memberInfo);
 
+	void deleteMember(String username, String password);
+
 }
