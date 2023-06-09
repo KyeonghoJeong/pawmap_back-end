@@ -26,6 +26,9 @@ public class CommentEntity {
 	@Column(name="articleid")
 	private Long articleId;
 	
+	@Column(name="memberid")
+	private String memberId;
+	
 	@Column(name="nickname")
 	private String nickname;
 	
@@ -39,9 +42,10 @@ public class CommentEntity {
 		
 	}
 
-	public CommentEntity(Long cmtId, Long articleId, String nickname, String writing, Date postDate) {
+	public CommentEntity(Long cmtId, Long articleId, String memberId, String nickname, String writing, Date postDate) {
 		this.cmtId = cmtId;
 		this.articleId = articleId;
+		this.memberId = memberId;
 		this.nickname = nickname;
 		this.writing = writing;
 		this.postDate = postDate;

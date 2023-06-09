@@ -1,5 +1,6 @@
 package com.pawmap.board.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,10 +46,13 @@ public class ArticleController {
 			return ResponseEntity.ok().body("Invalid");
 		}else {
 			String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
-			
 			Long count = articleRepository.getCount(articleId, memberId);
 			
-			return ResponseEntity.ok().body(count);
+			Map<String, Object> result = new HashMap<>();
+			result.put("memberId", memberId);
+			result.put("count", count);
+			
+			return ResponseEntity.ok().body(result);
 		}
 	}
 	

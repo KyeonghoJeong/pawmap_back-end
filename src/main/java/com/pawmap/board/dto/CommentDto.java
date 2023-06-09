@@ -17,6 +17,8 @@ public class CommentDto {
 	
 	private Long articleId;
 	
+	private String memberId;
+	
 	private String nickname;
 	
 	private String writing;
@@ -26,6 +28,7 @@ public class CommentDto {
 	public CommentDto(CommentEntity commentEntity) {
 		this.cmtId = commentEntity.getCmtId();
 		this.articleId = commentEntity.getArticleId();
+		this.memberId = commentEntity.getMemberId();
 		this.nickname = commentEntity.getNickname();
 		this.writing = commentEntity.getWriting();
 		

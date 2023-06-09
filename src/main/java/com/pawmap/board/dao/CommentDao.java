@@ -11,4 +11,10 @@ public interface CommentDao {
 
 	Page<CommentEntity> getComments(Long articleId, Pageable pageable);
 
+	void deleteComment(Long cmtId);
+
+	void putComment(Long cmtId, String writing);
+
+	Long getCommentNumbers(Long articleId);
+
 }

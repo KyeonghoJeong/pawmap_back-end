@@ -1,7 +1,10 @@
 package com.pawmap.board.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
 
 		Date currentTime = Calendar.getInstance().getTime();
 		
-		CommentEntity commentEntity = new CommentEntity(null, articleId, nickname, writing, currentTime);
+		CommentEntity commentEntity = new CommentEntity(null, articleId, memberId, nickname, writing, currentTime);
 	
 		commentDao.putComment(commentEntity);
 	}
@@ -46,6 +49,33 @@ public class CommentServiceImpl implements CommentService {
 		Page<CommentDto> commentDtos = commentEntities.map(CommentDto::new);
 		
 		return commentDtos;
+	}
+
+	@Override
+	public void deleteComment(Long cmtId) {
+		// TODO Auto-generated method stub
+		commentDao.deleteComment(cmtId);
+	}
+
+	@Override
+	public void putComment(Map<String, String> cmtInfo) {
+		// TODO Auto-generated method stub
+		Long cmtId = Long.parseLong(cmtInfo.get("cmtId"));
+		String writing = cmtInfo.get("writing");
+		
+		commentDao.putComment(cmtId, writing);
+	}
+
+	@Override
+	public List<Long> getCommentNumbers(List<Long> articleIds) {
+		// TODO Auto-generated method stub
+		List<Long> commentNumbers = new ArrayList<Long>();
+		
+		for(int i=0; i<articleIds.size(); i++) {
+			commentNumbers.add(commentDao.getCommentNumbers(articleIds.get(i)));
+		}
+
+		return commentNumbers;
 	}
 
 }

@@ -28,4 +28,22 @@ public class CommentDaoImpl implements CommentDao {
 		return commentEntities;
 	}
 
+	@Override
+	public void deleteComment(Long cmtId) {
+		// TODO Auto-generated method stub
+		commentRepository.deleteById(cmtId);
+	}
+
+	@Override
+	public void putComment(Long cmtId, String writing) {
+		// TODO Auto-generated method stub
+		commentRepository.putComment(cmtId, writing);
+	}
+
+	@Override
+	public Long getCommentNumbers(Long articleId) {
+		// TODO Auto-generated method stub
+		return commentRepository.countByArticleId(articleId);
+	}
+
 }
