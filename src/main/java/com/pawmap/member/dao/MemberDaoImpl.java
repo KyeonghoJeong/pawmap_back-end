@@ -1,5 +1,6 @@
 package com.pawmap.member.dao;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public MemberEntity getMember(String memberId) {
 		// TODO Auto-generated method stub
-		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberId(memberId);
+		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberIdAndDeletionDate(memberId, null);
 		
 		MemberEntity memberEntity;
 		
@@ -44,9 +45,9 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public void deleteMember(String memberId) {
+	public void deleteMember(String memberId, Date deletionDate) {
 		// TODO Auto-generated method stub
-		memberRepository.deleteByMemberId(memberId);
+		memberRepository.deleteByMember(memberId, deletionDate);
 	}
 
 }

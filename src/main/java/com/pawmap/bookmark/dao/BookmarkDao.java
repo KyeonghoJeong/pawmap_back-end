@@ -16,4 +16,6 @@ public interface BookmarkDao {
 
 	void deleteBookmark(String memberId, List<Long> facilityId);
 
+	void deleteBookmarks(String memberId);
+
 }

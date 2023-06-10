@@ -1,5 +1,6 @@
 package com.pawmap.member.repository;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,12 +14,14 @@ import com.pawmap.member.entity.MemberEntity;
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, Long>{
 
-	Optional<MemberEntity> findByMemberId(String username);
+	Optional<MemberEntity> findByMemberIdAndDeletionDate(String username, Date deletionDate);
 
 	@Modifying
 	@Query(value="UPDATE memberInfo SET pw = :pw WHERE memberId = :memberId", nativeQuery=true)
 	void putMember(@Param("memberId") String memberId, @Param("pw") String pw);
 
-	void deleteByMemberId(String memberId);
+	@Modifying
+	@Query(value="UPDATE memberInfo SET deletionDate = :deletiondate WHERE memberId = :memberid", nativeQuery=true)
+	void deleteByMember(@Param("memberid") String memberId, @Param("deletiondate") Date deletionDate);
 
 }

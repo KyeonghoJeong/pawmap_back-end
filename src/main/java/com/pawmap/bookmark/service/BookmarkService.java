@@ -16,4 +16,6 @@ public interface BookmarkService {
 
 	void deleteBookmark(String memberId, List<Long> facilityId);
 
+	void deleteBookmarks(String memberId);
+
 }

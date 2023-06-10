@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pawmap.bookmark.dao.BookmarkDao;
 import com.pawmap.bookmark.dto.BookmarkDto;
@@ -15,6 +16,7 @@ import com.pawmap.bookmark.entity.BookmarkEntity;
 import com.pawmap.facility.entity.FacilityEntity;
 
 @Service
+@Transactional
 public class BookmarkServiceImpl implements BookmarkService {
 	
 	@Autowired
@@ -48,6 +50,12 @@ public class BookmarkServiceImpl implements BookmarkService {
 	public void deleteBookmark(String memberId, List<Long> facilityId) {
 		// TODO Auto-generated method stub
 		bookmarkDao.deleteBookmark(memberId, facilityId);
+	}
+
+	@Override
+	public void deleteBookmarks(String memberId) {
+		// TODO Auto-generated method stub
+		bookmarkDao.deleteBookmarks(memberId);
 	}
 	
 }

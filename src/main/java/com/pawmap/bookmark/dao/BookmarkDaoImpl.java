@@ -53,4 +53,10 @@ public class BookmarkDaoImpl implements BookmarkDao {
 		}
 	}
 
+	@Override
+	public void deleteBookmarks(String memberId) {
+		// TODO Auto-generated method stub
+		bookmarkRepository.deleteAllByMemberId(memberId);
+	}
+
 }

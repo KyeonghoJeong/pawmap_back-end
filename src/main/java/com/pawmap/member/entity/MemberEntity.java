@@ -1,5 +1,7 @@
 package com.pawmap.member.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,16 +30,20 @@ public class MemberEntity {
 	@Column(name = "auth")
 	private String role;
 	
+	@Column(name = "deletiondate")
+	private Date deletionDate;
+	
 	public MemberEntity() {
 		
 	}
 
-	public MemberEntity(String memberId, String pw, String nickname, String email, String role) {
+	public MemberEntity(String memberId, String pw, String nickname, String email, String role, Date deletionDate) {
 		this.memberId = memberId;
 		this.pw = pw;
 		this.nickname = nickname;
 		this.email = email;
 		this.role = role;
+		this.deletionDate = deletionDate;
 	}
 	
 }

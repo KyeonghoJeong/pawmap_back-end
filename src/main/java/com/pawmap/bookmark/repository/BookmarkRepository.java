@@ -10,4 +10,6 @@ public interface BookmarkRepository extends JpaRepository<BookmarkEntity, Long>{
 
 	void deleteByMemberIdAndFacilityId(String memberId, Long facilityId);
 
+	void deleteAllByMemberId(String memberId);
+
 }

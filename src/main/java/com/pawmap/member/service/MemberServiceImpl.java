@@ -1,5 +1,8 @@
 package com.pawmap.member.service;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -59,7 +62,8 @@ public class MemberServiceImpl implements MemberService {
 				memberDto.getPw(),
 				memberDto.getNickname(),
 				memberDto.getEmail(),
-				"ROLE_USER"
+				"ROLE_USER",
+				null
 		);
 		
 		memberDao.signUp(memberEntity);
@@ -127,7 +131,9 @@ public class MemberServiceImpl implements MemberService {
 		// CustomAuthenticationProvider 회원 유효성 검사
 		Authentication authenticatedMember = authenticationManager.authenticate(authentication);
 		
-		memberDao.deleteMember(authenticatedMember.getName());
+		Date deletionDate = Calendar.getInstance().getTime();
+		
+		memberDao.deleteMember(authenticatedMember.getName(), deletionDate);
 	}
 
 }

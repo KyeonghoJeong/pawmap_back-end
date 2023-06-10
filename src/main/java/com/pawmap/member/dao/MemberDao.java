@@ -1,5 +1,7 @@
 package com.pawmap.member.dao;
 
+import java.util.Date;
+
 import com.pawmap.member.dto.SignInDto;
 import com.pawmap.member.entity.MemberEntity;
 
@@ -11,6 +13,6 @@ public interface MemberDao {
 
 	void putMember(SignInDto memberInfo);
 
-	void deleteMember(String memberId);
+	void deleteMember(String memberId, Date deletionDate);
 
 }

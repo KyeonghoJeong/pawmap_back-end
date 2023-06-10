@@ -18,7 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		MemberEntity memberEntity = memberRepository.findByMemberId(username)
+		MemberEntity memberEntity = memberRepository.findByMemberIdAndDeletionDate(username, null)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
 		return new UserDetailsImpl(memberEntity);
