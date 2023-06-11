@@ -35,7 +35,7 @@ public class InfoController {
 	
 	@GetMapping("/validation/email")
 	public Long checkEmail(@RequestParam String email) {
-		Long count = infoRepository.countByEmailAndDeletionDate(email, null);
+		Long count = infoRepository.countByEmailAndDeletionDateAndBanDate(email, null, null);
 
 		return count;
 	}

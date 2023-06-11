@@ -12,6 +12,6 @@ public interface InfoRepository extends JpaRepository<MemberEntity, Long> {
 
 	Long countByNickname(String nickname);
 
-	Long countByEmailAndDeletionDate(String email, Date deletionDate);
+	Long countByEmailAndDeletionDateAndBanDate(String email, Date deletionDate, Date banDate);
 
 }

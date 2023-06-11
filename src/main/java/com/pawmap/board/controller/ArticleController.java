@@ -1,6 +1,7 @@
 package com.pawmap.board.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,17 @@ public class ArticleController {
 		Page<ArticleDto> articleDtos = articleService.getArticles(title, writing, nickname, memberId, pageable);
 		
 		return articleDtos;
+	}
+	
+	@DeleteMapping("/board/articles")
+	public ResponseEntity<?> deleteArticles(HttpServletRequest request, @RequestBody List<Long> articleIds){
+		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			return ResponseEntity.ok().body("Invalid");
+		}else {
+			articleService.deleteArticles(articleIds);
+			
+			return ResponseEntity.ok().body("Deleted");
+		}
 	}
 	
 	@GetMapping("/board/article/membercheck")

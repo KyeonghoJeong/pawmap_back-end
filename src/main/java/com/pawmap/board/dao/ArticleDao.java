@@ -1,5 +1,7 @@
 package com.pawmap.board.dao;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,5 +18,7 @@ public interface ArticleDao {
 	void deleteArticle(Long articleId, String memberId);
 
 	void putArticle(Long articleId, String title, String writing);
+
+	void deleteArticles(List<Long> articleIds);
 
 }

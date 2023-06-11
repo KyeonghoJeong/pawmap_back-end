@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.pawmap.member.dto.SignInDto;
@@ -25,7 +27,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public MemberEntity getMember(String memberId) {
 		// TODO Auto-generated method stub
-		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberIdAndDeletionDate(memberId, null);
+		Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberIdAndDeletionDateAndBanDate(memberId, null, null);
 		
 		MemberEntity memberEntity;
 		
@@ -50,4 +52,28 @@ public class MemberDaoImpl implements MemberDao {
 		memberRepository.deleteByMember(memberId, deletionDate);
 	}
 
+	@Override
+	public Page<MemberEntity> getMembers(String memberId, String nickname, String email, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<MemberEntity> memberEntities = null;
+		
+		if(memberId.equals("") && nickname.equals("") && email.equals("")) {
+			memberEntities = memberRepository.findByDeletionDate(null, pageable);
+		}else if(!memberId.equals("") && nickname.equals("") && email.equals("")) {
+			memberEntities = memberRepository.getMembersByMemberId(memberId, pageable);
+		}else if(memberId.equals("") && !nickname.equals("") && email.equals("")) {
+			memberEntities = memberRepository.getMembersByNickname(nickname, pageable);
+		}else if(memberId.equals("") && nickname.equals("") && !email.equals("")) {
+			memberEntities = memberRepository.getMembersByEmail(email, pageable);
+		}
+	
+		return memberEntities;
+	}
+
+	@Override
+	public void updateBanDate(String memberId, Date banDate) {
+		// TODO Auto-generated method stub
+		memberRepository.updateBanDate(memberId, banDate);
+	}
+	
 }

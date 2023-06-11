@@ -1,5 +1,6 @@
 package com.pawmap.member.controller;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,8 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pawmap.member.dto.DetailedMemberDto;
 import com.pawmap.member.dto.MemberDto;
 import com.pawmap.member.dto.SignInDto;
 import com.pawmap.member.service.MemberService;
@@ -78,6 +84,20 @@ public class MemberController {
 		}
 	}
 	
+	@GetMapping("/member/authority")
+	public String getAuthLevel(HttpServletRequest request) {
+		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			return "Invalid";
+		}else {
+			Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+			
+			GrantedAuthority firstAuthority = authorities.iterator().next();
+			String authority = firstAuthority.getAuthority();
+			
+			return authority;
+		}
+	}
+	
 	@GetMapping("/member")
 	public ResponseEntity<?> getMember(HttpServletRequest request) {
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
@@ -108,6 +128,36 @@ public class MemberController {
 		memberService.deleteMember(username, password);
 		
 		return ResponseEntity.ok().body("Success");
+	}
+	
+	@GetMapping("/members")
+	public ResponseEntity<?> getMembers(
+			HttpServletRequest request, 
+			@RequestParam("memberId") String memberId,
+			@RequestParam("nickname") String nickname,
+			@RequestParam("email") String email,
+			Pageable pageable){
+		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			return ResponseEntity.ok().body("Invalid");
+		}else {
+			Page<DetailedMemberDto> detailedMemberDtos = memberService.getMembers(memberId, nickname, email, pageable);
+
+			return ResponseEntity.ok().body(detailedMemberDtos);
+		}
+	}
+	
+	@PutMapping("/member/ban")
+	public ResponseEntity<?> updateBanDate(HttpServletRequest request, @RequestBody Map<String, String> orders){
+		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			return ResponseEntity.ok().body("Invalid");
+		}else {
+			String memberId = orders.get("memberId");
+			String order = orders.get("order");
+			
+			memberService.updateBanDate(memberId, order);
+			
+			return ResponseEntity.ok().body("Success");
+		}
 	}
 	
 }

@@ -48,4 +48,6 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long>{
 	@Query(value="UPDATE article SET title = :title, writing = :writing WHERE articleId = :articleId", nativeQuery=true)
 	void putArticle(@Param("articleId") Long articleId, @Param("title") String title, @Param("writing") String writing);
 
+	void deleteByArticleId(Long long1);
+
 }

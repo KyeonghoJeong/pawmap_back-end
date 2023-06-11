@@ -2,6 +2,7 @@ package com.pawmap.board.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,12 @@ public class ArticleServiceImpl implements ArticleService {
 		String writing = article.get("writing");
 		
 		articleDao.putArticle(articleId, title, writing);
+	}
+
+	@Override
+	public void deleteArticles(List<Long> articleIds) {
+		// TODO Auto-generated method stub
+		articleDao.deleteArticles(articleIds);
 	}
 
 }

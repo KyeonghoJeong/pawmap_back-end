@@ -1,5 +1,6 @@
 package com.pawmap.board.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,14 @@ public class ArticleDaoImpl implements ArticleDao {
 		System.out.println(writing);
 		
 		articeRepository.putArticle(articleId, title, writing);
+	}
+
+	@Override
+	public void deleteArticles(List<Long> articleIds) {
+		// TODO Auto-generated method stub
+		for(int i=0; i<articleIds.size(); i++) {
+			articeRepository.deleteByArticleId(articleIds.get(i));
+		}
 	}
 
 }

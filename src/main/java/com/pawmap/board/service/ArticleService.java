@@ -1,5 +1,6 @@
 package com.pawmap.board.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -18,5 +19,7 @@ public interface ArticleService {
 	void deleteArticle(Long articleId, String memberId);
 
 	void putArticle(String memberId, Map<String, String> article);
+
+	void deleteArticles(List<Long> articleIds);
 
 }

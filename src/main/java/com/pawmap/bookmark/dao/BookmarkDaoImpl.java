@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.pawmap.bookmark.entity.BookmarkEntity;
 import com.pawmap.bookmark.repository.BookmarkInfoRepository;
@@ -45,7 +44,6 @@ public class BookmarkDaoImpl implements BookmarkDao {
 	}
 
 	@Override
-	@Transactional
 	public void deleteBookmark(String memberId, List<Long> facilityId) {
 		// TODO Auto-generated method stub
 		for(int i=0; i<facilityId.size(); i++) {

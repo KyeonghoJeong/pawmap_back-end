@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pawmap.member.dao.MemberDao;
 import com.pawmap.member.dao.RefreshTokenDao;
+import com.pawmap.member.dto.DetailedMemberDto;
 import com.pawmap.member.dto.MemberDto;
 import com.pawmap.member.dto.SignInDto;
 import com.pawmap.member.entity.MemberEntity;
@@ -63,6 +66,7 @@ public class MemberServiceImpl implements MemberService {
 				memberDto.getNickname(),
 				memberDto.getEmail(),
 				"ROLE_USER",
+				null,
 				null
 		);
 		
@@ -134,6 +138,28 @@ public class MemberServiceImpl implements MemberService {
 		Date deletionDate = Calendar.getInstance().getTime();
 		
 		memberDao.deleteMember(authenticatedMember.getName(), deletionDate);
+	}
+
+	@Override
+	public Page<DetailedMemberDto> getMembers(String memberId, String nickname, String email, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<MemberEntity> memberEntities = memberDao.getMembers(memberId, nickname, email, pageable);
+		
+		Page<DetailedMemberDto> datailedMemberDtos = memberEntities.map(DetailedMemberDto::new);
+		
+		return datailedMemberDtos;
+	}
+
+	@Override
+	public void updateBanDate(String memberId, String order) {
+		// TODO Auto-generated method stub
+		Date banDate = null;
+		
+		if(order.equals("ban")) {
+			banDate = Calendar.getInstance().getTime();
+		}
+		
+		memberDao.updateBanDate(memberId, banDate);
 	}
 
 }

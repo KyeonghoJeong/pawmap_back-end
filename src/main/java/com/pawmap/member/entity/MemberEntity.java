@@ -33,17 +33,21 @@ public class MemberEntity {
 	@Column(name = "deletiondate")
 	private Date deletionDate;
 	
+	@Column(name = "bandate")
+	private Date banDate;
+	
 	public MemberEntity() {
 		
 	}
 
-	public MemberEntity(String memberId, String pw, String nickname, String email, String role, Date deletionDate) {
+	public MemberEntity(String memberId, String pw, String nickname, String email, String role, Date deletionDate, Date banDate) {
 		this.memberId = memberId;
 		this.pw = pw;
 		this.nickname = nickname;
 		this.email = email;
 		this.role = role;
 		this.deletionDate = deletionDate;
+		this.banDate = banDate;
 	}
 	
 }
