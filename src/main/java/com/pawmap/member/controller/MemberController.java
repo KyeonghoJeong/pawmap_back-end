@@ -28,6 +28,12 @@ import com.pawmap.member.dto.MemberDto;
 import com.pawmap.member.dto.SignInDto;
 import com.pawmap.member.service.MemberService;
 
+// 회원(member)과 관련한 컨트롤러
+// 회원가입, 로그인, 회원탈퇴
+// accessToken 재발급, 회원권한 조회
+// 회원정보 조회, 회원정보 수정
+// 회원목록 조회, 회원차단 
+
 @RestController
 @RequestMapping("api")
 public class MemberController {
@@ -84,6 +90,7 @@ public class MemberController {
 		}
 	}
 	
+	// 회원권한 조회 (로그인 되어 있는 경우, 회원 또는 관리자의 요청)
 	@GetMapping("/member/authority")
 	public String getAuthLevel(HttpServletRequest request) {
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {

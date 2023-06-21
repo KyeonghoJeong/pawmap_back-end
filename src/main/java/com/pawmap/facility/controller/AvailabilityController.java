@@ -26,17 +26,11 @@ public class AvailabilityController {
 		
 		if(cat == null && sido == null && sigungu == null && emd != null) {
 			count = avaiabilityRepository.countByEmd(emd);
-		}
-		
-		if(cat != null && sido != null && sigungu == null && emd == null) {
+		}else if(cat != null && sido != null && sigungu == null && emd == null) {
 			count = avaiabilityRepository.countByCatAndSido(cat, sido);
-		}
-		
-		if(cat != null && sido != null && sigungu != null && emd == null) {
+		}else if(cat != null && sido != null && sigungu != null && emd == null) {
 			count = avaiabilityRepository.countByCatAndSidoAndSigungu(cat, sido, sigungu);
-		}
-		
-		if(cat != null && sido != null && sigungu != null && emd != null) {
+		}else if(cat != null && sido != null && sigungu != null && emd != null) {
 			count = avaiabilityRepository.countByCatAndSidoAndSigunguAndEmd(cat, sido, sigungu, emd);
 		}
 		

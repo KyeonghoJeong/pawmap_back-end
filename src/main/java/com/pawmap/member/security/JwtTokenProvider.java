@@ -52,7 +52,7 @@ public class JwtTokenProvider {
 		String accessToken = Jwts.builder()
 				.setSubject(authenticatedMember.getName())
 				.claim("auth", authorities)
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 30)) // 30УЪ
 				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
 	
@@ -61,7 +61,7 @@ public class JwtTokenProvider {
 	
 	public String generateRefreshToken(Authentication authenticatedMember) {
 		String refreshToken = Jwts.builder()
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 120))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60)) // 1Ка
 				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
 		
