@@ -71,6 +71,7 @@ public class CommentServiceImpl implements CommentService {
 		// TODO Auto-generated method stub
 		List<Long> commentNumbers = new ArrayList<Long>();
 		
+		// 한 페이지에 출력하는 게시글의 수만큼 반복하여 각 게시글이 가지고 있는 댓글 수 받아와서 list에 저장
 		for(int i=0; i<articleIds.size(); i++) {
 			commentNumbers.add(commentDao.getCommentNumbers(articleIds.get(i)));
 		}

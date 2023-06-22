@@ -28,6 +28,16 @@ public class ArticleServiceImpl implements ArticleService {
 	private MemberDao memberDao;
 	
 	@Override
+	public ArticleDto getArticles(Long articleId) {
+		// TODO Auto-generated method stub
+		ArticleEntity articleEntity = articleDao.getArticles(articleId);
+		
+		ArticleDto articleDto = new ArticleDto(articleEntity);
+		
+		return articleDto;
+	}
+	
+	@Override
 	public void postArticle(String memberId, Map<String, String> article) {
 		// TODO Auto-generated method stub
 		MemberEntity memberEntity = memberDao.getMember(memberId);
@@ -54,16 +64,6 @@ public class ArticleServiceImpl implements ArticleService {
 		Page<ArticleDto> articleDtos = articleEntities.map(ArticleDto::new);
 		
 		return articleDtos;
-	}
-
-	@Override
-	public ArticleDto getArticles(Long articleId) {
-		// TODO Auto-generated method stub
-		ArticleEntity articleEntity = articleDao.getArticles(articleId);
-		
-		ArticleDto articleDto = new ArticleDto(articleEntity);
-		
-		return articleDto;
 	}
 
 	@Override

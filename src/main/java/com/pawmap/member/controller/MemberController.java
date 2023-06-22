@@ -105,6 +105,7 @@ public class MemberController {
 		}
 	}
 	
+	// 특정 회원의 게시글만 조회하기 위해 회원 아이디를 수신하기 위한 메소드
 	@GetMapping("/member")
 	public ResponseEntity<?> getMember(HttpServletRequest request) {
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {

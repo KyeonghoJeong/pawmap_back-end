@@ -15,46 +15,65 @@ import com.pawmap.board.repository.ArticleRepository;
 public class ArticleDaoImpl implements ArticleDao {
 	
 	@Autowired
-	private ArticleRepository articeRepository;
+	private ArticleRepository articleRepository;
+	
+	@Override
+	public Page<ArticleEntity> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<ArticleEntity> articleEntities = null;
+		
+		// 일반적인 게시판 조회 기능
+		
+		// 게시판 전체 게시글 조회
+		if(title == "" && writing == "" && nickname == "" && memberId == "") {
+			articleEntities = articleRepository.findByOrderByPostDateDesc(pageable);
+		}
+		
+		// 제목+내용 검색 시 해당하는 게시글 조회
+		if(title != "" && writing != "" && nickname == "" && memberId == "") {
+			articleEntities = articleRepository.getArticlesByTitleOrWritingOrderByPostDateDesc(title, writing, pageable);
+		}
+
+		// 제목 또는 내용 검색 시 해당하는 게시글 조회
+		if((title == "" && writing != "" && nickname == "" && memberId == "") || (title != "" && writing == "" && nickname == "" && memberId == "")) {
+			articleEntities = articleRepository.getArticlesByTitleAndWritingOrderByPostDateDesc(title, writing, pageable);
+		}
+		
+		// 닉네임 검색 시 해당하는 게시글 조회
+		if(title == "" && writing == "" && nickname != "" && memberId == "") {
+			articleEntities = articleRepository.findByNicknameOrderByPostDateDesc(nickname, pageable);
+		}
+
+		// 특정 회원 게시글 조회 기능
+		
+		// 특정 회원 전체 게시글 조회
+		if(title == "" && writing == "" && nickname == "" && memberId != "") {
+			articleEntities = articleRepository.findByMemberIdOrderByPostDateDesc(memberId, pageable);
+		}
+
+		// 특정 회원 제목+내용 검색 시 해당하는 게시글 조회
+		if(title != "" && writing != "" && nickname == "" && memberId != "") {
+			articleEntities = articleRepository.getArticlesByTitleOrWritingWithMemberIdOrderByPostDateDesc(title, writing, memberId, pageable);
+		}
+
+		// 특정 회원 제목 또는 내용 검색 시 해당하는 게시글 조회
+		if((title != "" && writing == "" && nickname == "" && memberId != "") || (title == "" && writing != "" && nickname == "" && memberId != "")) {
+			articleEntities = articleRepository.getArticlesByTitleAndWritingWithMemberIdOrderByPostDateDesc(title, writing, memberId, pageable);
+		}
+		
+		return articleEntities;
+	}
 
 	@Override
 	public void postArticle(ArticleEntity articleEntity) {
 		// TODO Auto-generated method stub
-		articeRepository.save(articleEntity);
-	}
-
-	@Override
-	public Page<ArticleEntity> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable) {
-		// TODO Auto-generated method stub
-		Page<ArticleEntity> articeEntities = null;
-		
-		if(title == "" && writing == "" && nickname == "" && memberId == "") {
-			articeEntities = articeRepository.findByOrderByPostDateDesc(pageable);
-		}else if(title != "" && writing != "" && nickname == "" && memberId == "") {
-			articeEntities = articeRepository.findByTitleLikeOrWritingLikeOrderByPostDateDesc(title, writing, pageable);
-		}else if(title != "" && writing == "" && nickname == "" && memberId == "") {
-			articeEntities = articeRepository.findByTitleLikeOrderByPostDateDesc(title, pageable);
-		}else if(title == "" && writing != "" && nickname == "" && memberId == "") {
-			articeEntities = articeRepository.findByWritingLikeOrderByPostDateDesc(writing, pageable);
-		}else if(title == "" && writing == "" && nickname != "" && memberId == "") {
-			articeEntities = articeRepository.findByNicknameOrderByPostDateDesc(nickname, pageable);
-		}else if(title == "" && writing == "" && nickname == "" && memberId != "") {
-			articeEntities = articeRepository.findByMemberIdOrderByPostDateDesc(memberId, pageable);
-		}else if(title != "" && writing != "" && nickname == "" && memberId != "") {
-			articeEntities = articeRepository.getArticles(title, writing, memberId, pageable);
-		}else if(title != "" && writing == "" && nickname == "" && memberId != "") {
-			articeEntities = articeRepository.getArticlesByTitle(title, memberId, pageable);
-		}else if(title == "" && writing != "" && nickname == "" && memberId != "") {
-			articeEntities = articeRepository.getArticlesByWriting(writing, memberId, pageable);
-		}
-		
-		return articeEntities;
+		articleRepository.save(articleEntity);
 	}
 
 	@Override
 	public ArticleEntity getArticles(Long articleId) {
 		// TODO Auto-generated method stub
-		Optional<ArticleEntity> optionalArticleEntity = articeRepository.findById(articleId);
+		Optional<ArticleEntity> optionalArticleEntity = articleRepository.findById(articleId);
 		
 		ArticleEntity articleEntity;
 		if(optionalArticleEntity != null) {
@@ -69,7 +88,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public void deleteArticle(Long articleId, String memberId) {
 		// TODO Auto-generated method stub
-		articeRepository.deleteByArticleIdAndMemberId(articleId, memberId);
+		articleRepository.deleteByArticleIdAndMemberId(articleId, memberId);
 	}
 
 	@Override
@@ -79,14 +98,14 @@ public class ArticleDaoImpl implements ArticleDao {
 		System.out.println(title);
 		System.out.println(writing);
 		
-		articeRepository.putArticle(articleId, title, writing);
+		articleRepository.putArticle(articleId, title, writing);
 	}
 
 	@Override
 	public void deleteArticles(List<Long> articleIds) {
 		// TODO Auto-generated method stub
 		for(int i=0; i<articleIds.size(); i++) {
-			articeRepository.deleteByArticleId(articleIds.get(i));
+			articleRepository.deleteByArticleId(articleIds.get(i));
 		}
 	}
 

@@ -24,6 +24,10 @@ import com.pawmap.board.dto.ArticleDto;
 import com.pawmap.board.repository.ArticleRepository;
 import com.pawmap.board.service.ArticleService;
 
+// 게시판과 관련한 컨트롤러
+// 게시글 목록 조회, 삭제
+// 게시글 등록, 조회, 수정, 삭제 
+
 @RestController
 @RequestMapping("api")
 public class ArticleController {
@@ -34,6 +38,8 @@ public class ArticleController {
 	@Autowired
 	private ArticleRepository articleRepository;
 
+	// 게시판에 게시글 목록을 가져오기 위한 메소드
+	// 모든 게시글 조회뿐만 아니라 검색 기능 (제목, 내용, 닉네임) 및 회원 자신의 게시글 조회 (아이디) 기능을 위해 파라미터를 받아 판별함 
 	@GetMapping("/board/articles")
 	public Page<ArticleDto> getArticles(
 			@RequestParam("title") String title,

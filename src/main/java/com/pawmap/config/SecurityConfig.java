@@ -29,7 +29,10 @@ public class SecurityConfig {
 			.formLogin().disable() // formLogin 대신 jwt 사용
 			.httpBasic().disable() // httpBasic 대신 jwt 사용
 			.authorizeRequests()
+				//.antMatchers("/api/**").permitAll()
 				.antMatchers("/api/facilities/availability").permitAll()
+				.antMatchers("/api/board/articles").permitAll()
+				.antMatchers("/api/board/articles/comments/numbers").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session은 stateless로 설정

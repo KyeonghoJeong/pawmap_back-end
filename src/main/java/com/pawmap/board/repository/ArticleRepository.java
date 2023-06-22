@@ -12,30 +12,35 @@ import com.pawmap.board.entity.ArticleEntity;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<ArticleEntity, Long>{
-
+	
+	// 일반적인 게시판 조회 기능
+	
+	// 게시판 전체 게시글 조회
 	Page<ArticleEntity> findByOrderByPostDateDesc(Pageable pageable);
 	
+	// 제목+내용 검색 시 해당하는 게시글 조회
 	@Query(value="SELECT * FROM article WHERE title LIKE %:title% OR writing LIKE %:writing% ORDER BY postdate desc", nativeQuery=true)
-	Page<ArticleEntity> findByTitleLikeOrWritingLikeOrderByPostDateDesc(@Param("title") String title, @Param("writing") String writing, Pageable pageable);
+	Page<ArticleEntity> getArticlesByTitleOrWritingOrderByPostDateDesc(@Param("title") String title, @Param("writing") String writing, Pageable pageable);
 	
-	@Query(value="SELECT * FROM article WHERE title LIKE %:title% ORDER BY postdate desc", nativeQuery=true)
-	Page<ArticleEntity> findByTitleLikeOrderByPostDateDesc(@Param("title") String title, Pageable pageable);
-
-	@Query(value="SELECT * FROM article WHERE writing LIKE %:writing% ORDER BY postdate desc", nativeQuery=true)
-	Page<ArticleEntity> findByWritingLikeOrderByPostDateDesc(@Param("writing") String writing, Pageable pageable);
-
+	// 제목 또는 내용 검색 시 해당하는 게시글 조회
+	@Query(value="SELECT * FROM article WHERE title LIKE %:title% AND writing LIKE %:writing% ORDER BY postdate desc", nativeQuery=true)
+	Page<ArticleEntity> getArticlesByTitleAndWritingOrderByPostDateDesc(@Param("title") String title, @Param("writing") String writing, Pageable pageable);
+	
+	// 닉네임 검색 시 해당하는 게시글 조회
 	Page<ArticleEntity> findByNicknameOrderByPostDateDesc(String nickname, Pageable pageable);
 	
+	// 특정 회원 게시글 조회 기능
+
+	// 특정 회원 전체 게시글 조회
 	Page<ArticleEntity> findByMemberIdOrderByPostDateDesc(String memberId, Pageable pageable);
 	
+	// 특정 회원 제목+내용 검색 시 해당하는 게시글 조회
 	@Query(value="SELECT * FROM article WHERE (title LIKE %:title% OR writing LIKE %:writing%) AND memberId = :memberid ORDER BY postdate desc", nativeQuery=true)
-	Page<ArticleEntity> getArticles(@Param("title") String title, @Param("writing") String writing, @Param("memberid") String memberId, Pageable pageable);
+	Page<ArticleEntity> getArticlesByTitleOrWritingWithMemberIdOrderByPostDateDesc(@Param("title") String title, @Param("writing") String writing, @Param("memberid") String memberId, Pageable pageable);
 
-	@Query(value="SELECT * FROM article WHERE title LIKE %:title% AND memberId = :memberid ORDER BY postdate desc", nativeQuery=true)
-	Page<ArticleEntity> getArticlesByTitle(@Param("title") String title, @Param("memberid") String memberId, Pageable pageable);
-
-	@Query(value="SELECT * FROM article WHERE writing LIKE %:writing% AND memberId = :memberid ORDER BY postdate desc", nativeQuery=true)
-	Page<ArticleEntity> getArticlesByWriting(@Param("writing") String writing, @Param("memberid") String memberId, Pageable pageable);
+	// 특정 회원 제목 또는 내용 검색 시 해당하는 게시글 조회
+	@Query(value="SELECT * FROM article WHERE (title LIKE %:title% AND writing LIKE %:writing%) AND memberId = :memberid ORDER BY postdate desc", nativeQuery=true)
+	Page<ArticleEntity> getArticlesByTitleAndWritingWithMemberIdOrderByPostDateDesc(@Param("title") String title, @Param("writing") String writing, @Param("memberid") String memberId, Pageable pageable);
 	
 	//
 	

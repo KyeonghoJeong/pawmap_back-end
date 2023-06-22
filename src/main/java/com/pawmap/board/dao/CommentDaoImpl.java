@@ -43,7 +43,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public Long getCommentNumbers(Long articleId) {
 		// TODO Auto-generated method stub
-		return commentRepository.countByArticleId(articleId);
+		return commentRepository.countByArticleId(articleId); // 해당하는 게시글 id로 댓글 테이블을 조회하여 count 리턴
 	}
 
 }
