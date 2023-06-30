@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.pawmap.member.entity.MemberEntity;
 
+//UserDetails 인터페이스는 jwt 토큰 발급 시 회원 정보의 표준화, 통합, 보안, 확장, 변경(커스텀)을 가능하게 해주는 클래스
+
 public class UserDetailsImpl implements UserDetails {
 	
 	private static final long serialVersionUID = 1L;
@@ -27,7 +29,7 @@ public class UserDetailsImpl implements UserDetails {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		
 		authorities.add(new SimpleGrantedAuthority(this.memberEntity.getRole()));
-		
+
 		return authorities;
 	}
 

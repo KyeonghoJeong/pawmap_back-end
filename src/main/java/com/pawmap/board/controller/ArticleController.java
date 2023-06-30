@@ -53,14 +53,20 @@ public class ArticleController {
 		return articleDtos;
 	}
 	
+	// 관리자 권한 게시글 삭제 메소드
 	@DeleteMapping("/board/articles")
 	public ResponseEntity<?> deleteArticles(HttpServletRequest request, @RequestBody List<Long> articleIds){
+		// 헤더로 accessToken을 받고 RequestBody로 삭제할 게시글의 ID들을 받음
+		
+		// 전달 받은 accessToken에 대한 JwtAuthenticationFilter의 결과로 받은 Authentication 객체의 회원 아이디가 유효하지 앟은 경우 invalidAccessToken 리턴
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
+			// 유효한 경우 게시글 삭제 서비스 메소드 호출
 			articleService.deleteArticles(articleIds);
 			
-			return ResponseEntity.ok().body("Deleted");
+			// 성공 시 Success 리턴
+			return ResponseEntity.ok().body("Success");
 		}
 	}
 	

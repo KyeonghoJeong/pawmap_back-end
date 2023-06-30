@@ -5,12 +5,11 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.pawmap.bookmark.dto.BookmarkDto;
 import com.pawmap.bookmark.dto.BookmarkInfoDto;
 
 public interface BookmarkService {
 
-	String addBookmark(BookmarkDto addingBookmarkDto);
+	String addBookmark(Long facilityId);
 
 	Page<BookmarkInfoDto> getBookmarkInfo(String memberId, Pageable pageable);
 

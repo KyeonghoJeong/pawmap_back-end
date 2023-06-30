@@ -88,23 +88,28 @@ public class MemberServiceImpl implements MemberService {
 		return tokens;
 	}
 
+	// accessToken 재발급 서비스
 	@Override
 	public String getAccessToken(String refreshToken) {
 		// TODO Auto-generated method stub
+		// jwtTokenProvider에서 유효성 검사 후 토큰이 유효한 경우
 		if(jwtTokenProvider.validateToken(refreshToken)) {
+			// refreshToken 테이블에서 해당 refreshToken을 가지고 있는 row 가져오기
 			RefreshTokenEntity refreshTokenEntity = refreshTokenDao.getRefreshToken(refreshToken);
 			
+			// 해당 refreshToken을 가지고 있는 회원의 아이디로 회원 검색 및 userDetails 객체 만들기
 			String username = refreshTokenEntity.getMemberId();
-		
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 			
+			// 인증된 회원 Authentication 객체 생성
+			// 파라미터 각각 회원 엔티티, 비밀번호 (인증 이후 필요 없으므로 null), 회원 권한
 			Authentication authenticatedMember = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 			
 			String accessToken = jwtTokenProvider.generateAccessToken(authenticatedMember);
 			
 			return accessToken;
 		}else {
-			return null;
+			return "invalidRefreshToken";
 		}
 	}
 

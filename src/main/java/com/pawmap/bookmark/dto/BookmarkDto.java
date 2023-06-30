@@ -1,4 +1,4 @@
-package com.pawmap.bookmark.dto;
+ package com.pawmap.bookmark.dto;
 
 import lombok.Getter;
 import lombok.Setter;

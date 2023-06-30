@@ -33,6 +33,13 @@ public class SecurityConfig {
 				.antMatchers("/api/facilities/availability").permitAll()
 				.antMatchers("/api/board/articles").permitAll()
 				.antMatchers("/api/board/articles/comments/numbers").permitAll()
+				.antMatchers("/api/member/signin").permitAll()
+				.antMatchers("/api/member/authority").permitAll()
+				.antMatchers("/api/facility").permitAll()
+				.antMatchers("/api/districts/**").permitAll()
+				.antMatchers("/api/facilities").permitAll()
+				.antMatchers("/api/facilities/locations").permitAll()
+				.antMatchers("/api/bookmark").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session은 stateless로 설정

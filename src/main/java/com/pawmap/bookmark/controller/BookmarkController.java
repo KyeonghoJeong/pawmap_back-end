@@ -1,6 +1,7 @@
 package com.pawmap.bookmark.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pawmap.bookmark.dto.BookmarkDto;
 import com.pawmap.bookmark.dto.BookmarkInfoDto;
-import com.pawmap.bookmark.dto.RequestDto;
 import com.pawmap.bookmark.service.BookmarkService;
+
+// 북마크 관련 컨트롤러
+// 북마크 등록, 조회, 제거 
 
 @RestController
 @RequestMapping("api")
@@ -29,23 +31,25 @@ public class BookmarkController {
 	@Autowired
 	private BookmarkService bookmarkService;
 
+	// 북마크 추가 메소드
 	@PostMapping("/bookmark")
-	public ResponseEntity<?> addBookmark(HttpServletRequest request, @RequestBody RequestDto requestDto){
+	public ResponseEntity<?> addBookmark(HttpServletRequest request, @RequestBody Map<String, Long> facility){
+		// 헤더에 있는 accessToken 인증
+		// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
-			BookmarkDto bookmarkDto = new BookmarkDto();
+			// 유효한 accessToken인 경우 북마크 추가 서비스 메소드 호출
 			
-			bookmarkDto.setMemberId(SecurityContextHolder.getContext().getAuthentication().getName());
-			bookmarkDto.setFacilityId(requestDto.getFacilityId());
+			Long facilityid = facility.get("facilityId");
 			
-			String result = bookmarkService.addBookmark(bookmarkDto);
+			String result = bookmarkService.addBookmark(facilityid);
 			
 			return ResponseEntity.ok().body(result);
 		}
 	}
 	
-	@GetMapping("/bookmark")
+	@GetMapping("/bookmarks")
 	public ResponseEntity<?> getInfo(HttpServletRequest request, Pageable pageable){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
 			return ResponseEntity.ok().body("Invalid");

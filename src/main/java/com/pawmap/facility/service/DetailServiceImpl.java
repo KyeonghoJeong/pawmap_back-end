@@ -20,9 +20,9 @@ public class DetailServiceImpl implements DetailService {
 	@Override
 	public DetailDto getFacility(Long facilityId) {
 		// TODO Auto-generated method stub
-		FacilityEntity facilityEntity = detailDao.getFacility(facilityId);
+		FacilityEntity facilityEntity = detailDao.getFacility(facilityId); // 엔티티 받기
 		
-		DetailDto detailDto = modelMapper.map(facilityEntity, DetailDto.class);
+		DetailDto detailDto = modelMapper.map(facilityEntity, DetailDto.class); // 엔티티 => dto 매핑
 		
 		return detailDto;
 	}

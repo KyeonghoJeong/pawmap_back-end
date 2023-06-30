@@ -16,9 +16,10 @@ public class DetailController {
 	@Autowired
 	private DetailService detailService;
 	
+	// 시설 id를 파라미터로 받아 해당 시설 정보를 리턴하는 메소드
 	@GetMapping("/facility")
 	public DetailDto getFacility(@RequestParam Long facilityId) {
-		DetailDto detailDto = detailService.getFacility(facilityId);
+		DetailDto detailDto = detailService.getFacility(facilityId); // 시설 정보 메소드 호출
 		
 		return detailDto;
 	}
