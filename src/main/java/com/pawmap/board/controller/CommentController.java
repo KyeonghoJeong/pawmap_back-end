@@ -36,7 +36,7 @@ public class CommentController {
 	@PostMapping("/article/comment")
 	public ResponseEntity<?> postComment(HttpServletRequest request, @RequestBody Map<String, String> commentInfo){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			Long articleId = Long.parseLong(commentInfo.get("articleId"));
 			String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -58,7 +58,7 @@ public class CommentController {
 	@DeleteMapping("/article/comment")
 	public ResponseEntity<?> deleteComment(HttpServletRequest request, @RequestParam("cmtId") Long cmtId){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			commentService.deleteComment(cmtId);
 			
@@ -69,7 +69,7 @@ public class CommentController {
 	@PutMapping("/article/comment")
 	public ResponseEntity<?> putComment(HttpServletRequest request, @RequestBody Map<String, String> cmtInfo){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			commentService.putComment(cmtInfo);
 			

@@ -73,7 +73,7 @@ public class ArticleController {
 	@GetMapping("/board/article/membercheck")
 	public ResponseEntity<?> checkMember(HttpServletRequest request, @RequestParam Long articleId) {
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 			Long count = articleRepository.getCount(articleId, memberId);
@@ -89,7 +89,7 @@ public class ArticleController {
 	@PostMapping("/board/article")
 	public ResponseEntity<?> postArticle(HttpServletRequest request, @RequestBody Map<String, String> article){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 			articleService.postArticle(memberId, article);
@@ -108,7 +108,7 @@ public class ArticleController {
 	@DeleteMapping("/board/article")
 	public ResponseEntity<?> deleteArticle(HttpServletRequest request, @RequestParam("articleId") Long articleId){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 			articleService.deleteArticle(articleId, memberId);
@@ -120,7 +120,7 @@ public class ArticleController {
 	@PutMapping("/board/article")
 	public ResponseEntity<?> putArticle(HttpServletRequest request, @RequestBody Map<String, String> article){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 			articleService.putArticle(memberId, article);

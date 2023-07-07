@@ -93,11 +93,7 @@ public class ArticleDaoImpl implements ArticleDao {
 
 	@Override
 	public void putArticle(Long articleId, String title, String writing) {
-		// TODO Auto-generated method stub
-		System.out.println(articleId);
-		System.out.println(title);
-		System.out.println(writing);
-		
+		// TODO Auto-generated method stub		
 		articleRepository.putArticle(articleId, title, writing);
 	}
 

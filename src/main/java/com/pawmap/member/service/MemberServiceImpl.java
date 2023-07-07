@@ -1,6 +1,7 @@
 package com.pawmap.member.service;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 import org.modelmapper.ModelMapper;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,7 +67,7 @@ public class MemberServiceImpl implements MemberService {
 				memberDto.getPw(),
 				memberDto.getNickname(),
 				memberDto.getEmail(),
-				"ROLE_USER",
+				"ROLE_MEMBER",
 				null,
 				null
 		);
@@ -81,11 +83,16 @@ public class MemberServiceImpl implements MemberService {
 		// CustomAuthenticationProvider 회원 유효성 검사
 		Authentication authenticatedMember = authenticationManager.authenticate(authentication);
 		
-		String tokens[] = new String[2];
-		tokens[0] = jwtTokenProvider.generateAccessToken(authenticatedMember);
-		tokens[1] = jwtTokenProvider.generateRefreshToken(authenticatedMember);
+		Collection<? extends GrantedAuthority> authorities = authenticatedMember.getAuthorities();
+		GrantedAuthority firstAuthority = authorities.iterator().next();
+		String authority = firstAuthority.getAuthority();
 		
-		return tokens;
+		String info[] = new String[3];
+		info[0] = jwtTokenProvider.generateAccessToken(authenticatedMember);
+		info[1] = jwtTokenProvider.generateRefreshToken(authenticatedMember);
+		info[2] = authority;
+		
+		return info;
 	}
 
 	// accessToken 재발급 서비스
@@ -113,6 +120,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	// 회원정보 리턴 서비스 메소드
 	@Override
 	public MemberDto getMember(String memberId) {
 		// TODO Auto-generated method stub

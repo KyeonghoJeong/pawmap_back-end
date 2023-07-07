@@ -24,6 +24,8 @@ public class MemberDaoImpl implements MemberDao {
 		memberRepository.save(memberEntity);
 	}
 
+	// 회원정보 엔티티를 리턴하는 dao 메소드
+	// deletionDate, banDate 속성이 모두 null이어야 현재 유효한 회원
 	@Override
 	public MemberEntity getMember(String memberId) {
 		// TODO Auto-generated method stub

@@ -22,7 +22,7 @@ public class EmailServiceImpl implements EmailService {
 		String code = "";
 		
 		Random random = new Random();
-		int number = random.nextInt(8889) + 1111;
+		int number = random.nextInt(8889) + 1111; // nextInt(최대값) + 증감값
 		code = Integer.toString(number);
 		
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();

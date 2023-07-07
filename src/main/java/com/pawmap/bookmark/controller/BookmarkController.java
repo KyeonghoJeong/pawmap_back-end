@@ -40,7 +40,6 @@ public class BookmarkController {
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			// 유효한 accessToken인 경우 북마크 추가 서비스 메소드 호출
-			
 			Long facilityid = facility.get("facilityId");
 			
 			String result = bookmarkService.addBookmark(facilityid);
@@ -52,7 +51,7 @@ public class BookmarkController {
 	@GetMapping("/bookmarks")
 	public ResponseEntity<?> getInfo(HttpServletRequest request, Pageable pageable){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			Page<BookmarkInfoDto> bookmarkInfoDtos = bookmarkService.getBookmarkInfo(SecurityContextHolder.getContext().getAuthentication().getName(), pageable);
 			
@@ -63,7 +62,7 @@ public class BookmarkController {
 	@DeleteMapping("/bookmark")
 	public ResponseEntity<?> deleteBookmark(HttpServletRequest request, @RequestBody List<Long> facilityId){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("Invalid");
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 			

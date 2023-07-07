@@ -36,7 +36,7 @@ public interface BookmarkInfoRepository extends JpaRepository<FacilityEntity, Lo
 			+ "    a.outdoorAvail,\r\n"
 			+ "    a.lat,\r\n"
 			+ "    a.lng\r\n"
-			+ "FROM facility a JOIN (SELECT * FROM bookmark WHERE memberId = :memberId) b ON a.facilityId = b.facilityId", nativeQuery=true)
+			+ "FROM facility a JOIN (SELECT * FROM bookmark WHERE memberId = :memberId) b ON a.facilityId = b.facilityId ORDER BY a.cat", nativeQuery=true)
 	Page<FacilityEntity> getInfo(@Param("memberId") String memberId, Pageable pageable);
 
 }
