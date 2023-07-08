@@ -25,7 +25,7 @@ import com.pawmap.member.dto.MemberDto;
 import com.pawmap.member.dto.SignInDto;
 import com.pawmap.member.entity.MemberEntity;
 import com.pawmap.member.entity.RefreshTokenEntity;
-import com.pawmap.member.security.JwtTokenProvider;
+import com.pawmap.security.JwtTokenProvider;
 
 @Service
 @Transactional

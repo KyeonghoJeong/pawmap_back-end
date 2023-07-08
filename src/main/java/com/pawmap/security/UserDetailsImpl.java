@@ -1,4 +1,4 @@
-package com.pawmap.member.security;
+package com.pawmap.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.pawmap.member.entity.MemberEntity;
 
-//UserDetails 인터페이스는 jwt 토큰 발급 시 회원 정보의 표준화, 통합, 보안, 확장, 변경(커스텀)을 가능하게 해주는 클래스
+// UserDetails 인터페이스는 jwt 토큰 발급 시 회원 정보의 표준화, 통합, 보안, 확장, 변경(커스텀)을 가능하게 해주는 클래스
+// 객체는 회원 정보 엔티티를 갖음
+// 회원 권한, 비밀번호, 아이디, 계정 만기 여부, 계정 잠금 여부, 비밀번호 만기 여부, 계정 사용 가능 여부 설정
 
 public class UserDetailsImpl implements UserDetails {
 	

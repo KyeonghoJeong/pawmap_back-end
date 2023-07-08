@@ -1,4 +1,4 @@
-package com.pawmap.member.security;
+package com.pawmap.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.extern.slf4j.Slf4j;
 
+// AuthenticationProvider 커스텀 구현 클래스
+
 @Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
@@ -22,12 +24,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	// authentication은 프론트엔드로부터 넘어 온 jwt로 JwtAuthenticationFilter 실행에 따라 CustomAuthenticationProvider가 실행되고 jwt를 받음
 	// 회원의 아이디를 사용하여 해당하는 회원정보를 확인
 	// 해당 회원의 비밀번호와 입력한 비밀번호가 일치하는 지 확인
-	// 일치 시 인증 된 Authentication 객체 생성 후 리턴
+	// 일치 시 인증된 Authentication 객체 생성 후 리턴
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		System.out.println(1);
 		// TODO Auto-generated method stub
 		// 전달 받은 authentication에서 아이디와 비밀번호 추출
 		String username = authentication.getName();
@@ -54,12 +56,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	    }
 	}
 
-	// 회원 로그인 시 Spring Security 인증 절차에 의해 CustomAuthenticationProvider가 실행되고 supports 메소드가 호출됨
+	// 회원 로그인 시 CustomAuthenticationProvider가 실행되고 supports 메소드가 호출됨
 	// 매개변수인 authenticaiton 객체를 UsernamePasswordAuthenticationToken 클래스가 지원하는 지 확인 후 true or false 리턴
 	// true인 경우 authenticate가 실행 됨
 	// false인 경우 authenticate가 실행되지 않고 CustomAuthenticationProvider가 스킵됨
 	@Override
 	public boolean supports(Class<?> authentication) {
+		System.out.println(2);
 		// TODO Auto-generated method stub
 		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
 	}

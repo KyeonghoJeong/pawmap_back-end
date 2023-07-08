@@ -1,4 +1,4 @@
-package com.pawmap.member.security;
+package com.pawmap.security;
 
 import java.security.Key;
 import java.sql.Timestamp;

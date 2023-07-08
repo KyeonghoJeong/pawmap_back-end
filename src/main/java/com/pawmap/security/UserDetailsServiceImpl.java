@@ -1,4 +1,4 @@
-package com.pawmap.member.security;
+package com.pawmap.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.pawmap.member.entity.MemberEntity;
 import com.pawmap.member.repository.MemberRepository;
+
+// 매개변수로 받은 회원 아이디로 엔티티(회원정보)를 조회하고 존재하면 UserDetails 객체를 반환하는 클래스
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -24,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		MemberEntity memberEntity = memberRepository.findByMemberIdAndDeletionDateAndBanDate(username, null, null)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-		return new UserDetailsImpl(memberEntity); // 회원 엔티티 반환
+		return new UserDetailsImpl(memberEntity); // 회원 엔티티로 생성한 UserDetails 객체 반환
 	}
 
 }
