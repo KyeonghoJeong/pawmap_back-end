@@ -32,16 +32,14 @@ public class BookmarkController {
 	
 	// 맵 => 북마크 추가 메소드
 	@PostMapping("/bookmark")
-	public ResponseEntity<?> postBookmark(@RequestBody Map<String, Long> data, HttpServletRequest request){
+	public ResponseEntity<?> postBookmark(@RequestBody Map<String, Long> facilityData, HttpServletRequest request){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
 			// 헤더에 있는 accessToken 인증
 			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			// 유효한 accessToken인 경우 북마크 추가 서비스 메소드 호출
-			
-			Long facilityId = data.get("facilityId");
-			String result = bookmarkService.postBookmark(facilityId); // 결과값 리턴 받기
+			String result = bookmarkService.postBookmark(facilityData); // 결과값 리턴 받기
 			
 			return ResponseEntity.ok().body(result);
 		}
@@ -73,11 +71,10 @@ public class BookmarkController {
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			// 유효한 accessToken인 경우 북마크 삭제 서비스 메소드 호출
-			
 			String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // 인증 토큰에서 아이디 가져오기
-			bookmarkService.deleteBookmarks(memberId, facilityIds); // 회원 아이디, 시설 아이디 리스트로 삭제 메소드 호출
+			bookmarkService.deleteBookmarks(facilityIds, memberId); // 회원 아이디, 시설 아이디 리스트로 삭제 메소드 호출
 			
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 		}
 	}
 

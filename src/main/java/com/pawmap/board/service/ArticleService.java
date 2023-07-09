@@ -10,15 +10,17 @@ import com.pawmap.board.dto.ArticleDto;
 
 public interface ArticleService {
 
-	void postArticle(String memberId, Map<String, String> article);
+	ArticleDto getArticle(Long articleId);
+	
+	void postArticle(Map<String, String> article, String memberId);
+	
+	void putArticle(Map<String, String> article, String memberId);
+	
+	void deleteArticle(Long articleId, String memberId);
+	
+	Map<String, Object> identifyMember(Long articleId, String memberId);
 
 	Page<ArticleDto> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable);
-
-	ArticleDto getArticles(Long articleId);
-
-	void deleteArticle(Long articleId, String memberId);
-
-	void putArticle(String memberId, Map<String, String> article);
 
 	void deleteArticles(List<Long> articleIds);
 

@@ -49,12 +49,12 @@ public class BookmarkDaoImpl implements BookmarkDao {
 	}
 
 	@Override
-	public void deleteBookmarks(String memberId, List<Long> facilityIds) {
+	public void deleteBookmarks(List<Long> facilityIds, String memberId) {
 		// TODO Auto-generated method stub
 		
 		// facilityIds 사이즈 만큼 반복해서 memberId와 요청한 시설 id로 조회하여 북마크 하나씩 삭제
 		for(int i=0; i<facilityIds.size(); i++) {
-			bookmarkRepository.deleteByMemberIdAndFacilityId(memberId, facilityIds.get(i));
+			bookmarkRepository.deleteByFacilityIdAndMemberId(facilityIds.get(i), memberId);
 		}
 	}
 

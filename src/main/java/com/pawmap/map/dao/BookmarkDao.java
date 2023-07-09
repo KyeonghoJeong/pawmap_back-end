@@ -14,6 +14,6 @@ public interface BookmarkDao {
 	
 	Page<FacilityEntity> getBookmarks(String memberId, Pageable pageable);
 
-	void deleteBookmarks(String memberId, List<Long> facilityIds);
+	void deleteBookmarks(List<Long> facilityIds, String memberId);
 
 }

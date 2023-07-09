@@ -33,13 +33,25 @@ public class SecurityConfig {
 			.formLogin().disable() // formLogin 대신 jwt 사용
 			.httpBasic().disable() // httpBasic 대신 jwt 사용
 			.authorizeRequests() // 요청 권한 부여
-				//.antMatchers("/api/**").permitAll()
+				.antMatchers("/api/**").permitAll()
 				//.antMatchers("/api/member/signin").permitAll()
-				.antMatchers("/api/map/bookmark").permitAll() // Post => 회원, 관리자만 가능
-				.antMatchers("/api/map/bookmarks").permitAll() // Get, Delete => 회원, 관리자만 가능
-				.antMatchers("/api/map/district/**").permitAll() // sido, sigungu, emd => Get => 모두 가능
-				.antMatchers("/api/map/facility/**").permitAll() // information, locations => Get => 모두 가능
-				.antMatchers("/api/map/facilities").permitAll() // Get => 모두 가능
+				//.antMatchers("/api/map/bookmark").permitAll() // Post => 회원, 관리자만 가능
+				//.antMatchers("/api/map/bookmarks").permitAll() // GET, DELETE => 회원, 관리자만 가능
+				//.antMatchers("/api/map/district/**").permitAll() // sido, sigungu, emd => GET => 모두 가능
+				//.antMatchers("/api/map/facility/**").permitAll() // information, locations => GET => 모두 가능
+				//.antMatchers("/api/map/facilities").permitAll() // GET => 모두 가능
+				//.antMatchers(HttpMethod.GET, "/api/board/article").permitAll() // GET => 모두 가능
+				//.antMatchers(HttpMethod.POST, "/api/board/article").permitAll() // POST => 회원, 관리자만 가능
+				//.antMatchers(HttpMethod.PUT, "/api/board/article").permitAll() // PUT => 회원, 관리자만 가능
+				//.antMatchers(HttpMethod.DELETE, "/api/board/article").permitAll() // DELETE => 회원, 관리자만 가능
+				//.antMatchers("/api/board/article/memberId/identification").permitAll() // GET => 회원, 관리자만 가능
+				//.antMatchers(HttpMethod.GET, "/api/board/articles").permitAll() // GET => 모두 가능
+				//.antMatchers(HttpMethod.DELETE, "/api/board/articles").permitAll() // DELETE => 관리자만 가능
+				//.antMatchers(HttpMethod.POST, "/api/board/article/comment").permitAll() // POST => 회원, 관리자만 가능
+				//.antMatchers(HttpMethod.PUT, "/api/board/article/comment").permitAll() // PUT => 회원, 관리자만 가능
+				//.antMatchers(HttpMethod.DELETE, "/api/board/article/comment").permitAll() // DELETE => 회원, 관리자만 가능
+				//.antMatchers("/api/board/article/comments").permitAll() // GET => 모두 가능
+				//.antMatchers("/api/board/article/comment/numbers").permitAll() // GET => 모두 가능
 				.anyRequest().authenticated()
 				.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session은 stateless로 설정

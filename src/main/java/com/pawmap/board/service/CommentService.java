@@ -10,13 +10,13 @@ import com.pawmap.board.dto.CommentDto;
 
 public interface CommentService {
 
-	void postComment(Long articleId, String memberId, String writing);
-
-	Page<CommentDto> getComments(Long articleId, Pageable pageable);
+	void postComment(Map<String, String> commentData, String memberId);
+	
+	void putComment(Map<String, String> commentData);
 
 	void deleteComment(Long cmtId);
-
-	void putComment(Map<String, String> cmtInfo);
+	
+	Page<CommentDto> getComments(Long articleId, Pageable pageable);
 
 	List<Long> getCommentNumbers(List<Long> articleIds);
 

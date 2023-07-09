@@ -1,6 +1,7 @@
 package com.pawmap.map.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import com.pawmap.map.entity.BookmarkEntity;
 import com.pawmap.map.entity.FacilityEntity;
 
 @Service
-@Transactional
+@Transactional // 트랜잭션 설정
 public class BookmarkServiceImpl implements BookmarkService {
 	
 	@Autowired
@@ -28,8 +29,11 @@ public class BookmarkServiceImpl implements BookmarkService {
 
 	// 북마크 추가 서비스 메소드
 	@Override
-	public String postBookmark(Long facilityId) {
+	public String postBookmark(Map<String, Long> facilityData) {
 		// TODO Auto-generated method stub
+		
+		// 입력받은 데이터에서 시설 id 가져오기
+		Long facilityId = facilityData.get("facilityId");
 		
 		// BookmarkDto 객체 생성
 		BookmarkDto bookmarkDto = new BookmarkDto();
@@ -59,9 +63,9 @@ public class BookmarkServiceImpl implements BookmarkService {
 
 	// 북마크 삭제 서비스 메소드
 	@Override
-	public void deleteBookmarks(String memberId, List<Long> facilityIds) {
+	public void deleteBookmarks(List<Long> facilityIds, String memberId) {
 		// TODO Auto-generated method stub
-		bookmarkDao.deleteBookmarks(memberId, facilityIds);
+		bookmarkDao.deleteBookmarks(facilityIds, memberId);
 	}
 
 }

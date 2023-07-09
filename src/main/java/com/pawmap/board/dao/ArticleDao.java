@@ -9,15 +9,17 @@ import com.pawmap.board.entity.ArticleEntity;
 
 public interface ArticleDao {
 
+	ArticleEntity getArticle(Long articleId);
+	
 	void postArticle(ArticleEntity articleEntity);
+	
+	void putArticle(Long articleId, String title, String writing);
+	
+	void deleteArticle(Long articleId, String memberId);
+	
+	Long identifyMember(Long articleId, String memberId);
 
 	Page<ArticleEntity> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable);
-
-	ArticleEntity getArticles(Long articleId);
-
-	void deleteArticle(Long articleId, String memberId);
-
-	void putArticle(Long articleId, String title, String writing);
 
 	void deleteArticles(List<Long> articleIds);
 
