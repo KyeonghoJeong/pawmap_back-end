@@ -33,17 +33,13 @@ public class SecurityConfig {
 			.formLogin().disable() // formLogin 대신 jwt 사용
 			.httpBasic().disable() // httpBasic 대신 jwt 사용
 			.authorizeRequests() // 요청 권한 부여
-				.antMatchers("/api/**").permitAll()
-				.antMatchers("/api/facilities/availability").permitAll()
-				.antMatchers("/api/board/articles").permitAll()
-				.antMatchers("/api/board/articles/comments/numbers").permitAll()
-				.antMatchers("/api/member/signin").permitAll()
-				.antMatchers("/api/member/authority").permitAll()
-				.antMatchers("/api/facility").permitAll()
-				.antMatchers("/api/districts/**").permitAll()
-				.antMatchers("/api/facilities").permitAll()
-				.antMatchers("/api/facilities/locations").permitAll()
-				.antMatchers("/api/bookmark").permitAll()
+				//.antMatchers("/api/**").permitAll()
+				//.antMatchers("/api/member/signin").permitAll()
+				.antMatchers("/api/map/bookmark").permitAll() // Post => 회원, 관리자만 가능
+				.antMatchers("/api/map/bookmarks").permitAll() // Get, Delete => 회원, 관리자만 가능
+				.antMatchers("/api/map/district/**").permitAll() // sido, sigungu, emd => Get => 모두 가능
+				.antMatchers("/api/map/facility/**").permitAll() // information, locations => Get => 모두 가능
+				.antMatchers("/api/map/facilities").permitAll() // Get => 모두 가능
 				.anyRequest().authenticated()
 				.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session은 stateless로 설정

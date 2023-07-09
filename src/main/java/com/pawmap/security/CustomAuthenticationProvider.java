@@ -29,7 +29,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	// 일치 시 인증된 Authentication 객체 생성 후 리턴
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		System.out.println(1);
 		// TODO Auto-generated method stub
 		// 전달 받은 authentication에서 아이디와 비밀번호 추출
 		String username = authentication.getName();
@@ -62,7 +61,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	// false인 경우 authenticate가 실행되지 않고 CustomAuthenticationProvider가 스킵됨
 	@Override
 	public boolean supports(Class<?> authentication) {
-		System.out.println(2);
 		// TODO Auto-generated method stub
 		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
 	}
