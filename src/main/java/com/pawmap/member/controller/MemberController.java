@@ -1,31 +1,23 @@
 package com.pawmap.member.controller;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pawmap.member.dto.DetailedMemberDto;
+import com.pawmap.member.dto.MemberBanDto;
 import com.pawmap.member.dto.MemberDto;
-import com.pawmap.member.dto.SignInDto;
+import com.pawmap.member.repository.MemberRepository;
 import com.pawmap.member.service.MemberService;
 
 // 회원(member)과 관련한 컨트롤러
@@ -40,72 +32,23 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
-
-	@PostMapping("/member/signup")
-	public ResponseEntity<?> signUp(@RequestBody MemberDto memberInfo) {
-		memberService.signUp(memberInfo);
-		
-		return ResponseEntity.ok().build();
-	}
 	
-	// 로그인 메소드
-	@PostMapping("/member/signin")
-	public ResponseEntity<?> signIn(@RequestBody SignInDto signInDto, HttpServletResponse response) {
-		String username = signInDto.getMemberId();
-		String password = signInDto.getPw();
-		
-		String[] info = memberService.signIn(username, password);
-		
-		String accessToken = info[0];
-		String refreshToken = info[1];
-		String authority = info[2];
-		
-		// 쿠키 생성
-		ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-				//.maxAge(Duration.ofMinutes(1)) // 백엔드 리소스 요청 시 accessToken 및 refreshToken의 유효성을 확인하므로 cookie 만료 시간까지는 설정하지 않음
-				.path("/") // 프론트엔드 측에서 쿠키를 허용할 path 설정
-				.secure(true) // https 연결로 보내기
-				.sameSite("none") // 다른 도메인으로 보내는 것 허용
-				.httpOnly(true) // http 또는 https만 접근 허용하여 자바스크립트에서 쿠키에 접근하여 수정하는 것 방지
-				.build();
-
-		response.setHeader("Set-cookie", cookie.toString());
-		
-		Map<String, String> responseBody = new HashMap<>();
-		responseBody.put("accessToken", accessToken);
-		responseBody.put("authority", authority);
-		
-		return ResponseEntity.ok(responseBody);
-	}
+	@Autowired
+	private MemberRepository memberRepository;
 	
-	// accessToken 재발급 메소드
-	// refreshToken을 Cookie로 받음 (보안을 위해 refreshToken은 Cookie에 담아 송수신 <=> path, secure, sameStie, httpOnly)
-	@GetMapping("/member/accesstoken")
-	public ResponseEntity<?> getAccessToken(@CookieValue("refreshToken") String refreshToken){
-		String accessToken = memberService.getAccessToken(refreshToken);
-		
-		if(accessToken.equals("invalidRefreshToken")) {
-			return ResponseEntity.ok().body("invalidRefreshToken");
-		}else {
-			Map<String, String> responseBody = new HashMap<>();
-			responseBody.put("accessToken", accessToken);
-			
-			return ResponseEntity.ok().body(responseBody);
-		}	
-	}
-	
-	// 회원권한 조회 (로그인 되어 있는 경우, 회원 또는 관리자의 요청)
-	@GetMapping("/member/authority")
-	public String getAuthLevel(HttpServletRequest request) {
+	// 회원정보 리턴 메소드
+	// 회원정보 조회 시 사용
+	@GetMapping("/member")
+	public ResponseEntity<?> getMember(HttpServletRequest request){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return "invalidAccessToken";
+			// 헤더에 있는 accessToken 인증
+			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
+			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
-			Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+			// 유효한 accessToken인 경우 서비스 메소드 호출
+			MemberDto memberDto = memberService.getMember(); // MemberDto = 회원정보 dto
 			
-			GrantedAuthority firstAuthority = authorities.iterator().next();
-			String authority = firstAuthority.getAuthority();
-			
-			return authority;
+			return ResponseEntity.ok().body(memberDto);
 		}
 	}
 	
@@ -114,78 +57,131 @@ public class MemberController {
 	@GetMapping("/member/memberId")
 	public ResponseEntity<?> getMemberId(HttpServletRequest request) {
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			// 헤더에 있는 accessToken 인증
+			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
-			String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+			String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기
 			
-			return ResponseEntity.ok().body(memberId);
+			return ResponseEntity.ok().body(memberId); // 회원 아이디 리턴
 		}
 	}
 	
-	@GetMapping("/member")
-	public ResponseEntity<?> getMember(HttpServletRequest request){
+	// 비밀번호 수정 메소드
+	@PutMapping("/member/pw")
+	public ResponseEntity<?> putMemberPw(@RequestBody MemberDto memberDto, HttpServletRequest request){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			// 헤더에 있는 accessToken 인증
+			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
-			MemberDto memberDto = memberService.getMember(SecurityContextHolder.getContext().getAuthentication().getName());
-			
-			return ResponseEntity.ok().body(memberDto);
-		}
-	}
-	
-	@PutMapping("/member")
-	public ResponseEntity<?> putMember(HttpServletRequest request, @RequestBody SignInDto memberInfo){
-		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("invalidAccessToken");
-		}else {
-			memberService.putMember(memberInfo);
+			// 유효한 accessToken인 경우 서비스 메소드 호출
+			memberService.putMemberPw(memberDto);
 
-			return ResponseEntity.ok("Success");
+			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 		}
 	}
 	
-	@PutMapping("/member/deletion")
-	public ResponseEntity<?> deleteMember(HttpServletRequest request, @RequestBody Map<String, String> pw){
+	// 회원권한 조회 (로그인 되어 있는 경우, 회원 또는 관리자의 요청)
+	@GetMapping("/member/role")
+	public String getMemberRole(HttpServletRequest request) {
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			// 헤더에 있는 accessToken 인증
+			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
+			return "invalidAccessToken";
+		}else {
+			// 유효한 accessToken인 경우 서비스 메소드 호출
+			String role = memberService.getMemberRole(); // role (권한명) 요청 서비스 메소드
+			
+			return role;
+		}
+	}
+	
+	// 회원탈퇴 메소드
+	// 회원 테이블에는 탈퇴날짜(deletionDate) 칼럼이 있으며 이 칼럼의 값이 null이면 이용가능 회원, 날짜 데이터(탈퇴날짜)가 있으면 탈퇴한 회원
+	@PutMapping("/member/deletionDate")
+	public ResponseEntity<?> putMemberDeletionDate(@RequestBody MemberDto memberDto, HttpServletRequest request){
+		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			// 헤더에 있는 accessToken 인증
+			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
-			String username = SecurityContextHolder.getContext().getAuthentication().getName();
-			String password = pw.get("pw");
+			// 유효한 accessToken인 경우 서비스 메소드 호출
+			memberService.putMemberDeletionDate(memberDto);
 			
-			memberService.deleteMember(username, password);
-			
-			return ResponseEntity.ok().body("Success");
+			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 		}
 	}
 	
+	// 회원 차단 메소드
+	// 회원 테이블에는 차단날짜(banDate) 칼럼이 있으며 이 칼럼의 값이 null이면 이용가능 회원, 날짜 데이터(차단날짜)가 있으면 차단된 회원
+	@PutMapping("/member/banDate")
+	public ResponseEntity<?> putMemberBanDate(@RequestBody MemberBanDto memberBanDto, HttpServletRequest request){
+		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			// 헤더에 있는 accessToken 인증
+			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
+			return ResponseEntity.ok().body("invalidAccessToken");
+		}else {		
+			// 유효한 accessToken인 경우 서비스 메소드 호출
+			memberService.putMemberBanDate(memberBanDto);
+			
+			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
+		}
+	}
+	
+	// 회원탈퇴 후 해당 회원이 등록했던 모든 북마크를 삭제하는 메소드
+	// 회원탈퇴 과정에 accessToken 인증 과정이 있기 때문에 인증 없이 바로 서비스 메소드 호출
+	@DeleteMapping("/member/bookmarks")
+	public ResponseEntity<?> deleteBookmarks(HttpServletRequest request){
+		memberService.deleteBookmarks();
+		
+		return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
+	}
+	
+	// 관리자 페이지의 회원관리 탭에서 회원 조회 시 검색(조건) 결과를 리턴하는 메소드
 	@GetMapping("/members")
 	public ResponseEntity<?> getMembers(
+			@RequestParam("memberId") String memberId, 
+			@RequestParam("nickname") String nickname, 
+			@RequestParam("email") String email, 
 			HttpServletRequest request, 
-			@RequestParam("memberId") String memberId,
-			@RequestParam("nickname") String nickname,
-			@RequestParam("email") String email,
 			Pageable pageable){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
+			// 헤더에 있는 accessToken 인증
+			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
-			Page<DetailedMemberDto> detailedMemberDtos = memberService.getMembers(memberId, nickname, email, pageable);
+			// 유효한 accessToken인 경우 서비스 메소드 호출
+			Page<MemberDto> memberDtos = memberService.getMembers(memberId, nickname, email, pageable);
 
-			return ResponseEntity.ok().body(detailedMemberDtos);
+			return ResponseEntity.ok().body(memberDtos); // 회원정보 페이지 리턴
 		}
 	}
 	
-	@PutMapping("/member/ban")
-	public ResponseEntity<?> updateBanDate(HttpServletRequest request, @RequestBody Map<String, String> orders){
-		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("invalidAccessToken");
-		}else {
-			String memberId = orders.get("memberId");
-			String order = orders.get("order");
-			
-			memberService.updateBanDate(memberId, order);
-			
-			return ResponseEntity.ok().body("Success");
-		}
+	// 입력한 회원 아이디의 수를 리턴 => 회원가입 시 이용가능한 아이디 여부 확인하는 데 사용
+	@GetMapping("/member/memberid/number")
+	public Long getMemberIdNumber(@RequestParam String memberId) {
+		Long number = memberRepository.countByMemberId(memberId); // 아이디로 조회하여 카운트 리턴
+
+		return number;
+	}
+	
+	// 입력한 닉네임의 수를 리턴 => 회원가입 시 이용가능한 닉네임 여부 확인하는 데 사용
+	@GetMapping("/member/nickname/number")
+	public Long getNicknameNumber(@RequestParam String nickname) {
+		Long number = memberRepository.countByNickname(nickname); // 닉네임으로 조회하여 카운트 리턴
+
+		return number;
+	}
+	
+	// 입력한 메일 주소의 수를 리턴 => 회원가입 시 이용가능한 이메일 여부 확인하는 데 사용
+	@GetMapping("/member/email/number")
+	public Long getEmailNumber(@RequestParam String email) {
+		// 탈퇴 회원 재가입 허용 O => deletionDate 칼럼 값 null이 아니어도 됨
+		// 차단 회원 재가입 허용 X => banDate 칼럼 값 null이어야 함 (null이 아니면 차단 회원이므로 해당 이메일 사용 불가)
+		Long number = memberRepository.countByEmailAndBanDate(email, null); // 메일 주소, 차단 날짜로 조회하여 카운트 리턴
+
+		return number;
 	}
 	
 }

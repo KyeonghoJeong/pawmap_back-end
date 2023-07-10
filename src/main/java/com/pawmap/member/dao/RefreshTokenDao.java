@@ -6,6 +6,4 @@ public interface RefreshTokenDao {
 
 	void addRefreshToken(RefreshTokenEntity refreshTokenEntity);
 
-	RefreshTokenEntity getRefreshToken(String refreshToken);
-
 }

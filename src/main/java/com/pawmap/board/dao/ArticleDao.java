@@ -17,7 +17,7 @@ public interface ArticleDao {
 	
 	void deleteArticle(Long articleId, String memberId);
 	
-	Long identifyMember(Long articleId, String memberId);
+	Long getMemberIdentification(Long articleId, String memberId);
 
 	Page<ArticleEntity> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable);
 

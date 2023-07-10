@@ -1,7 +1,6 @@
 package com.pawmap.board.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pawmap.board.dto.ArticleDto;
+import com.pawmap.board.dto.MemberIdentificationDto;
 import com.pawmap.board.service.ArticleService;
 
 // 게시판과 관련한 컨트롤러
@@ -43,15 +43,14 @@ public class ArticleController {
 	
 	// 게시글 등록
 	@PostMapping("/article")
-	public ResponseEntity<?> postArticle(@RequestBody Map<String, String> article, HttpServletRequest request){
+	public ResponseEntity<?> postArticle(@RequestBody ArticleDto articleDto, HttpServletRequest request){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
 			// 헤더에 있는 accessToken 인증
 			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			// 유효한 accessToken인 경우 서비스 메소드 호출
-			String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기 
-			articleService.postArticle(article, memberId); // 회원 아이디, 작성 게시글(제목+내용)으로 서비스 메소드 호출
+			articleService.postArticle(articleDto); // 회원 아이디, 작성 게시글(제목+내용)으로 서비스 메소드 호출
 			
 			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 		}
@@ -59,15 +58,14 @@ public class ArticleController {
 	
 	// 게시글 수정
 	@PutMapping("/article")
-	public ResponseEntity<?> putArticle(@RequestBody Map<String, String> article, HttpServletRequest request){
+	public ResponseEntity<?> putArticle(@RequestBody ArticleDto articleDto, HttpServletRequest request){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
 			// 헤더에 있는 accessToken 인증
 			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			// 유효한 accessToken인 경우 서비스 메소드 호출
-			String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기
-			articleService.putArticle(article, memberId); // 회원 아이디, 작성 게시글(제목+내용)으로 서비스 메소드 호출
+			articleService.putArticle(articleDto); // 회원 아이디, 작성 게시글(제목+내용)으로 서비스 메소드 호출
 			
 			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 		}
@@ -82,8 +80,7 @@ public class ArticleController {
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			// 유효한 accessToken인 경우 서비스 메소드 호출
-			String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기
-			articleService.deleteArticle(articleId, memberId); // 게시글 id, 회원 id로 호출
+			articleService.deleteArticle(articleId); // 게시글 id, 회원 id로 호출
 			
 			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 		}
@@ -92,18 +89,17 @@ public class ArticleController {
 	// 로그인 중인 회원이 조회 중인 게시글의 회원과 일치하는지 확인하고 회원 아이디를 리턴
 	// 일치 확인 => 수정, 삭제 메뉴 출력
 	// 회원 아이디 => 댓글 컴포넌트로 전달하여 마찬가지로 각 댓글의 작성 회원과 일치하는지 확인
-	@GetMapping("/article/memberId/identification")
-	public ResponseEntity<?> identifyMember(@RequestParam Long articleId, HttpServletRequest request) {
+	@GetMapping("/article/member/identification")
+	public ResponseEntity<?> getMemberIdentification(@RequestParam Long articleId, HttpServletRequest request) {
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
 			// 헤더에 있는 accessToken 인증
 			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			// 유효한 accessToken인 경우 서비스 메소드 호출
-			String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기
-			Map<String, Object> result = articleService.identifyMember(articleId, memberId); // 게시글 id, 회원 id로 호출
+			MemberIdentificationDto memberIdentificationDto = articleService.getMemberIdentification(articleId); // 게시글 id로 호출
 			
-			return ResponseEntity.ok().body(result);
+			return ResponseEntity.ok().body(memberIdentificationDto);
 		}
 	}
 

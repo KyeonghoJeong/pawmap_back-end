@@ -18,12 +18,4 @@ public class RefreshTokenDaoImpl implements RefreshTokenDao {
 		refreshTokenRepository.save(refreshTokenEntity);
 	}
 
-	@Override
-	public RefreshTokenEntity getRefreshToken(String refreshToken) {
-		// TODO Auto-generated method stub
-		RefreshTokenEntity refreshTokenEntity = refreshTokenRepository.findByRefreshToken(refreshToken);
-		
-		return refreshTokenEntity;
-	}
-
 }

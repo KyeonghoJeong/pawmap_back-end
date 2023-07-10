@@ -11,7 +11,7 @@ import com.pawmap.map.dto.FacilityLocationDto;
 
 public interface FacilityService {
 	
-	FacilityDto getFacilityInformation(Long facilityId);
+	FacilityDto getFacility(Long facilityId);
 	
 	List<FacilityLocationDto> getFacilityLocations(String cat, String sido, String sigungu, String emd, Double lat,
 			Double lng);

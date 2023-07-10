@@ -8,6 +8,4 @@ import com.pawmap.member.entity.RefreshTokenEntity;
 @Repository
 public interface RefreshTokenRepository extends JpaRepository<RefreshTokenEntity, Long> {
 
-	RefreshTokenEntity findByRefreshToken(String refreshToken);
-
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,13 +28,13 @@ public class CommentServiceImpl implements CommentService {
 	private CommentDao commentDao;
 	
 	@Override
-	public void postComment(Map<String, String> commentData, String memberId) {
+	public void postComment(CommentDto commentDto, String memberId) {
 		// TODO Auto-generated method stub
 		MemberEntity memberEntity = memberDao.getMember(memberId); // 회원 아이디로 회원 엔티티 생성
 		
-		Long articleId = Long.parseLong(commentData.get("articleId")); // 게시글 id 형변환
+		Long articleId = commentDto.getArticleId(); // 게시글 id 가져오기
 		String nickname = memberEntity.getNickname(); // 회원 닉네임 가져오기
-		String writing = commentData.get("writing"); // 댓글 내용
+		String writing = commentDto.getWriting(); // 댓글 내용
 		Date currentTime = Calendar.getInstance().getTime(); // 현재 시간
 		
 		// 댓글 엔티티 생성
@@ -46,10 +45,10 @@ public class CommentServiceImpl implements CommentService {
 	}
 	
 	@Override
-	public void putComment(Map<String, String> commentData) {
+	public void putComment(CommentDto commentDto) {
 		// TODO Auto-generated method stub
-		Long cmtId = Long.parseLong(commentData.get("cmtId")); // 댓글 id
-		String writing = commentData.get("writing"); // 댓글 내용
+		Long cmtId = commentDto.getCmtId(); // 댓글 id
+		String writing = commentDto.getWriting(); // 댓글 내용
 		
 		commentDao.putComment(cmtId, writing); // dao 호출
 	}
@@ -59,17 +58,7 @@ public class CommentServiceImpl implements CommentService {
 		// TODO Auto-generated method stub
 		commentDao.deleteComment(cmtId); // dao 호출
 	}
-
-	@Override
-	public Page<CommentDto> getComments(Long articleId, Pageable pageable) {
-		// TODO Auto-generated method stub
-		Page<CommentEntity> commentEntities = commentDao.getComments(articleId, pageable); // dao 호출해서 엔티티 리스트 받기
-		
-		Page<CommentDto> commentDtos = commentEntities.map(CommentDto::new); // Page형 그대로 dto 클래스의 생성자를 이용해서 내용 매핑
-		
-		return commentDtos;
-	}
-
+	
 	@Override
 	public List<Long> getCommentNumbers(List<Long> articleIds) {
 		// TODO Auto-generated method stub
@@ -81,6 +70,16 @@ public class CommentServiceImpl implements CommentService {
 		}
 
 		return commentNumbers;
+	}
+
+	@Override
+	public Page<CommentDto> getComments(Long articleId, Pageable pageable) {
+		// TODO Auto-generated method stub
+		Page<CommentEntity> commentEntities = commentDao.getComments(articleId, pageable); // dao 호출해서 엔티티 리스트 받기
+		
+		Page<CommentDto> commentDtos = commentEntities.map(CommentDto::new); // Page형 그대로 dto 클래스의 생성자를 이용해서 내용 매핑
+		
+		return commentDtos;
 	}
 
 }

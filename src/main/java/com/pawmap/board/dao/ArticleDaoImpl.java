@@ -50,9 +50,9 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 	
 	@Override
-	public Long identifyMember(Long articleId, String memberId) {
+	public Long getMemberIdentification(Long articleId, String memberId) {
 		// TODO Auto-generated method stub
-		Long count = articleRepository.identifyMember(articleId, memberId); // 게시글 id, 회원 id로 호출
+		Long count = articleRepository.getMemberIdentification(articleId, memberId); // 게시글 id, 회원 id로 호출
 		
 		return count;
 	}

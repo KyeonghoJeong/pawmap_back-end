@@ -18,11 +18,11 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
 	@Modifying
 	@Query(value="UPDATE cmt SET writing = :writing WHERE cmtid = :cmtid", nativeQuery=true)
 	void putComment(@Param("cmtid") Long cmtId, @Param("writing") String writing);
-
-	// 댓글 테이블에서 게시글 id로 조회하고 댓글 작성일 순차 정렬
-	Page<CommentEntity> findByArticleIdOrderByPostDateAsc(Long articleId, Pageable pageable);
 	
 	// 해당하는 게시글 id로 댓글 테이블을 조회하여 해당하는 댓글 수 count 리턴
 	Long countByArticleId(Long articleId);
+
+	// 댓글 테이블에서 게시글 id로 조회하고 댓글 작성일 순차 정렬
+	Page<CommentEntity> findByArticleIdOrderByPostDateAsc(Long articleId, Pageable pageable);
 
 }

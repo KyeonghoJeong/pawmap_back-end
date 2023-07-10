@@ -1,24 +1,24 @@
 package com.pawmap.board.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.pawmap.board.dto.ArticleDto;
+import com.pawmap.board.dto.MemberIdentificationDto;
 
 public interface ArticleService {
 
 	ArticleDto getArticle(Long articleId);
 	
-	void postArticle(Map<String, String> article, String memberId);
+	void postArticle(ArticleDto articleDto);
 	
-	void putArticle(Map<String, String> article, String memberId);
+	void putArticle(ArticleDto articleDto);
 	
-	void deleteArticle(Long articleId, String memberId);
+	void deleteArticle(Long articleId);
 	
-	Map<String, Object> identifyMember(Long articleId, String memberId);
+	MemberIdentificationDto getMemberIdentification(Long articleId);
 
 	Page<ArticleDto> getArticles(String title, String writing, String nickname, String memberId, Pageable pageable);
 

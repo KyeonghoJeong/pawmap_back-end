@@ -25,7 +25,7 @@ public class FacilityServiceImpl implements FacilityService {
 	private FacilityDao facilityDao;
 	
 	@Override
-	public FacilityDto getFacilityInformation(Long facilityId) {
+	public FacilityDto getFacility(Long facilityId) {
 		// TODO Auto-generated method stub
 		FacilityEntity facilityEntity = facilityDao.getFacilityInformation(facilityId);
 		

@@ -26,7 +26,7 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long>{
 	
 	// 게시글 중 입력 받은 회원 id와 게시글 id 값을 가지고 있는 row 수 조회
 	@Query(value="SELECT COUNT(*) FROM article WHERE articleId = :articleid AND memberId = :memberid", nativeQuery=true)
-	Long identifyMember(@Param("articleid") Long articleId, @Param("memberid") String memberId);
+	Long getMemberIdentification(@Param("articleid") Long articleId, @Param("memberid") String memberId);
 	
 	// 일반적인 게시판 조회 기능
 	

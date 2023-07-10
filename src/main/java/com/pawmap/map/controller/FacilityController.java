@@ -25,9 +25,9 @@ public class FacilityController {
 	private FacilityService facilityService;
 	
 	// 시설 id를 파라미터로 받아 해당 시설의 상세정보를 리턴하는 메소드
-	@GetMapping("/facility/information")
-	public FacilityDto getFacilityInformation(@RequestParam Long facilityId) {
-		FacilityDto facilityDtos = facilityService.getFacilityInformation(facilityId); // 시설 정보 메소드 호출
+	@GetMapping("/facility")
+	public FacilityDto getFacility(@RequestParam Long facilityId) {
+		FacilityDto facilityDtos = facilityService.getFacility(facilityId); // 시설 정보 메소드 호출
 		
 		return facilityDtos;
 	}

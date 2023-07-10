@@ -2,19 +2,19 @@ package com.pawmap.board.service;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pawmap.board.dao.ArticleDao;
 import com.pawmap.board.dto.ArticleDto;
+import com.pawmap.board.dto.MemberIdentificationDto;
 import com.pawmap.board.entity.ArticleEntity;
 import com.pawmap.member.dao.MemberDao;
 import com.pawmap.member.entity.MemberEntity;
@@ -44,8 +44,10 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 	
 	@Override
-	public void postArticle(Map<String, String> article, String memberId) {
+	public void postArticle(ArticleDto articleDto) {
 		// TODO Auto-generated method stub
+		String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기 
+		
 		MemberEntity memberEntity = memberDao.getMember(memberId); // 회원 아이디로 정보 가져오기
 		
 		String nickname = memberEntity.getNickname(); // 닉네임 가져오기
@@ -57,8 +59,8 @@ public class ArticleServiceImpl implements ArticleService {
 				null,
 				memberId, // 회원 아이디
 				nickname, // 닉네임
-				article.get("title"), // 제목
-				article.get("writing"), // 내용
+				articleDto.getTitle(), // 제목
+				articleDto.getWriting(), // 내용
 				currentTime // 현재 시간
 		);
 		
@@ -66,25 +68,29 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 	
 	@Override
-	public void putArticle(Map<String, String> article, String memberId) {
+	public void putArticle(ArticleDto articleDto) {
 		// TODO Auto-generated method stub
-		Long articleId = Long.parseLong(article.get("articleId")); // 게시글 id 형변환
-		String title = article.get("title"); // 제목
-		String writing = article.get("writing"); // 내용
+		Long articleId = articleDto.getArticleId(); // 게시글 id 형변환
+		String title = articleDto.getTitle(); // 제목
+		String writing = articleDto.getWriting(); // 내용
 		
 		articleDao.putArticle(articleId, title, writing); // dao 호출
 	}
 	
 	@Override
-	public void deleteArticle(Long articleId, String memberId) {
+	public void deleteArticle(Long articleId) {
 		// TODO Auto-generated method stub
+		String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기
+		
 		articleDao.deleteArticle(articleId, memberId);
 	}
 	
 	@Override
-	public Map<String, Object> identifyMember(Long articleId, String memberId) {
+	public MemberIdentificationDto getMemberIdentification(Long articleId) {
 		// TODO Auto-generated method stub
-		Long count = articleDao.identifyMember(articleId, memberId); // 게시글 id, 회원 id로 호출
+		String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기
+		
+		Long count = articleDao.getMemberIdentification(articleId, memberId); // 게시글 id, 회원 id로 호출
 		
 		// 카운트가 0이면 게시글 작성자와 로그인 중인 회원 일치하지 않음 (false)
 		// 카운트가 0이 아니면 일치
@@ -93,12 +99,10 @@ public class ArticleServiceImpl implements ArticleService {
 			isItsMember = true;
 		}
 		
-		// 회원 아이디와 작성자 여부 리턴
-		Map<String, Object> result = new HashMap<>();
-		result.put("memberId", memberId);
-		result.put("isItsMember", isItsMember);
+		// 회원 아이디와 작성자 여부 dto 객체 생성
+		MemberIdentificationDto memberIdentificationDto = new MemberIdentificationDto(memberId, isItsMember);
 		
-		return result;
+		return memberIdentificationDto;
 	}
 
 	@Override

@@ -31,6 +31,12 @@ public class CommentDaoImpl implements CommentDao {
 		// TODO Auto-generated method stub
 		commentRepository.deleteById(cmtId); // 입력 댓글 id에 해당하는 댓글 삭제
 	}
+	
+	@Override
+	public Long getCommentNumbers(Long articleId) {
+		// TODO Auto-generated method stub
+		return commentRepository.countByArticleId(articleId); // 해당하는 게시글 id로 댓글 테이블을 조회하여 해당하는 댓글 수 count 리턴
+	}
 
 	@Override
 	public Page<CommentEntity> getComments(Long articleId, Pageable pageable) {
@@ -40,12 +46,6 @@ public class CommentDaoImpl implements CommentDao {
 		Page<CommentEntity> commentEntities = commentRepository.findByArticleIdOrderByPostDateAsc(articleId, pageable);
 		
 		return commentEntities;
-	}
-
-	@Override
-	public Long getCommentNumbers(Long articleId) {
-		// TODO Auto-generated method stub
-		return commentRepository.countByArticleId(articleId); // 해당하는 게시글 id로 댓글 테이블을 조회하여 해당하는 댓글 수 count 리턴
 	}
 
 }

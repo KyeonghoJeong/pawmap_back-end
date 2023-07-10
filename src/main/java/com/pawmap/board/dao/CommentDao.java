@@ -13,8 +13,8 @@ public interface CommentDao {
 
 	void deleteComment(Long cmtId);
 	
-	Page<CommentEntity> getComments(Long articleId, Pageable pageable);
-
 	Long getCommentNumbers(Long articleId);
+	
+	Page<CommentEntity> getComments(Long articleId, Pageable pageable);
 
 }

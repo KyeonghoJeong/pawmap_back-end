@@ -8,22 +8,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+// 댓글 등록, 수정에 사용
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class CommentDto {
 
 	private Long cmtId;
-	
 	private Long articleId;
-	
-	private String memberId;
-	
-	private String nickname;
-	
-	private String writing;
-	
+	private String memberId;	
+	private String nickname;	
+	private String writing;	
 	private String postDate;
+	
+	public CommentDto() {
+		
+	}
 
 	public CommentDto(CommentEntity commentEntity) {
 		this.cmtId = commentEntity.getCmtId();

@@ -1,7 +1,6 @@
 package com.pawmap.map.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +28,10 @@ public class BookmarkServiceImpl implements BookmarkService {
 
 	// 북마크 추가 서비스 메소드
 	@Override
-	public String postBookmark(Map<String, Long> facilityData) {
+	public String postBookmark(BookmarkDto bookmarkDto) {
 		// TODO Auto-generated method stub
-		
-		// 입력받은 데이터에서 시설 id 가져오기
-		Long facilityId = facilityData.get("facilityId");
-		
-		// BookmarkDto 객체 생성
-		BookmarkDto bookmarkDto = new BookmarkDto();
-		bookmarkDto.setMemberId(SecurityContextHolder.getContext().getAuthentication().getName()); // 토큰에서 회원 id 가져오기
-		bookmarkDto.setFacilityId(facilityId); // 프론트엔드에서 받은 시설 id
+	
+		bookmarkDto.setMemberId(SecurityContextHolder.getContext().getAuthentication().getName()); // 토큰에서 회원 id 가져와서 저장
 		
 		// BookmarkEntity 객체 생성 <= BookmarkDTO 매핑
 		BookmarkEntity bookmarkEntity = modelMapper.map(bookmarkDto, BookmarkEntity.class); // ModelMapper 클래스로 dto => entity로 변환
@@ -49,8 +42,9 @@ public class BookmarkServiceImpl implements BookmarkService {
 	}
 	
 	@Override
-	public Page<BookmarkFacilityDto> getBookmarks(String memberId, Pageable pageable) {
+	public Page<BookmarkFacilityDto> getBookmarks(Pageable pageable) {
 		// TODO Auto-generated method stub
+		String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기 
 		
 		// dao를 통해 entity 받아오기
 		Page<FacilityEntity> facilityEntities = bookmarkDao.getBookmarks(memberId, pageable);
@@ -63,8 +57,10 @@ public class BookmarkServiceImpl implements BookmarkService {
 
 	// 북마크 삭제 서비스 메소드
 	@Override
-	public void deleteBookmarks(List<Long> facilityIds, String memberId) {
+	public void deleteBookmarks(List<Long> facilityIds) {
 		// TODO Auto-generated method stub
+		String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기 
+		
 		bookmarkDao.deleteBookmarks(facilityIds, memberId);
 	}
 
