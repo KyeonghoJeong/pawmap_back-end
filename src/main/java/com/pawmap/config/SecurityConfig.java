@@ -1,7 +1,10 @@
 package com.pawmap.config;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -12,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.pawmap.security.CustomAuthenticationProvider;
 import com.pawmap.security.JwtAuthenticationFilter;
@@ -32,61 +38,54 @@ public class SecurityConfig {
 			.csrf().disable() // 현재 서버는 stateless 상태로 서버에 인증 정보를 저장하지 않고 jwt을 통해 리소스 접근 시 인증이 이루어지므로 서버에 인증 정보 저장을 disable
 			.formLogin().disable() // formLogin 대신 jwt 사용
 			.httpBasic().disable() // httpBasic 대신 jwt 사용
-			.authorizeRequests() // 요청 권한 부여
-				.antMatchers("/api/**").permitAll()
-				// ArticleController
-				//.antMatchers(HttpMethod.GET, "/api/board/article").permitAll() // GET => 모두 가능
-				//.antMatchers(HttpMethod.POST, "/api/board/article").permitAll() // POST => 회원, 관리자만 가능
-				//.antMatchers(HttpMethod.PUT, "/api/board/article").permitAll() // PUT => 회원, 관리자만 가능
-				//.antMatchers(HttpMethod.DELETE, "/api/board/article").permitAll() // DELETE => 회원, 관리자만 가능
-				//.antMatchers("/api/board/article/memberId/identification").permitAll() // GET => 회원, 관리자만 가능
-				//.antMatchers(HttpMethod.GET, "/api/board/articles").permitAll() // GET => 모두 가능
-				//.antMatchers(HttpMethod.DELETE, "/api/board/articles").permitAll() // DELETE => 관리자만 가능
-				
-				// CommentController
-				//.antMatchers(HttpMethod.POST, "/api/board/article/comment").permitAll() // POST => 회원, 관리자만 가능
-				//.antMatchers(HttpMethod.PUT, "/api/board/article/comment").permitAll() // PUT => 회원, 관리자만 가능
-				//.antMatchers(HttpMethod.DELETE, "/api/board/article/comment").permitAll() // DELETE => 회원, 관리자만 가능
-				//.antMatchers("/api/board/article/comments").permitAll() // GET => 모두 가능
-				//.antMatchers("/api/board/article/comment/numbers").permitAll() // GET => 모두 가능				
-				
-				// BookmarkController
-				//.antMatchers("/api/map/bookmark").permitAll() // Post => 회원, 관리자만 가능
-				//.antMatchers("/api/map/bookmarks").permitAll() // GET, DELETE => 회원, 관리자만 가능				
-				
+			.authorizeRequests() // 요청 권한 부여 => 회원, 관리자만 접근 가능한 API는 anyRequest().authenticated()로 모두 포함시킴
+				// APIs in Board
+				.antMatchers(HttpMethod.GET, "/api/board/articles").permitAll() // GET => 모두 가능
+				.antMatchers(HttpMethod.DELETE, "/api/board/articles").hasRole("ADMIN") // DELETE => 관리자만 가능
+				.antMatchers("/api/board/article/comments").permitAll() // GET => 모두 가능
+				.antMatchers("/api/board/article/comment/numbers").permitAll() // GET => 모두 가능
+				.antMatchers("/api/board/article").permitAll() // GET => 모두 가능
 				// DistrictController
-				//.antMatchers("/api/map/district/**").permitAll() // sido, sigungu, emd => GET => 모두 가능				
-				
+				.antMatchers("/api/map/district").permitAll() // sido, sigungu, emd => GET => 모두 가능						
 				// FacilityController
-				//.antMatchers("/api/map/facility/**").permitAll() // information, locations => GET => 모두 가능
-				//.antMatchers("/api/map/facilities").permitAll() // GET => 모두 가능				
-				
+				.antMatchers("/api/map/facility").permitAll() // information, locations => GET => 모두 가능
+				.antMatchers("/api/map/facilities").permitAll() // GET => 모두 가능				
 				// AuthController
-				//.antMatchers("/api/auth/emailAuthCode").permitAll() // GET => 모두 가능
-				//.antMatchers("/api/auth/member").permitAll() // POST => 모두 가능
-				//.antMatchers("/api/auth/authorization").permitAll() // GET => 모두 가능
-				//.antMatchers("/api/auth/accessToken").permitAll() // GET => 회원, 관리자만 가능
-				
+				.antMatchers("/api/auth/email-auth-code").permitAll() // GET => 모두 가능
+				.antMatchers("/api/auth/member").permitAll() // POST => 모두 가능
+				.antMatchers("/api/auth/sign-in").permitAll() // POST => 모두 가능			
 				// MemberController
-				//.antMatchers("/api/member").permitAll() // GET => 회원, 관리자만 가능
-				//.antMatchers("/api/member/memberId").permitAll() // GET => 회원, 관리자만 가능
-				//.antMatchers("/api/member/pw").permitAll() // PUT => 회원, 관리자만 가능
-				//.antMatchers("/api/member/role").permitAll() // GET => 회원, 관리자만 가능
-				//.antMatchers("/api/member/deletionDate").permitAll() // PTT => 회원, 관리자만 가능
-				//.antMatchers("/api/member/banDate").permitAll() // PTT => 관리자만 가능
-				//.antMatchers("/api/member/bookmarks").permitAll() // DELETE => 회원, 관리자만 가능
-				//.antMatchers("/api/members").permitAll() // GET => 관리자만 가능									
-				//.antMatchers("/api/member/memberId/number").permitAll() // GET => 모두 가능
-				//.antMatchers("/api/member/nickname/number").permitAll() // GET => 모두 가능
-				//.antMatchers("/api/member/email/number").permitAll() // GET => 모두 가능
-							
+				.antMatchers("/api/members").hasRole("ADMIN") // GET => 관리자만 가능
+				.antMatchers("/api/member/ban-date").hasRole("ADMIN") // PTT => 관리자만 가능									
+				.antMatchers("/api/member/member-id/number").permitAll() // GET => 모두 가능
+				.antMatchers("/api/member/nickname/number").permitAll() // GET => 모두 가능
+				.antMatchers("/api/member/email/number").permitAll() // GET => 모두 가능
 				.anyRequest().authenticated()
 				.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session은 stateless로 설정
 				.and()
 			.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // 필터 추가
-			
+		http
+			.cors(); // cors 설정
+		
 		return http.build();
+	}
+	
+	// CORS 설정 메소드
+	// 엔드포인트(컨트롤러 메소드 url) 별 허용 출처(origin), HTTP 메소드, Header 이름, Credential 설정
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		
+		configuration.addAllowedOrigin("http://localhost:8080");
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+		configuration.addAllowedHeader("*");
+		configuration.setAllowCredentials(true);
+		
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+
+		return source;
 	}
 
 	// 회원가입 시 비밀번호 암호화를 위한 메소드

@@ -63,7 +63,8 @@ public class JwtTokenProvider {
 		String accessToken = Jwts.builder()
 				.setSubject(authenticatedMember.getName())
 				.claim("auth", authorities)
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 30)) // 1시간
+				//.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1시간
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 30)) // 30초
 				.signWith(key, SignatureAlgorithm.HS512)
 				.compact();
 	
@@ -72,7 +73,7 @@ public class JwtTokenProvider {
 	
 	public String generateRefreshToken(Authentication authenticatedMember) {
 		String refreshToken = Jwts.builder()
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60)) // 2시간
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60)) // 60초
 				.signWith(key, SignatureAlgorithm.HS512)
 				.compact();
 		
@@ -82,7 +83,7 @@ public class JwtTokenProvider {
 				null, 
 				authenticatedMember.getName(), 
 				refreshToken,
-				new Timestamp(System.currentTimeMillis() + 1000 * 60) // 2시간
+				new Timestamp(System.currentTimeMillis() + 1000 * 60) // 60초
 		);
 		
 		refreshTokenDao.addRefreshToken(refreshTokenEntity); // DB 테이븰에 추가

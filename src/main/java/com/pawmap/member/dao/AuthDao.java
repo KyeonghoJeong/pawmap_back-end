@@ -8,5 +8,5 @@ public interface AuthDao {
 	RefreshTokenEntity getRefreshToken(String refreshToken);
 	
 	void postMember(MemberEntity memberEntity);
-
+	
 }

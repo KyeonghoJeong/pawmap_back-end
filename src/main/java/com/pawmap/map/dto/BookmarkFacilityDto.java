@@ -2,6 +2,7 @@ package com.pawmap.map.dto;
 
 import com.pawmap.map.entity.FacilityEntity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,12 +10,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class BookmarkFacilityDto {
 
 	private Long facilityId;
 	private String cat;
 	private String facilityName;
 	private String roadAddr;
+	
+	public BookmarkFacilityDto() {
+		
+	}
 	
 	public BookmarkFacilityDto(FacilityEntity facilityEntity) {
 		this.facilityId = facilityEntity.getFacilityId();

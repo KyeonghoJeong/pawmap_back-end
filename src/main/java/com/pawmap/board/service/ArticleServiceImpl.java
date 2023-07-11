@@ -94,13 +94,15 @@ public class ArticleServiceImpl implements ArticleService {
 		
 		// 카운트가 0이면 게시글 작성자와 로그인 중인 회원 일치하지 않음 (false)
 		// 카운트가 0이 아니면 일치
-		boolean isItsMember = false;
+		boolean itsMember = false;
 		if(count != 0) {
-			isItsMember = true;
+			itsMember = true;
 		}
 		
 		// 회원 아이디와 작성자 여부 dto 객체 생성
-		MemberIdentificationDto memberIdentificationDto = new MemberIdentificationDto(memberId, isItsMember);
+		MemberIdentificationDto memberIdentificationDto = new MemberIdentificationDto();
+		memberIdentificationDto.setMemberId(memberId);
+		memberIdentificationDto.setItsMember(itsMember);
 		
 		return memberIdentificationDto;
 	}

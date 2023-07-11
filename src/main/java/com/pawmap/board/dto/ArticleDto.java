@@ -33,8 +33,8 @@ public class ArticleDto {
 		this.title = articleEntity.getTitle();
 		this.writing = articleEntity.getWriting();
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String formattedTime = sdf.format(articleEntity.getPostDate());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 날짜 포맷 지정
+		String formattedTime = sdf.format(articleEntity.getPostDate()); // 지정 포맷으로 String 형변환
 		this.postDate = formattedTime;
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pawmap.map.dto.BookmarkDto;
@@ -62,14 +63,14 @@ public class BookmarkController {
 	
 	// 북마크 삭제 메소드
 	@DeleteMapping("/bookmarks")
-	public ResponseEntity<?> deleteBookmarks(@RequestBody List<Long> facilityIds, HttpServletRequest request){
+	public ResponseEntity<?> deleteBookmarks(@RequestParam List<Long> facilityIds, HttpServletRequest request){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
 			// 헤더에 있는 accessToken 인증
 			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
 			return ResponseEntity.ok().body("invalidAccessToken");
 		}else {
 			// 유효한 accessToken인 경우 북마크 삭제 서비스 메소드 호출
-			bookmarkService.deleteBookmarks(facilityIds); // 회원 아이디, 시설 아이디 리스트로 삭제 메소드 호출
+			bookmarkService.deleteBookmarks(facilityIds); // 시설 아이디 리스트로 삭제 메소드 호출
 			
 			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 		}

@@ -9,8 +9,8 @@ public interface AuthService {
 	
 	void postMember(MemberDto memberDto);
 	
-	AuthDto getAuthorization(MemberDto memberDto);
-	
+	AuthDto signIn(MemberDto memberDto);
+
 	String getAccessToken(String refreshToken);
-	
+
 }

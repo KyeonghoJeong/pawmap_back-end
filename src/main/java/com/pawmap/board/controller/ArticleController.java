@@ -122,7 +122,7 @@ public class ArticleController {
 	
 	// 관리자 권한 게시글 삭제 메소드
 	@DeleteMapping("/articles")
-	public ResponseEntity<?> deleteArticles(@RequestBody List<Long> articleIds, HttpServletRequest request){
+	public ResponseEntity<?> deleteArticles(@RequestParam List<Long> articleIds, HttpServletRequest request){
 		// 헤더로 accessToken을 받고 RequestBody로 삭제할 게시글의 ID들을 받음
 		// 전달 받은 accessToken에 대한 JwtAuthenticationFilter의 결과로 받은 Authentication 객체의 회원 아이디가 유효하지 앟은 경우 invalidAccessToken 리턴
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {

@@ -54,7 +54,7 @@ public class MemberController {
 	
 	// 특정 회원의 게시글만 조회하기 위해 회원 아이디를 수신하기 위한 메소드
 	// 로그인 과정에서 이미 탈퇴 및 차단 칼럼을 체크 했기 때문에 다시 체크할 필요 없이 바로 id 리턴
-	@GetMapping("/member/memberId")
+	@GetMapping("/member/member-id")
 	public ResponseEntity<?> getMemberId(HttpServletRequest request) {
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
 			// 헤더에 있는 accessToken 인증
@@ -82,24 +82,9 @@ public class MemberController {
 		}
 	}
 	
-	// 회원권한 조회 (로그인 되어 있는 경우, 회원 또는 관리자의 요청)
-	@GetMapping("/member/role")
-	public String getMemberRole(HttpServletRequest request) {
-		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			// 헤더에 있는 accessToken 인증
-			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
-			return "invalidAccessToken";
-		}else {
-			// 유효한 accessToken인 경우 서비스 메소드 호출
-			String role = memberService.getMemberRole(); // role (권한명) 요청 서비스 메소드
-			
-			return role;
-		}
-	}
-	
 	// 회원탈퇴 메소드
 	// 회원 테이블에는 탈퇴날짜(deletionDate) 칼럼이 있으며 이 칼럼의 값이 null이면 이용가능 회원, 날짜 데이터(탈퇴날짜)가 있으면 탈퇴한 회원
-	@PutMapping("/member/deletionDate")
+	@PutMapping("/member/deletion-date")
 	public ResponseEntity<?> putMemberDeletionDate(@RequestBody MemberDto memberDto, HttpServletRequest request){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
 			// 헤더에 있는 accessToken 인증
@@ -115,7 +100,7 @@ public class MemberController {
 	
 	// 회원 차단 메소드
 	// 회원 테이블에는 차단날짜(banDate) 칼럼이 있으며 이 칼럼의 값이 null이면 이용가능 회원, 날짜 데이터(차단날짜)가 있으면 차단된 회원
-	@PutMapping("/member/banDate")
+	@PutMapping("/member/ban-date")
 	public ResponseEntity<?> putMemberBanDate(@RequestBody MemberBanDto memberBanDto, HttpServletRequest request){
 		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
 			// 헤더에 있는 accessToken 인증
@@ -159,7 +144,7 @@ public class MemberController {
 	}
 	
 	// 입력한 회원 아이디의 수를 리턴 => 회원가입 시 이용가능한 아이디 여부 확인하는 데 사용
-	@GetMapping("/member/memberid/number")
+	@GetMapping("/member/member-id/number")
 	public Long getMemberIdNumber(@RequestParam String memberId) {
 		Long number = memberRepository.countByMemberId(memberId); // 아이디로 조회하여 카운트 리턴
 

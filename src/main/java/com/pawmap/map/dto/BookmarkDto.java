@@ -1,5 +1,6 @@
 package com.pawmap.map.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,10 +8,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class BookmarkDto {
 
 	private Long bookmarkId;
 	private String memberId;
 	private Long facilityId;
+	
+	public BookmarkDto() {
+		
+	}
 	
 }

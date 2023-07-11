@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pawmap.map.dto.FacilityCardDto;
 import com.pawmap.map.dto.FacilityDto;
 import com.pawmap.map.dto.FacilityLocationDto;
 import com.pawmap.map.service.FacilityService;
@@ -53,7 +52,7 @@ public class FacilityController {
 	// 동 이름 검색, 카테고리 선택, select 메뉴 선택에 맞게 리턴해주기 위해 각 파라미터의 유무 별로 조회하여 리턴
 	// pagination을 위해 Page형으로 리턴
 	@GetMapping("/facilities")
-	public Page<FacilityCardDto> getFacilities(
+	public Page<FacilityDto> getFacilities(
 			@RequestParam(required=false) String cat,
 			@RequestParam(required=false) String sido,
 			@RequestParam(required=false) String sigungu,
@@ -63,9 +62,9 @@ public class FacilityController {
 			Pageable pageable){
 		
 		// 서비스 메소드 호출
-		Page<FacilityCardDto> facilityCardDtos = facilityService.getFacilities(cat, sido, sigungu, emd, lat, lng, pageable);
+		Page<FacilityDto> facilityDtos = facilityService.getFacilities(cat, sido, sigungu, emd, lat, lng, pageable);
 		
-		return facilityCardDtos;
+		return facilityDtos;
 	}
 	
 }

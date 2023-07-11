@@ -15,25 +15,25 @@ import lombok.Getter;
 public class MemberEntity {
 
 	@Id
-	@Column(name = "memberid")
+	@Column(name="memberid")
 	private String memberId;
 	
-	@Column(name = "pw")
+	@Column(name="pw")
 	private String pw;
 
-	@Column(name = "nickname")
+	@Column(name="nickname")
 	private String nickname;
 
-	@Column(name = "email")
+	@Column(name="email")
 	private String email;
 	
-	@Column(name = "auth")
+	@Column(name="auth")
 	private String role;
 	
-	@Column(name = "deletiondate")
+	@Column(name="deletiondate")
 	private Date deletionDate;
 	
-	@Column(name = "bandate")
+	@Column(name="bandate")
 	private Date banDate;
 	
 	public MemberEntity() {

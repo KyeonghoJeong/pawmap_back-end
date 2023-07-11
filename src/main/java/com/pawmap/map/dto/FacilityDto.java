@@ -1,5 +1,8 @@
 package com.pawmap.map.dto;
 
+import com.pawmap.map.entity.FacilityEntity;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class FacilityDto {
 
 	private Long facilityId;
@@ -32,5 +36,22 @@ public class FacilityDto {
 	private String outdoorAvail;
 	private Double lat;
 	private Double lng;
+	
+	public FacilityDto() {
+		
+	}
+	
+	public FacilityDto(FacilityEntity facilityEntity) {
+		this.facilityId = facilityEntity.getFacilityId();
+		this.cat = facilityEntity.getCat();
+		this.facilityName = facilityEntity.getFacilityName();
+		this.basicInfo = facilityEntity.getBasicInfo();
+		this.roadAddr = facilityEntity.getRoadAddr();
+		this.landAddr = facilityEntity.getLandAddr();
+		this.phoneNum = facilityEntity.getPhoneNum();
+		this.businessHr = facilityEntity.getBusinessHr();
+		this.lat = facilityEntity.getLat();
+		this.lng = facilityEntity.getLng();
+	}
 	
 }

@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pawmap.map.dao.FacilityDao;
-import com.pawmap.map.dto.FacilityCardDto;
 import com.pawmap.map.dto.FacilityDto;
 import com.pawmap.map.dto.FacilityLocationDto;
 import com.pawmap.map.entity.FacilityEntity;
@@ -50,15 +49,15 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 
 	@Override
-	public Page<FacilityCardDto> getFacilities(String cat, String sido, String sigungu, String emd, Double lat, Double lng,
+	public Page<FacilityDto> getFacilities(String cat, String sido, String sigungu, String emd, Double lat, Double lng,
 			Pageable pageable) {
 		// TODO Auto-generated method stub
 		Page<FacilityEntity> facilityEntities = facilityDao.getFacilities(cat, sido, sigungu, emd, lat, lng, pageable);
 		
 		// Page 옵션 그대로 내부의 FacilityEntity 객체 각각을 FacilityDto 클래스의 생성자를 이용 매핑 
-		Page<FacilityCardDto> facilityCardDtos = facilityEntities.map(FacilityCardDto::new);
+		Page<FacilityDto> facilityDtos = facilityEntities.map(FacilityDto::new);
 		
-		return facilityCardDtos;
+		return facilityDtos;
 	}
 
 }

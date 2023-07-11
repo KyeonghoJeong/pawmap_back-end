@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pawmap.member.dao.AuthDao;
 import com.pawmap.member.dto.AuthDto;
@@ -23,6 +25,8 @@ import com.pawmap.member.entity.MemberEntity;
 import com.pawmap.member.entity.RefreshTokenEntity;
 import com.pawmap.security.JwtTokenProvider;
 
+@Service
+@Transactional // 트랜잭션 설정
 public class AuthServiceImpl implements AuthService {
 	
 	@Autowired
@@ -88,16 +92,16 @@ public class AuthServiceImpl implements AuthService {
 	
 	// 로그인 서비스 메소드
 	@Override
-	public AuthDto getAuthorization(MemberDto memberDto) {
+	public AuthDto signIn(MemberDto memberDto) {
 		// TODO Auto-generated method stub
-		String username = memberDto.getMemberId(); // 입력받은 회원 아이디 가져오기
-		String password = memberDto.getPw(); // 입력받은 비밀번호 가져오기
+		String memberId = memberDto.getMemberId(); // 입력받은 회원 아이디 가져오기
+		String pw = memberDto.getPw(); // 입력받은 비밀번호 가져오기
 		
 		// authentication 인증 객체 생성
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(memberId, pw);
 		
 		// CustomAuthenticationProvider 회원 유효성 검사
-		Authentication authenticatedMember = authenticationManager.authenticate(authentication);
+		Authentication authenticatedMember = authenticationManager.authenticate(authentication); // 유효하지 않을 경우 예외발생
 		
 		String accessToken = jwtTokenProvider.generateAccessToken(authenticatedMember); // accessToken 생성
 		String refreshToken = jwtTokenProvider.generateRefreshToken(authenticatedMember); // refreshToken 생성
@@ -122,8 +126,8 @@ public class AuthServiceImpl implements AuthService {
 			// refreshToken 엔티티는 refreshToken id, 회원 id, refreshToken, 만기 시간 속성을 가지고 있으며 1시간 마다 스케줄러에 의해 만기 시간이 지난 row는 삭제됨
 			RefreshTokenEntity refreshTokenEntity = authDao.getRefreshToken(refreshToken);
 			
-			String username = refreshTokenEntity.getMemberId(); // 해당 refreshToken을 가지고 있는 회원의 아이디 가져오기
-			UserDetails userDetails = userDetailsService.loadUserByUsername(username); // 회원 아이디로 회원 검색 및 userDetails 객체 만들기
+			String memberId = refreshTokenEntity.getMemberId(); // 해당 refreshToken을 가지고 있는 회원의 아이디 가져오기
+			UserDetails userDetails = userDetailsService.loadUserByUsername(memberId); // 회원 아이디로 회원 검색 및 userDetails 객체 만들기
 			
 			// 인증된 회원 Authentication 객체 생성
 			// 파라미터 각각 회원 엔티티, 비밀번호 (인증 이후 필요 없으므로 null), 회원 권한

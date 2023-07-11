@@ -12,8 +12,6 @@ public interface MemberService {
 	
 	void putMemberPw(MemberDto memberDto);
 	
-	String getMemberRole();
-	
 	void putMemberDeletionDate(MemberDto memberDto);
 	
 	void putMemberBanDate(MemberBanDto memberBanDto);

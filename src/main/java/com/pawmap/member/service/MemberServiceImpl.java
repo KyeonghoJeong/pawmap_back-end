@@ -1,7 +1,6 @@
 package com.pawmap.member.service;
 
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 
 import org.modelmapper.ModelMapper;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,7 @@ import com.pawmap.member.dto.MemberDto;
 import com.pawmap.member.entity.MemberEntity;
 
 @Service
-@Transactional
+@Transactional // 트랜잭션 설정
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
@@ -59,20 +57,6 @@ public class MemberServiceImpl implements MemberService {
 		String pw = passwordEncoder.encode(memberDto.getPw()); // 비밀번호 암호화
 		
 		memberDao.putMemberPw(memberId, pw); // dao 호출
-	}
-
-	// 권한명 리턴 메소드
-	@Override
-	public String getMemberRole() {
-		// TODO Auto-generated method stub
-		
-		// SecurityContextHolder에서 권한 가져오기
-		Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		
-		GrantedAuthority authority = authorities.iterator().next(); // 이 어플리케이션에는 회원 당 권한이 하나
-		String role = authority.getAuthority(); // role(권한명) 가져오기
-		
-		return role; // role 리턴
 	}
 	
 	// 회원탈퇴 (탈퇴날짜 수정) 메소드

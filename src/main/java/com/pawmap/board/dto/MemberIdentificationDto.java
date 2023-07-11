@@ -12,7 +12,7 @@ import lombok.Setter;
 public class MemberIdentificationDto {
 
 	private String memberId;
-	private boolean isItsMember;
+	private boolean itsMember;
 	
 	public MemberIdentificationDto() {
 		

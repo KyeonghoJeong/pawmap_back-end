@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 
 import com.pawmap.member.entity.MemberEntity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class MemberDto {
 
 	private String memberId;
@@ -19,6 +21,10 @@ public class MemberDto {
 	private String nickname;
 	private String email;
 	private String banDate;
+	
+	public MemberDto() {
+		
+	}
 	
 	// 관리자가 모든 회원의 정보를 조회하는 데 사용할 때
 	// 모든 회원의 엔티티를 매개변수로 받아 아이디, 닉네임, 메일 주소를 설정하고 차단 날짜가 null이 아닌 경우 차단 날짜를 포맷해서 설정
