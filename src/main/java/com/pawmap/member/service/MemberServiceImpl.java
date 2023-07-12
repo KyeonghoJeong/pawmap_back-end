@@ -2,19 +2,20 @@ package com.pawmap.member.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pawmap.board.dao.ArticleDao;
 import com.pawmap.member.dao.MemberDao;
 import com.pawmap.member.dto.MemberBanDto;
 import com.pawmap.member.dto.MemberDto;
@@ -28,13 +29,16 @@ public class MemberServiceImpl implements MemberService {
 	private ModelMapper modelMapper;
 	
 	@Autowired
-	private AuthenticationManager authenticationManager;
-	
-	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private ArticleDao articleDao;
 
 	// 회원정보 리턴 서비스 메소드
 	@Override
@@ -50,6 +54,13 @@ public class MemberServiceImpl implements MemberService {
 		return memberDto;
 	}
 	
+	// 회원이 마이페이지에서 자신의 게시글들을 삭제하는 메소드
+	@Override
+	public void deleteMemberArticles(List<Long> articleIds) {
+		// TODO Auto-generated method stub
+		articleDao.deleteArticles(articleIds);
+	}
+	
 	@Override
 	public void putMemberPw(MemberDto memberDto) {
 		// TODO Auto-generated method stub
@@ -59,24 +70,24 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.putMemberPw(memberId, pw); // dao 호출
 	}
 	
-	// 회원탈퇴 (탈퇴날짜 수정) 메소드
+	// 회원탈퇴 (탈퇴날짜 삽입) 메소드
 	@Override
-	public void putMemberDeletionDate(MemberDto memberDto) {
+	public boolean putMemberDeletionDate(MemberDto memberDto) {
 		// TODO Auto-generated method stub
 		String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기
-		String pw = memberDto.getPw(); // 비밀번호 가져오기
+		String pw = memberDto.getPw(); // 탈퇴 시 입력한 비밀번호 가져오기
 		
-		// 유효성 검사를 위해 authentication 토큰 객체 생성
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(memberId, pw);
+		UserDetails userDetails = userDetailsService.loadUserByUsername(memberId); // 해당 아이디의 엔티티(회원정보) 가져오기
 		
-		// CustomAuthenticationProvider 회원 유효성 검사
-		// DB에 등록된 회원 아이디가 아니거나 입력한 비밀번호 인코딩 결과가 DB에 등록된 비밀번호와 같지 않으면 예외 발생  
-		Authentication authenticatedMember = authenticationManager.authenticate(authentication); // authentication 객체 생성
-		memberId = authenticatedMember.getName(); // 인증완료 된 회원 아이디
-		
-		Date deletionDate = Calendar.getInstance().getTime(); // 현재 날짜
-		
-		memberDao.putMemberDeletionDate(memberId, deletionDate);
+		if(passwordEncoder.matches(pw, userDetails.getPassword())){ // 입력한 비밀번호와 등록 비밀번호가 같은 경우
+			Date deletionDate = Calendar.getInstance().getTime(); // 현재 날짜
+			
+			memberDao.putMemberDeletionDate(memberId, deletionDate); // dao 호출
+			
+			return true; // 비밀번호가 맞고 탈퇴 처리가 완료된 후 true 리턴
+		}else {
+			return false; // 비밀번호가 틀리면 false 리턴
+		}
 	}
 	
 	// 회원차단 (차단날짜 수정) 메소드

@@ -22,7 +22,7 @@ public class BookmarkDaoImpl implements BookmarkDao {
 	private FacilityRepository facilityRepository;
 
 	@Override
-	public String postBookmark(BookmarkEntity bookmarkEntity) {
+	public boolean postBookmark(BookmarkEntity bookmarkEntity) {
 		// TODO Auto-generated method stub
 		// 회원 id와 시설 id를 조건으로 북마크 테이블에 등록되어 있는 북마크를 카운트
 		Long count = bookmarkRepository.countByMemberIdAndFacilityId(bookmarkEntity.getMemberId(), bookmarkEntity.getFacilityId());
@@ -31,10 +31,10 @@ public class BookmarkDaoImpl implements BookmarkDao {
 		if(count == 0) {
 			bookmarkRepository.save(bookmarkEntity);
 			
-			return "success";
+			return true;
 		}else {
 			// 카운트가 0개가 아니면 이미 등록되어 있는 북마크
-			return "addedBookmark";
+			return false;
 		}
 	}
 

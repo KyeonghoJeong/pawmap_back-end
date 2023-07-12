@@ -3,6 +3,7 @@ package com.pawmap.member.controller;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -70,9 +71,9 @@ public class AuthController {
 	public ResponseEntity<?> getAccessToken(@CookieValue("refreshToken") String refreshToken){
 		String accessToken = authService.getAccessToken(refreshToken); // 수신한 refreshToken으로 accessToken 재발급 시도
 		
-		if(accessToken.equals("invalidRefreshToken")) {
-			// refreshToken이 유효하지 않아서 accessToken 재발급 실패한 경우 메시지 리턴
-			return ResponseEntity.ok().body("invalidRefreshToken");
+		if(accessToken == null) {
+			// refreshToken이 유효하지 않아서 accessToken 재발급 실패한 경우 403 에러 코드 리턴
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}else {
 			// authDto 객체에 accessToken 담아서 리턴
 			AuthDto authDto = new AuthDto();

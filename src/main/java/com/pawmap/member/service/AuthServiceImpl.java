@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +44,9 @@ public class AuthServiceImpl implements AuthService {
 	
 	@Autowired
 	private AuthDao authDao;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	// 이메일 인증코드 발송 및 리턴 메소드
 	@Override
@@ -75,11 +79,12 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public void postMember(MemberDto memberDto) {
 		// TODO Auto-generated method stub
+		String encodedPw = passwordEncoder.encode(memberDto.getPw()); // 비밀번호 암호화
 		
 		// 회원 엔티티 객체 생성
 		MemberEntity memberEntity = new MemberEntity(
 				memberDto.getMemberId(), // 입력받은 아이디
-				memberDto.getPw(), // 입력받은 비밀번호
+				encodedPw, // 암호화 한 입력 비밀번호
 				memberDto.getNickname(), // 입력받은 닉네임
 				memberDto.getEmail(), // 입력받은 이메일
 				"ROLE_MEMBER", // 권한 => 회원
@@ -137,8 +142,8 @@ public class AuthServiceImpl implements AuthService {
 			
 			return accessToken; // accessToken 리턴
 		}else {
-			// 토큰이 유효하지 않으면 메시지 리턴
-			return "invalidRefreshToken";
+			// 토큰이 유효하지 않으면 null 리턴
+			return null;
 		}
 	}
 

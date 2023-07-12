@@ -10,7 +10,7 @@ import com.pawmap.map.entity.FacilityEntity;
 
 public interface BookmarkDao {
 
-	String postBookmark(BookmarkEntity bookmarkEntity);
+	boolean postBookmark(BookmarkEntity bookmarkEntity);
 	
 	Page<FacilityEntity> getBookmarks(String memberId, Pageable pageable);
 

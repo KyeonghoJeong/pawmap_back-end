@@ -32,6 +32,7 @@ public class SecurityConfig {
 	// 회원 인증 및 인가를 위한 jwt 및 필터 설정
 	// 커스텀 필터 JwtAuthenticationFilter 추가
 	// 인증 요청 시 JwtAuthenticationFilter로 감
+	// accessToken이 유효하지 않으면 403 에러 코드 리턴
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http
@@ -42,25 +43,27 @@ public class SecurityConfig {
 				// APIs in Board
 				.antMatchers(HttpMethod.GET, "/api/board/articles").permitAll() // GET => 모두 가능
 				.antMatchers(HttpMethod.DELETE, "/api/board/articles").hasRole("ADMIN") // DELETE => 관리자만 가능
-				.antMatchers("/api/board/article/comments").permitAll() // GET => 모두 가능
-				.antMatchers("/api/board/article/comment/numbers").permitAll() // GET => 모두 가능
-				.antMatchers("/api/board/article").permitAll() // GET => 모두 가능
+				.antMatchers(HttpMethod.GET, "/api/board/article/comments").permitAll() // GET => 모두 가능
+				.antMatchers(HttpMethod.GET, "/api/board/article/comment/numbers").permitAll() // GET => 모두 가능
+				.antMatchers(HttpMethod.GET, "/api/board/article").permitAll() // GET => 모두 가능
 				// DistrictController
-				.antMatchers("/api/map/district").permitAll() // sido, sigungu, emd => GET => 모두 가능						
+				.antMatchers(HttpMethod.GET, "/api/map/district/**").permitAll() // sido, sigungu, emd => GET => 모두 가능						
 				// FacilityController
-				.antMatchers("/api/map/facility").permitAll() // information, locations => GET => 모두 가능
-				.antMatchers("/api/map/facilities").permitAll() // GET => 모두 가능				
+				.antMatchers(HttpMethod.GET, "/api/map/facility/**").permitAll() // information, locations => GET => 모두 가능
+				.antMatchers(HttpMethod.GET, "/api/map/facilities").permitAll() // GET => 모두 가능				
 				// AuthController
-				.antMatchers("/api/auth/email-auth-code").permitAll() // GET => 모두 가능
-				.antMatchers("/api/auth/member").permitAll() // POST => 모두 가능
-				.antMatchers("/api/auth/sign-in").permitAll() // POST => 모두 가능			
+				.antMatchers(HttpMethod.GET, "/api/auth/email-auth-code").permitAll() // GET => 모두 가능
+				.antMatchers(HttpMethod.POST, "/api/auth/member").permitAll() // POST => 모두 가능
+				.antMatchers(HttpMethod.POST, "/api/auth/sign-in").permitAll() // POST => 모두 가능	
+				.antMatchers(HttpMethod.GET, "/api/auth/access-token").permitAll() // GET => 모두 가능
 				// MemberController
-				.antMatchers("/api/members").hasRole("ADMIN") // GET => 관리자만 가능
-				.antMatchers("/api/member/ban-date").hasRole("ADMIN") // PTT => 관리자만 가능									
-				.antMatchers("/api/member/member-id/number").permitAll() // GET => 모두 가능
-				.antMatchers("/api/member/nickname/number").permitAll() // GET => 모두 가능
-				.antMatchers("/api/member/email/number").permitAll() // GET => 모두 가능
-				.anyRequest().authenticated()
+				.antMatchers(HttpMethod.GET, "/api/members").hasRole("ADMIN") // GET => 관리자만 가능
+				.antMatchers(HttpMethod.PUT, "/api/member/ban-date").hasRole("ADMIN") // PUT => 관리자만 가능									
+				.antMatchers(HttpMethod.GET, "/api/member/member-id/number").permitAll() // GET => 모두 가능
+				.antMatchers(HttpMethod.GET, "/api/member/nickname/number").permitAll() // GET => 모두 가능
+				.antMatchers(HttpMethod.GET, "/api/member/email/number").permitAll() // GET => 모두 가능
+				.antMatchers(HttpMethod.POST, "/api/member/pw").permitAll()
+				.anyRequest().authenticated() // 회원, 관리자만 접근 가능한 API는 anyRequest().authenticated()로 모두 포함시킴
 				.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // session은 stateless로 설정
 				.and()

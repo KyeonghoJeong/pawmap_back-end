@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +29,9 @@ public class CommentServiceImpl implements CommentService {
 	private CommentDao commentDao;
 	
 	@Override
-	public void postComment(CommentDto commentDto, String memberId) {
+	public void postComment(CommentDto commentDto) {
 		// TODO Auto-generated method stub
+		String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기
 		MemberEntity memberEntity = memberDao.getMember(memberId); // 회원 아이디로 회원 엔티티 생성
 		
 		Long articleId = commentDto.getArticleId(); // 게시글 id 가져오기

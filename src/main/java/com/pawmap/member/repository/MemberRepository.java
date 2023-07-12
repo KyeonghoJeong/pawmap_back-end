@@ -68,7 +68,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>{
 	// 닉네임으로 조회하여 카운트 리턴
 	Long countByNickname(String nickname);
 	
-	// 메일 주소, 차단 날짜로 조회하여 카운트 리턴
-	Long countByEmailAndBanDate(String email, Date banDate);
+	// 메일 주소, 차단 날짜로 조회하여 카운트 리턴 => 차단 이메일은 사용 불가
+	@Query(value="SELECT COUNT(*) FROM memberInfo WHERE email = :email AND banDate IS NOT NULL", nativeQuery=true)
+	Long getEmailNumber(@Param("email") String email);
 
 }

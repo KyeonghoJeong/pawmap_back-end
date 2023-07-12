@@ -28,7 +28,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 
 	// 북마크 추가 서비스 메소드
 	@Override
-	public String postBookmark(BookmarkDto bookmarkDto) {
+	public boolean postBookmark(BookmarkDto bookmarkDto) {
 		// TODO Auto-generated method stub
 	
 		bookmarkDto.setMemberId(SecurityContextHolder.getContext().getAuthentication().getName()); // 토큰에서 회원 id 가져와서 저장
@@ -36,7 +36,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 		// BookmarkEntity 객체 생성 <= BookmarkDTO 매핑
 		BookmarkEntity bookmarkEntity = modelMapper.map(bookmarkDto, BookmarkEntity.class); // ModelMapper 클래스로 dto => entity로 변환
 		
-		String result = bookmarkDao.postBookmark(bookmarkEntity); // 북마크 추가 dao 호출
+		boolean result = bookmarkDao.postBookmark(bookmarkEntity); // 북마크 추가 dao 호출
 		
 		return result;
 	}

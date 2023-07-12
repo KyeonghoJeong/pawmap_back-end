@@ -9,7 +9,7 @@ import com.pawmap.board.dto.CommentDto;
 
 public interface CommentService {
 
-	void postComment(CommentDto commentDto, String memberId);
+	void postComment(CommentDto commentDto);
 	
 	void putComment(CommentDto commentDto);
 

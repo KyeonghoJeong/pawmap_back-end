@@ -10,7 +10,7 @@ import com.pawmap.map.dto.BookmarkFacilityDto;
 
 public interface BookmarkService {
 
-	String postBookmark(BookmarkDto bookmarkDto);
+	boolean postBookmark(BookmarkDto bookmarkDto);
 
 	Page<BookmarkFacilityDto> getBookmarks(Pageable pageable);
 	

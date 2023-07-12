@@ -1,5 +1,7 @@
 package com.pawmap.member.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,9 +12,11 @@ public interface MemberService {
 
 	MemberDto getMember();
 	
+	void deleteMemberArticles(List<Long> articleIds);
+	
 	void putMemberPw(MemberDto memberDto);
 	
-	void putMemberDeletionDate(MemberDto memberDto);
+	boolean putMemberDeletionDate(MemberDto memberDto);
 	
 	void putMemberBanDate(MemberBanDto memberBanDto);
 	

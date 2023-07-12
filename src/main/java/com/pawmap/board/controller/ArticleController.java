@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,46 +43,31 @@ public class ArticleController {
 	// 게시글 등록
 	@PostMapping("/article")
 	public ResponseEntity<?> postArticle(@RequestBody ArticleDto articleDto, HttpServletRequest request){
-		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			// 헤더에 있는 accessToken 인증
-			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
-			return ResponseEntity.ok().body("invalidAccessToken");
-		}else {
-			// 유효한 accessToken인 경우 서비스 메소드 호출
-			articleService.postArticle(articleDto); // 회원 아이디, 작성 게시글(제목+내용)으로 서비스 메소드 호출
-			
-			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
-		}
+		// JwtAuthenticationFilter에서 accessToken이 유효하지 않거나 권한이 맞지 않는 경우 403 코드 리턴
+		// accessToken이 유효한 경우 서비스 메소드 호출
+		articleService.postArticle(articleDto); // 회원 아이디, 작성 게시글(제목+내용)으로 서비스 메소드 호출
+		
+		return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 	}
 	
 	// 게시글 수정
 	@PutMapping("/article")
 	public ResponseEntity<?> putArticle(@RequestBody ArticleDto articleDto, HttpServletRequest request){
-		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			// 헤더에 있는 accessToken 인증
-			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
-			return ResponseEntity.ok().body("invalidAccessToken");
-		}else {
-			// 유효한 accessToken인 경우 서비스 메소드 호출
-			articleService.putArticle(articleDto); // 회원 아이디, 작성 게시글(제목+내용)으로 서비스 메소드 호출
-			
-			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
-		}
+		// JwtAuthenticationFilter에서 accessToken이 유효하지 않거나 권한이 맞지 않는 경우 403 코드 리턴
+		// accessToken이 유효한 경우 서비스 메소드 호출
+		articleService.putArticle(articleDto); // 회원 아이디, 작성 게시글(제목+내용)으로 서비스 메소드 호출
+		
+		return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 	}
 	
 	// 게시글 삭제
 	@DeleteMapping("/article")
 	public ResponseEntity<?> deleteArticle(@RequestParam("articleId") Long articleId, HttpServletRequest request){
-		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			// 헤더에 있는 accessToken 인증
-			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
-			return ResponseEntity.ok().body("invalidAccessToken");
-		}else {
-			// 유효한 accessToken인 경우 서비스 메소드 호출
-			articleService.deleteArticle(articleId); // 게시글 id, 회원 id로 호출
-			
-			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
-		}
+		// JwtAuthenticationFilter에서 accessToken이 유효하지 않거나 권한이 맞지 않는 경우 403 코드 리턴
+		// accessToken이 유효한 경우 서비스 메소드 호출
+		articleService.deleteArticle(articleId); // 게시글 id, 회원 id로 호출
+		
+		return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 	}
 	
 	// 로그인 중인 회원이 조회 중인 게시글의 회원과 일치하는지 확인하고 회원 아이디를 리턴
@@ -91,16 +75,11 @@ public class ArticleController {
 	// 회원 아이디 => 댓글 컴포넌트로 전달하여 마찬가지로 각 댓글의 작성 회원과 일치하는지 확인
 	@GetMapping("/article/member/identification")
 	public ResponseEntity<?> getMemberIdentification(@RequestParam Long articleId, HttpServletRequest request) {
-		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			// 헤더에 있는 accessToken 인증
-			// JwtAuthenticationFilter 인증 이후 유효한 토큰이 아닌 경우 아이디는 anonymousUser이고 프론트엔드로 메시지 보냄
-			return ResponseEntity.ok().body("invalidAccessToken");
-		}else {
-			// 유효한 accessToken인 경우 서비스 메소드 호출
-			MemberIdentificationDto memberIdentificationDto = articleService.getMemberIdentification(articleId); // 게시글 id로 호출
-			
-			return ResponseEntity.ok().body(memberIdentificationDto);
-		}
+		// JwtAuthenticationFilter에서 accessToken이 유효하지 않거나 권한이 맞지 않는 경우 403 코드 리턴
+		// accessToken이 유효한 경우 서비스 메소드 호출
+		MemberIdentificationDto memberIdentificationDto = articleService.getMemberIdentification(articleId); // 게시글 id로 호출
+		
+		return ResponseEntity.ok().body(memberIdentificationDto);
 	}
 
 	// 게시판에 게시글 목록을 가져오기 위한 메소드
@@ -123,17 +102,11 @@ public class ArticleController {
 	// 관리자 권한 게시글 삭제 메소드
 	@DeleteMapping("/articles")
 	public ResponseEntity<?> deleteArticles(@RequestParam List<Long> articleIds, HttpServletRequest request){
-		// 헤더로 accessToken을 받고 RequestBody로 삭제할 게시글의 ID들을 받음
-		// 전달 받은 accessToken에 대한 JwtAuthenticationFilter의 결과로 받은 Authentication 객체의 회원 아이디가 유효하지 앟은 경우 invalidAccessToken 리턴
-		if(SecurityContextHolder.getContext().getAuthentication().getName() == "anonymousUser") {
-			return ResponseEntity.ok().body("invalidAccessToken");
-		}else {
-			// 유효한 경우 articleIds 데이터로 게시글 삭제 서비스 메소드 호출
-			articleService.deleteArticles(articleIds);
-			
-			// 성공 시 Success 리턴
-			return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
-		}
+		// JwtAuthenticationFilter에서 accessToken이 유효하지 않거나 권한이 맞지 않는 경우 403 코드 리턴
+		// accessToken이 유효한 경우 서비스 메소드 호출
+		articleService.deleteArticles(articleIds);
+		
+		return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 	}
 	
 }
