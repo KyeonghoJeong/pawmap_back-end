@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pawmap.member.dto.MemberBanDto;
 import com.pawmap.member.dto.MemberDto;
+import com.pawmap.member.dto.MemberPwDto;
 import com.pawmap.member.repository.MemberRepository;
 import com.pawmap.member.service.MemberService;
 
@@ -72,12 +73,12 @@ public class MemberController {
 	
 	// 비밀번호 수정 메소드
 	@PutMapping("/member/pw")
-	public ResponseEntity<?> putMemberPw(@RequestBody MemberDto memberDto, HttpServletRequest request){
+	public ResponseEntity<?> putMemberPw(@RequestBody MemberPwDto memberPwDto, HttpServletRequest request){
 		// JwtAuthenticationFilter에서 accessToken이 유효하지 않거나 권한이 맞지 않는 경우 403 코드 리턴
 		// accessToken이 유효한 경우 서비스 메소드 호출
-		memberService.putMemberPw(memberDto);
+		boolean response = memberService.putMemberPw(memberPwDto);
 
-		return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
+		return ResponseEntity.ok().body(response); // 응답 코드 200(OK) 리턴 => 데이터로는 성공 시 true, 기존 비밀번호 불일치 시 false 리턴
 	}
 	
 	// 회원탈퇴 메소드

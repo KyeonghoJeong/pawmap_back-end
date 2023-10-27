@@ -19,6 +19,7 @@ import com.pawmap.board.dao.ArticleDao;
 import com.pawmap.member.dao.MemberDao;
 import com.pawmap.member.dto.MemberBanDto;
 import com.pawmap.member.dto.MemberDto;
+import com.pawmap.member.dto.MemberPwDto;
 import com.pawmap.member.entity.MemberEntity;
 
 @Service
@@ -62,12 +63,21 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public void putMemberPw(MemberDto memberDto) {
+	public boolean putMemberPw(MemberPwDto memberPwDto) {
 		// TODO Auto-generated method stub
 		String memberId = SecurityContextHolder.getContext().getAuthentication().getName(); // SecurityContextHolder에서 회원 아이디 가져오기
-		String pw = passwordEncoder.encode(memberDto.getPw()); // 비밀번호 암호화
+		UserDetails userDetails = userDetailsService.loadUserByUsername(memberId); // 해당 아이디의 엔티티(회원정보) 가져오기
 		
-		memberDao.putMemberPw(memberId, pw); // dao 호출
+    	// 사용자가 입력한 비밀번호와 DB 테이블에 등록되어 있는 비밀번호 일치 확인
+		if(!passwordEncoder.matches(memberPwDto.getPw(), userDetails.getPassword())) {
+			return false; // 불일치 시 false 리턴
+		}
+		
+		String newPw = passwordEncoder.encode(memberPwDto.getNewPw()); // 새 비밀번호 암호화
+		
+		memberDao.putMemberPw(memberId, newPw); // dao 호출
+		
+		return true; // 비밀번호 변경 성공 시 true 리턴
 	}
 	
 	// 회원탈퇴 (탈퇴날짜 삽입) 메소드

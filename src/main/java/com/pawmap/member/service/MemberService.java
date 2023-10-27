@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.pawmap.member.dto.MemberBanDto;
 import com.pawmap.member.dto.MemberDto;
+import com.pawmap.member.dto.MemberPwDto;
 
 public interface MemberService {
 
@@ -14,7 +15,7 @@ public interface MemberService {
 	
 	void deleteMemberArticles(List<Long> articleIds);
 	
-	void putMemberPw(MemberDto memberDto);
+	boolean putMemberPw(MemberPwDto memberPwDto);
 	
 	boolean putMemberDeletionDate(MemberDto memberDto);
 	
