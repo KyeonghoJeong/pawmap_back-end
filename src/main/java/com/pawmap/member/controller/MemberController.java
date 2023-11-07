@@ -148,9 +148,7 @@ public class MemberController {
 	// 입력한 메일 주소의 수를 리턴 => 회원가입 시 이용가능한 이메일 여부 확인하는 데 사용
 	@GetMapping("/member/email/number")
 	public Long getEmailNumber(@RequestParam String email) {
-		// 탈퇴 회원 재가입 허용 O => deletionDate 칼럼 값 null이 아니어도 됨
-		// 차단 회원 재가입 허용 X => banDate 칼럼 값 null이어야 함 (null이 아니면 차단 회원이므로 해당 이메일 사용 불가)
-		Long number = memberRepository.getEmailNumber(email); // 메일 주소, 차단 날짜로 조회하여 카운트 리턴
+		Long number = memberService.getEmailNumber(email); // 이메일 조회를 위해 서비스 메소드 호출
 		
 		return number;
 	}

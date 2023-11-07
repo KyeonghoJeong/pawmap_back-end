@@ -25,4 +25,6 @@ public interface MemberService {
 
 	Page<MemberDto> getMembers(String memberId, String nickname, String email, Pageable pageable);
 
+	Long getEmailNumber(String email);
+
 }

@@ -43,21 +43,27 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>{
 	// 전체 회원 조회 및 조건 검색
 
 	// deletionDate 값이 null인 경우는 탈퇴 회원으로 조회 시 제외해야 하므로 null인 row 조회
-	Page<MemberEntity> findByDeletionDate(Date deletionDate, Pageable pageable);
-
+	// 관리자 권한 계정은 제외
+	//Page<MemberEntity> findByDeletionDate(Date deletionDate, Pageable pageable);
+	@Query(value="SELECT * FROM memberInfo WHERE deletionDate IS NULL AND auth = 'ROLE_MEMBER'", nativeQuery=true)
+	Page<MemberEntity> getMembers(Pageable pageable);
+	
 	// LIKE를 써서 회원 아이디에 검색어가 포함되는 경우 모두 조회
+	// 관리자 권한 계정은 제외
 	// deletionDate 값이 null인 경우는 탈퇴 회원으로 조회 시 제외해야 하므로 null인 row 조회
-	@Query(value="SELECT * FROM memberinfo WHERE memberId LIKE %:memberId% AND deletionDate IS NULL", nativeQuery=true)
+	@Query(value="SELECT * FROM memberinfo WHERE memberId LIKE %:memberId% AND deletionDate IS NULL AND auth = 'ROLE_MEMBER'", nativeQuery=true)
 	Page<MemberEntity> getMembersByMemberId(@Param("memberId") String memberId, Pageable pageable);
 
 	// LIKE를 써서 닉네임에 검색어가 포함되는 경우 모두 조회
+	// 관리자 권한 계정은 제외
 	// deletionDate 값이 null인 경우는 탈퇴 회원으로 조회 시 제외해야 하므로 null인 row 조회
-	@Query(value="SELECT * FROM memberinfo WHERE nickname LIKE %:nickname% AND deletionDate IS NULL", nativeQuery=true)
+	@Query(value="SELECT * FROM memberinfo WHERE nickname LIKE %:nickname% AND deletionDate IS NULL AND auth = 'ROLE_MEMBER'", nativeQuery=true)
 	Page<MemberEntity> getMembersByNickname(@Param("nickname") String nickname, Pageable pageable);
 
 	// LIKE를 써서 이메일에 검색어가 포함되는 경우 모두 조회
+	// 관리자 권한 계정은 제외
 	// deletionDate 값이 null인 경우는 탈퇴 회원으로 조회 시 제외해야 하므로 null인 row 조회
-	@Query(value="SELECT * FROM memberinfo WHERE email LIKE %:email% AND deletionDate IS NULL", nativeQuery=true)
+	@Query(value="SELECT * FROM memberinfo WHERE email LIKE %:email% AND deletionDate IS NULL AND auth = 'ROLE_MEMBER'", nativeQuery=true)
 	Page<MemberEntity> getMembersByEmail(@Param("email") String email, Pageable pageable);
 	
 	// 아이디, 닉네임, 이메일 존재하는지 count
@@ -67,8 +73,13 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>{
 
 	// 닉네임으로 조회하여 카운트 리턴
 	Long countByNickname(String nickname);
+
+	// 관리자 계정 중 중복 이메일 계정이 있는지 조회하여 카운트 리턴
+	@Query(value="SELECT COUNT(*) FROM memberInfo WHERE email = :email AND auth = 'ROLE_ADMIN'", nativeQuery=true)
+	Long getAdminEmailNumber(@Param("email") String email);
 	
 	// 메일 주소, 차단 날짜로 조회하여 카운트 리턴 => 차단 이메일은 사용 불가
+	// 관리자 권한 계정은 제외
 	@Query(value="SELECT COUNT(*) FROM memberInfo WHERE email = :email AND banDate IS NOT NULL", nativeQuery=true)
 	Long getEmailNumber(@Param("email") String email);
 

@@ -21,4 +21,6 @@ public interface MemberDao {
 
 	Page<MemberEntity> getMembers(String memberId, String nickname, String email, Pageable pageable);
 
+	Long getEmailNumber(String email);
+
 }

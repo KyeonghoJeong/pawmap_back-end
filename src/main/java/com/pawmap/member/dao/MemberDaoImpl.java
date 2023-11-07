@@ -78,7 +78,8 @@ public class MemberDaoImpl implements MemberDao {
 		// 모든 회원 조회
 		if(memberId.equals("") && nickname.equals("") && email.equals("")) {
 			// deletionDate 값이 null인 경우는 탈퇴 회원으로 조회 시 제외해야 하므로 null인 row 조회
-			memberEntities = memberRepository.findByDeletionDate(null, pageable);
+			//memberEntities = memberRepository.findByDeletionDate(null, pageable);
+			memberEntities = memberRepository.getMembers(pageable);
 		}
 		
 		// 회원 아이디로 검색
@@ -97,6 +98,24 @@ public class MemberDaoImpl implements MemberDao {
 		}
 	
 		return memberEntities;
+	}
+
+	@Override
+	public Long getEmailNumber(String email) {
+		// TODO Auto-generated method stub
+		// 회원가입 요청 이메일의 중복을 확인할 때 관리자 권한 계정의 이메일과 중복되는지 먼저 확인하기
+		Long number = memberRepository.getAdminEmailNumber(email);
+		
+		// 관리자 권한 계정 중에 해당 이메일을 사용하는 계정이 없는 경우에는 회원 계정 중에 있는지 확인
+		if(number == 0) {
+			// 탈퇴 회원 재가입 허용 O => deletionDate 칼럼 값 null이 아니어도 됨
+			// 차단 회원 재가입 허용 X => banDate 칼럼 값 null이어야 함 (null이 아니면 차단 회원이므로 해당 이메일 사용 불가)
+			number = memberRepository.getEmailNumber(email); // 메일 주소, 차단 날짜로 조회하여 카운트 리턴
+			
+			return number;
+		}
+
+		return number;
 	}
 	
 }

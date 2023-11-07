@@ -136,4 +136,13 @@ public class MemberServiceImpl implements MemberService {
 		return memberDtos;
 	}
 
+	// 회원가입 시 요청 이메일의 중복 확인 메소드
+	@Override
+	public Long getEmailNumber(String email) {
+		// TODO Auto-generated method stub
+		Long number = memberDao.getEmailNumber(email); // dao 호출
+
+		return number;
+	}
+
 }
