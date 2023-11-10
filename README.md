@@ -69,19 +69,19 @@
 
 > 지도 페이지 관련
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/64cf559b-0285-4ad5-a3d1-9045a415a8a1" width="640"/><br>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/968c6ed4-f04d-4f72-b63d-2d21d371faab" width="640"/><br>
 
 > 게시판 페이지 관련
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/ffd40d6c-466e-4c33-8f38-f865aae83f2c" width="640"/><br>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/bdba7202-4bc6-4dec-8c84-e3b1ea7dc459" width="640"/><br>
 
 > 인증과 인가 관련
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/30383a2e-4f77-4cbb-a172-8b0803af9aa0" width="640"/><br>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/713f7f8a-4638-4ddc-84cd-fd180f216ba2" width="640"/><br>
 
 > 회원 관련
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/e66d88b1-0881-4b17-a1ef-3e1bfd925cd2" width="640"/>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/246702ae-a537-48c0-97d1-056384846311" width="640"/>
 
 ## 4. 주요 기능
 
