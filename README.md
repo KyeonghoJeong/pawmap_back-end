@@ -41,6 +41,18 @@
 
 <img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/d326d64f-0066-42a4-a82a-e4677615c5f6" width="500"/><br>
 
+- Back-end 개발 환경
+
+> Java Version 11, Spring Tool Suite 4.4.8.0 Release, Spring Boot 2.7.10, Gradle, Spring Data JPA, JDBC API, Oracle Driver, Spring Security, Spring Web, SMTP, YAML, Lombok, ModelMapper 3.0.0
+
+- Front-end 개발 환경
+
+> Vue 2, Bootstrap 5.2.3, Kakao 지도 API, Vue Router 3.6.5, Axios 1.4.0
+
+- 형상 관리
+
+> Git 2.40.0, Github
+
 ---
 
 - ERD
