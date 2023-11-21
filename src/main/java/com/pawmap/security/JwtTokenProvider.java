@@ -85,12 +85,13 @@ public class JwtTokenProvider {
 				new Timestamp(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7) // 1주
 		);
 		
-		refreshTokenDao.addRefreshToken(refreshTokenEntity); // DB 테이븰에 추가
+		refreshTokenDao.addRefreshToken(refreshTokenEntity); // DB 테이블에 추가
 	
 		return refreshToken;
 	}
 
 	// JwtAutheticationFilter에서 실행
+	// AuthServiceImpl에서 실행
 	// 토큰 유효성 검사 메소드
 	public boolean validateToken(String jwtToken) {
 		// TODO Auto-generated method stub
@@ -120,24 +121,24 @@ public class JwtTokenProvider {
 	// 인증 받은 회원 정보를 담은 authentication 객체 리턴
 	public Authentication getAuthentication(String jwtToken) {
 		// TODO Auto-generated method stub
-		Claims claims  = parseClaims(jwtToken); // 클레임 받기
+		Claims claims = parseClaims(jwtToken); // 클레임 받기
 		
 		// 클레임 중 auth라는 이름이 없는 경우 부적절한 토큰 => 예외 처리
 		if(claims.get("auth") == null) {
 			throw new RuntimeException("Not Authorized Token");
 		}
 		
-		// auth라는 이름으로 들어있는 클레임들은 콤마로 구분되어 있고 이 콤마로 구분하여 각 권한 목록을 Collection 타입으로 매핑    
+		// auth라는 이름으로 들어있는 클레임들은 콤마로 구분되어 있고 이 콤마로 구분하여 각 권한 목록을 SimpleGrantedAuthority 타입의 Collection으로 매핑    
 		Collection<? extends GrantedAuthority> authorities =
 				Arrays.stream(claims.get("auth").toString().split(","))
 					.map(SimpleGrantedAuthority::new)
 					.collect(Collectors.toList());
 		
-		// UserDetails 인터페이스는 jwt 토큰 발급 시 회원 정보의 표준화, 통합, 보안, 확장, 변경(커스텀)을 가능하게 해주는 클래스
-		// 회원 아이디, 비밀번호, 권한 목록으로 UserDetails 객체 생성
+		// UserDetails 인터페이스는 jwt 토큰 발급 시 회원 정보의 표준화, 통합, 보안, 확장, 변경(커스텀)을 가능하게 해줌
+		// User 클래스를 이용해 회원 아이디, 비밀번호, 권한 목록을 갖는 UserDetails 객체 생성
 		UserDetails userDetails = new User(claims.getSubject(), "", authorities);
 		
-		return new UsernamePasswordAuthenticationToken(userDetails, "", authorities); // 인증된 authentication 객체 리턴
+		return new UsernamePasswordAuthenticationToken(userDetails, "", authorities); // UsernamePasswordAuthenticationToken 클래스를 이용해 인증된 authentication 객체 리턴
 	}
 
 	// jwt 토큰에서 클레임 추출해서 리턴

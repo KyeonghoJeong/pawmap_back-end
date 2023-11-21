@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-// 회원 인증정보를 리턴하는 데 사용
+// 로그인, Access Token 재발급 시 회원정보 리턴 DTO
 
 @Getter
 @Setter

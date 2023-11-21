@@ -36,7 +36,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http
-			.csrf().disable() // 현재 서버는 stateless 상태로 서버에 인증 정보를 저장하지 않고 jwt을 통해 리소스 접근 시 인증이 이루어지므로 서버에 인증 정보 저장을 disable
+			.csrf().disable() // 현재 서버는 stateless 상태로 서버에 인증 정보를 저장하지 않고 jwt을 통해 리소스 접근 시 인증이 이루어지므로 disable
 			.formLogin().disable() // formLogin 대신 jwt 사용
 			.httpBasic().disable() // httpBasic 대신 jwt 사용
 			.authorizeRequests() // 요청 권한 부여 => 회원, 관리자만 접근 가능한 API는 anyRequest().authenticated()로 모두 포함시킴
@@ -98,7 +98,7 @@ public class SecurityConfig {
 	}
 	
 	// AuthenticationManager 등록
-	// MemberServiceImpl에서 회원 유효성 검사를 위해 사용
+	// AuthServiceImpl에서 회원 유효성 검사를 위해 사용
 	// AuthenticationManager => AuthenticationProvider에 위임
 	// AuthenticationConfiguration는 스프링 시큐리티 초기화 시 AuthenticationManager를 생성한 설정 클래스
 	@Bean

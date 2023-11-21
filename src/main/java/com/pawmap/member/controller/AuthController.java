@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.pawmap.member.dto.AuthDto;
 import com.pawmap.member.dto.MemberDto;
@@ -20,7 +20,7 @@ import com.pawmap.member.service.AuthService;
 
 // accessToken 재발급, 이메일 인증 코드 발송 및 리턴, 로그인, 회원가입 등 회원 인증과 관련한 컨트롤러
 
-@Controller
+@RestController
 @RequestMapping("api/auth")
 public class AuthController {
 	
@@ -52,17 +52,17 @@ public class AuthController {
 		// data에 들어있는 refreshToken 쿠키에 담기
 		ResponseCookie cookie = ResponseCookie.from("refreshToken", authDto.getRefreshToken())
 				//.maxAge(Duration.ofMinutes(1)) // 백엔드 리소스 요청 시 accessToken 및 refreshToken의 유효성을 확인하므로 cookie 만료 시간까지는 설정하지 않음
-				.path("/") // 프론트엔드 측에서 쿠키를 허용할 path 설정
-				.secure(true) // https 연결로 보내기
-				.sameSite("none") // 다른 도메인으로 보내는 것 허용
-				.httpOnly(true) // http 또는 https만 접근 허용하여 자바스크립트에서 쿠키에 접근하여 수정하는 것 방지
+				.path("/") // 쿠키를 허용할 프론트엔드 측 path 설정 => "/"로 설정 시 모든 path 허용
+				.secure(true) // https 연결로 보내기 => 보안 강화
+				.sameSite("none") // none으로 설정 시 쿠키를 다른 도메인으로 보내는 것 허용
+				.httpOnly(true) // true 설정 시 쿠키에 대해 http 요청 또는 https 요청만 접근을 허용하여 자바스크립트에서 쿠키에 접근하여 수정하는 것 방지
 				.build();
 
-		response.setHeader("Set-cookie", cookie.toString()); // 쿠키 헤더 설정
+		response.setHeader("Set-cookie", cookie.toString()); // HTTP 응답으로 쿠키를 설정할 때 응답 헤더 이름은 반드시 Set-Cookie로 설정 => 응답 헤더 Set-Cookie는 쿠키를 String으로 나타냄 => 따라서 cookie.toString()으로 설정
 		
 		authDto.setRefreshToken(null); // authDto에 있는 refreshToken 제거
 		
-		return ResponseEntity.ok(authDto); // refreshToken을 제외한 authority, accessToken 리턴
+		return ResponseEntity.ok(authDto); // refreshToken을 제외(헤더에 있으므로)한 authority, accessToken 리턴
 	}
 	
 	// accessToken 재발급 메소드

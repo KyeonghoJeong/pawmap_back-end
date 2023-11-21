@@ -60,7 +60,7 @@ public class MemberController {
 		return ResponseEntity.ok().build(); // 응답 코드 200(OK) 리턴
 	}
 	
-	// 특정 회원의 게시글만 조회하기 위해 회원 아이디를 수신하기 위한 메소드
+	// Front-end 마이페이지의 내 게시글 탭에서 해당 회원의 게시글만 조회하기 위해 회원 아이디를 수신하기 위한 메소드
 	// 로그인 과정에서 이미 탈퇴 및 차단 칼럼을 체크 했기 때문에 다시 체크할 필요 없이 바로 id 리턴
 	@GetMapping("/member/member-id")
 	public ResponseEntity<?> getMemberId(HttpServletRequest request) {

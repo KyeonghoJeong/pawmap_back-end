@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-// 각 회원이 회원정보를 조회하는 데 사용
-// 관리자가 모든 회원의 정보를 조회하는 데 사용
+// 회원가입 시 입력 정보, 로그인 시 입력 정보, 회원 탈퇴 시 입력 정보
+// 회원이 회원 정보 탭에서 회원 정보 조회 시 리턴 정보, 관리자가 회원 정보 탭에서 조회 시 리턴 정보
 
 @Getter
 @Setter

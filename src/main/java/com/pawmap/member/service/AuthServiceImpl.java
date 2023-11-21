@@ -53,10 +53,10 @@ public class AuthServiceImpl implements AuthService {
 	public String getEmailAuthCode(String email) {
 		// TODO Auto-generated method stub
 		Random random = new Random(); // 난수 발생
-		int number = random.nextInt(8889) + 1111; // nextInt(n) + a => n는 포함 X, a는 증가값 => 0~8888 => 1111~9999 사이의 난수 발생 
+		int number = random.nextInt(8889) + 1111; // nextInt(n) + a => n는 포함 X (0 ~ n-1), a는 기존 범위를 증가시킬 값 => 0~8888 => 1111~9999 사이의 난수 발생 
 		String emailAuthCode = Integer.toString(number); // 형변환
 		
-		MimeMessage mimeMessage = javaMailSender.createMimeMessage(); // 메일 메시지 객체 생성
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage(); // Mime 포맷 메시지 객체 생성
 
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8"); // 보낼 메일 메시지 객체, multipart 여부, 인코딩 타입
