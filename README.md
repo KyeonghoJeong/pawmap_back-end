@@ -1,285 +1,375 @@
-<h2><img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/477d5789-f58e-41ef-ad66-854f22bc8575" width="20"/> 반려동물 동반 가능 시설을 쉽게 찾을 수 있는 웹사이트 포맵</h2>
+<h1><img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/477d5789-f58e-41ef-ad66-854f22bc8575" width="20"/> 반려동물 동반 가능 시설을 쉽게 찾을 수 있는 웹사이트 포맵</h1>
 
 목차
 ----
 1. 프로젝트 소개
-2. 기술 스택
-3. 프로젝트 구조
-4. 주요 기능
-5. 데모 영상
+2. 목표
+3. 담당 역할
+4. 기술 스택
+5. 프로젝트 구조
+6. 주요 기능
+7. 데모 영상
+8. 회고
 
 ## 1. 프로젝트 소개
 
 <img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/e4e7cb55-3849-4f1e-9c60-9930d8449bcd" width="640"/><p>
 <img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/bb0e21e0-040f-45e6-995d-d96bb88852b6" width="640"/><p>
 
-<strong>우리나라의 반려가구 수 2022년 기준 552만 가구 (출처: KB경영연구소)</strong><br>
+> 우리나라의 반려가구 수 2022년 기준 552만 가구 (출처: KB경영연구소)
 
-반려동물을 키우는 사람들은 방문하고자 하는 장소에 반려동물 동반이 가능한지 일일이 찾고 알아봐야 함<br>
+반려동물을 키우는 사람들은 방문하고자 하는 장소에 반려동물 동반이 가능한지 일일이 찾고 알아봐야 함.<p><p>
 
-공공데이터와 사용자의 위치 정보를 활용, 사용자가 다양한 검색 옵션으로 반려동물 동반 가능 시설을 쉽게 찾을 수 있도록 해주는 웹사이트를 개발하고자 함<br>
+공공데이터와 사용자의 위치 정보를 활용, 사용자가 다양한 검색 옵션으로 반려동물 동반 가능 시설을 쉽게 찾을 수 있도록 해주는 웹사이트를 개발하고자 함.<p><p>
 
-사이트 이름인 포맵은 paw(동물의 발) + map(지도)를 합쳐 만들었음
+사이트 이름인 포맵은 paw(동물의 발) + map(지도)를 합쳐 만들었음.
 
-## 2. 기술 스택
+## 2. 목표
 
-- Back-end
+- #### Back-end
+ 
+    Spring 프레임워크 학습<br>
+    Spring Boot Back-end 프로젝트 구조 이해 및 구현<br>
+    REST API 설계<br>
+    Oracle DB 설계<br>
+    Spring Security 동작 원리 이해 및 구현<br>
+    JWT 인증과 인가 구현<br>
+    YAML을 사용한 프로젝트 설정<br>
+    Gradle을 사용한 프로젝트 빌드<br>
+    회원가입 시 이메일 인증 기능 구현
 
-> Java, Spring Boot, MySQL, Oracle
+- #### Front-end
 
-- Front-end
+    HTML, CSS, JavaScript 학습<br>
+    Vue.js를 통한 Front-end 프레임워크 이해 및 화면 구현<br>
+    HTTP 요청 메서드 활용<br>
+    Bootstrap을 활용한 반응형 웹 구현<br>
+    카카오맵 API 활용
 
-> HTML, CSS, JavaScript, Vue, Bootstrap
+## 3. 담당 역할
 
-- Version Control
+- Spring Boot 프로젝트 구조 설계<br>
+- Spring Security 구현<br>
+- JWT 인증과 인가 구현<br>
+- REST API 설계<br>
+- Service 계층 로직 구현<br>
+- DB 설계<br>
+- Front-end 화면 디자인<br>
+- Front-end UI 및 동작 구현
 
-> Git, Github
+## 4. 기술 스택
 
-## 3. 프로젝트 구조
+- #### Back-end
 
-- 프로젝트 구성도
+    Java, Spring Boot, Oracle
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/d326d64f-0066-42a4-a82a-e4677615c5f6" width="500"/><br>
+- #### Front-end
 
-- Back-end 개발 환경
+    HTML, CSS, JavaScript, Vue.js, Bootstrap
 
-> Java Version 11, Spring Tool Suite 4.4.8.0 Release, Spring Boot 2.7.10, Gradle, Spring Data JPA, JDBC API, Oracle Driver, Spring Security, Spring Web, SMTP, YAML, Lombok, ModelMapper 3.0.0
+- #### Version Control
 
-- Front-end 개발 환경
+    Git, Github
 
-> Vue 2, Bootstrap 5.2.3, Kakao 지도 API, Vue Router 3.6.5, Axios 1.4.0
+## 5. 프로젝트 구조
 
-- 형상 관리
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/d326d64f-0066-42a4-a82a-e4677615c5f6" width="500"/><p>
 
-> Git 2.40.0, Github
+> 프로젝트 구성도
+
+### Gradle
+Gradle은 Maven과 비교하여 빌드 속도가 빠르고 동적이며 설정 주입 방식으로 재사용에 용이하고 Groovy 언어를 사용하여 구조적이고 가독성이 좋음. Gradle를 사용하여 프로젝트를 빌드 하였고 필요한 라이브러리와 의존성을 관리하였음.
+
+### YAML
+YAML 타입은 계층 구조로 가독성이 좋은 장점이 있어 application.yml 파일로 PORT 설정, Oracle DB 연동 설정, SMTP 관련 설정을 하였음.
+
+### Spring Boot
+Spring 프레임워크는 Java에 기반하고 있으며 Spring Security를 통해 보안 설정, 인증과 인가, JWT를 쉽게 처리할 수 있도록 해줌. Spring 프레임워크 설정을 편리하게 할 수 있는 Spring Boot로 Back-end 서버를 개발하였음.
+
+### Oracle
+공공데이터포털의 한국문화정보원 전국 반려동물 동반 가능 문화시설 위치 데이터를 활용하였으며 View 단의 요구에 맞는 데이터만을 효율적으로 보내기 위해 API가 아닌 CSV 파일을 받아 수정 후 임포트 하여 DB를 구성하였음.
+
+### Vue.js
+Vue.js 프레임워크는 사이즈가 가볍고 JavaScript 기반으로 문법이 간단하고 직관적임. Vue.js 프레임워크로 Front-end를 개발하였음.
+
+### Bootstrap
+Bootstrap을 활용해 Front-end 화면을 반응형 웹으로 개발하였음.
+
+### 카카오맵 API
+반려동물 동반 가능 시설을 지도에 표시하기 위해 지도 API를 활용하였음. 구글 Maps API는 대한민국 지도를 표시할 때 정확도가 떨어지는 문제가 있었고 네이버 지도 API는 카카오맵 API에 비해 활용 관련 정보를 구하기 어려웠기 때문에 카카오맵 API를 활용하였음.
 
 ---
 
-- ERD
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/62e327d2-c078-4ff3-8ce2-3c462169da7d" width="800"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/62e327d2-c078-4ff3-8ce2-3c462169da7d" width="800"/><br>
-
-공공데이터포털의 한국문화정보원 전국 반려동물 동반 가능 문화시설 위치 데이터를 활용하였음<br>
-
-프론트단의 요구에 맞는 데이터만을 효율적으로 보내기 위해 공공데이터포털 API를 이용하는 것이 아니라 CSV 파일을 받아 수정 후 임포트 하여 DB를 구성하고 REST API를 설계하였음
+> ERD
 
 ---
 
-- REST API
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/968c6ed4-f04d-4f72-b63d-2d21d371faab" width="640"/><p>
 
-> 지도 페이지 관련
+> 지도 페이지 관련 REST API
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/968c6ed4-f04d-4f72-b63d-2d21d371faab" width="640"/><br>
+---
 
-> 게시판 페이지 관련
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/bdba7202-4bc6-4dec-8c84-e3b1ea7dc459" width="640"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/bdba7202-4bc6-4dec-8c84-e3b1ea7dc459" width="640"/><br>
+> 게시판 페이지 관련 REST API
 
-> 인증과 인가 관련
+---
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/713f7f8a-4638-4ddc-84cd-fd180f216ba2" width="640"/><br>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/713f7f8a-4638-4ddc-84cd-fd180f216ba2" width="640"/><p>
 
-> 회원 관련
+> 인증과 인가 관련 REST API
+
+---
 
 <img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/246702ae-a537-48c0-97d1-056384846311" width="640"/>
 
-## 4. 주요 기능
-
-- 메인 페이지 주요 기능
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/1ec5108e-ddbf-4469-bd07-b043fd74aa98" width="640"/><br>
-
-동 이름 검색 시 지도 페이지로 이동하여 해당 읍면동에 있는 반려동물 동반 가능 시설을 지도와 마커, 목록으로 확인할 수 있음<br>
-
-카테고리 버튼 클릭 시 지도 페이지로 이동하여 접속 중인 기기의 현재 위치를 기준으로 주변에 있는 해당 카테고리의 반려동물 동반 가능 시설을 확인할 수 있음
+> 회원 관련 REST API
 
 ---
 
-- 지도 페이지 주요 기능
+## 6. 주요 기능
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/edd25b29-3dfd-4016-a1f8-133f48b9d12a" width="640"/><br>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/1ec5108e-ddbf-4469-bd07-b043fd74aa98" width="640"/><p>
 
-동 이름 검색 시 해당 읍면동에 있는 반려동물 동반 가능 시설을 지도와 마커, 목록으로 확인할 수 있음<br>
+> 메인 페이지
 
-카테고리 선택 시 접속 중인 기기의 현재 위치를 기준으로 주변에 있는 해당 카테고리의 반려동물 동반 가능 시설을 확인할 수 있음<br>
-
-Select 메뉴를 통해 카테고리, 시도, 시군구, 읍면동을 조합하여 조회할 수 있으며 각 Select에서 항목을 선택할 때마다 선택한 조합에 해당하는 반려동물 동반 가능 시설을 바로바로 지도와 마커, 목록으로 확인할 수 있음<br>
-
-마커를 클릭하거나 목록에서 카드 또는 상세보기 클릭 시 해당 시설의 상세정보 및 반려동물 동반 관련 사항을 확인할 수 있음<br>
-
-북마크 메뉴 클릭 시 해당 시설을 북마크에 추가할 수 있음 (로그인 필요)
+- 동 이름 검색 시 지도 페이지로 이동하여 목록과 지도에서 해당 시설 확인
+- 카테고리 버튼 클릭 시 지도 페이지로 이동하여 목록과 지도에서 해당 시설 확인
 
 ---
 
-- 게시판 페이지 주요 기능
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/edd25b29-3dfd-4016-a1f8-133f48b9d12a" width="640"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/94ae60fb-de24-4db2-953c-7e6cf244f0b5" width="640"/><br>
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/2879fcc5-32a1-4190-b068-d4de61dfdcac" width="640"/><br>
+> 지도 페이지
 
-게시글 및 댓글 작성을 통해 다른 회원들과 의사소통할 수 있음<br>
-
-게시글과 댓글은 수정, 삭제할 수 있음<br>
-
-하단의 검색 메뉴에서 제목+내용, 제목, 내용, 닉네임 중 하나를 선택하여 원하는 검색어로 게시글을 검색 및 조회할 수 있음
-
----
-
-- 로그인 페이지 주요 기능
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/b6e79fc8-04e2-462b-8541-3ce415dfb22d" width="640"/><br>
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/6cbf994e-2f46-418c-abcf-91675e0dfb64" width="640"/><br>
-
-아이디, 비밀번호 입력을 통해 로그인할 수 있으며 아이디 저장 체크박스를 통해 로그아웃 후에도 이전 로그인 시 사용한 아이디를 쉽게 입력할 수 있음
+- 동 이름 검색 시 목록과 지도에서 해당 시설 확인
+- 카테고리 선택 시 목록과 지도에서 해당 시설을 현재 접속 위치 기준 가까운 순으로 확인
+- Select 메뉴를 통해 카테고리/시도/시군구/읍면동을 조합하여 검색하고 해당 시설을 목록과 지도로 확인
+- 지도의 마커를 클릭하거나 상세보기 버튼을 클릭하여 해당 시설의 상세정보 및 반려동물 관련 사항을 확인
+- 북마크 버튼을 클릭하여 해당 시설을 북마크에 추가 (로그인 필요)
 
 ---
 
-- 회원가입 페이지 주요 기능
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/94ae60fb-de24-4db2-953c-7e6cf244f0b5" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/2879fcc5-32a1-4190-b068-d4de61dfdcac" width="640"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/55565c61-8d69-4752-a704-616fc833fc86" width="640"/><br>
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/14009366-ffef-49b1-82e3-91d917bce160" width="640"/><br>
+> 게시판 페이지
 
-아이디, 비밀번호, 닉네임, 이메일을 입력하여 회원가입할 수 있음<br>
-
-아이디, 비밀번호, 닉네임, 이메일은 모두 길이 제한, 글자 제한이 있으며 이 제한을 지키지 않을 경우 회원가입이 불가함<br>
-
-아이디와 닉네임은 중복 확인이 필요하고 중복 확인을 하지 않거나 기존 다른 회원과 중복되는 아이디인 경우 회원가입이 불가함<br>
-
-이메일 입력 후 메일 인증 버튼을 눌러 인증번호를 수신한 뒤 이를 입력해야 하며 인증번호를 입력하지 않거나 틀릴 경우 회원가입이 불가함
+- 게시글 및 댓글 작성/조회/수정/삭제
+- 검색 메뉴에서 제목+내용, 제목, 내용, 닉네임 중 하나를 선택하여 원하는 검색어로 게시글 검색
 
 ---
 
-- 마이페이지 북마크 탭 주요 기능
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/b6e79fc8-04e2-462b-8541-3ce415dfb22d" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/6cbf994e-2f46-418c-abcf-91675e0dfb64" width="640"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/8d8487be-73dd-49ba-8790-d3fffd28281d" width="640"/><br>
+> 로그인 페이지
 
-회원이 지도 페이지에서 추가한 시설 북마크를 조회 및 삭제할 수 있음
-
----
-
-- 마이페이지 내 게시글 탭 주요 기능
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/d3353994-5cd0-482d-b39b-e85d6baf6e7c" width="640"/><br>
-
-회원이 작성한 본인의 게시글을 모두 조회할 수 있으며 제목+내용, 제목, 내용 중 하나를 선택하여 원하는 검색어로 게시글을 검색 및 조회할 수 있음. 또한 체크박스를 이용하여 한번에 여러 게시글을 삭제할 수 있음
+- 로그인 (아이디 저장)
 
 ---
 
-- 마이페이지 회원정보 탭 주요 기능
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/55565c61-8d69-4752-a704-616fc833fc86" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/14009366-ffef-49b1-82e3-91d917bce160" width="640"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/8c38d496-0ef5-4c79-89e8-2682145cecc5" width="640"/><br>
+> 회원가입 페이지
 
-회원이 본인의 아이디, 닉네임, 이메일을 확인할 수 있으며 비밀번호를 변경할 수 있음
-
----
-
-- 회원탈퇴 페이지 주요 기능
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/e652520d-e20d-4415-abae-9c5131a0a01d" width="640"/><br>
-
-마이페이지의 회원정보 탭에서 회원탈퇴 페이지로 이동할 수 있으며 비밀번호 입력을 통해 회원탈퇴할 수 있음
+- 회원가입 (입력 데이터 유효성 체크, 이메일 인증)
 
 ---
 
-- 관리페이지 게시글 관리 탭 주요 기능
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/8d8487be-73dd-49ba-8790-d3fffd28281d" width="640"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/858340fa-3db2-45b3-8f36-976087ce34dc" width="640"/><br>
+> 마이페이지의 북마크 탭
 
-관리자 계정으로 로그인했을 때만 이용할 수 있으며 게시판의 전체 게시글을 조회, 검색, 삭제할 수 있음
-
----
-
-- 관리페이지 회원 관리 탭 주요 기능
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/588639f5-6e07-4aa5-8a0a-37612b3630e9" width="640"/><br>
-
-관리자 계정으로 로그인했을 때만 이용할 수 있으며 전체 회원의 정보를 조회 및 검색할 수 있고 특정 회원을 차단할 수 있음
+- 회원이 추가한 반려동물 동반 가능 시설 북마크 조회
+- 체크박스를 통해 한번에 여러 북마크 삭제
 
 ---
 
-- 부트스트랩을 활용한 반응형 웹 디자인
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/d3353994-5cd0-482d-b39b-e85d6baf6e7c" width="640"/><p>
+
+> 마이페이지의 내 게시글 탭
+
+- 회원 본인의 게시글 모두 조회
+- 검색 메뉴에서 제목+내용, 제목, 내용, 닉네임 중 하나를 선택하여 원하는 검색어로 게시글 검색
+- 체크박스를 통해 한번에 여러 게시글 삭제
+
+---
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/8c38d496-0ef5-4c79-89e8-2682145cecc5" width="640"/><p>
+
+> 마이페이지의 회원정보 탭
+
+- 회원 본인의 아이디, 닉네임, 이메일 확인
+- 비밀번호 변경
+
+---
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/e652520d-e20d-4415-abae-9c5131a0a01d" width="640"/><p>
+
+> 회원 탈퇴 페이지
+
+- 회원 탈퇴 (비밀번호 입력)
+
+---
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/858340fa-3db2-45b3-8f36-976087ce34dc" width="640"/><p>
+
+> 관리페이지의 게시글 관리 탭
+
+- 게시판 전체 게시글 조회/검색/삭제 (관리자 권한 계정)
+
+---
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/588639f5-6e07-4aa5-8a0a-37612b3630e9" width="640"/><p>
+
+> 관리페이지의 회원 관리 탭
+
+- 전체 회원 정보 조회/검색 (관리자 권한 계정)
+- 회원 차단 (관리자 권한 계정)
+
+---
 
 <img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/9cac85a7-1c63-4b3e-8b0a-472545a1ed0f" width="210"/>
 <img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/2d14b722-4418-4610-9a0d-dc7fb9a22387" width="210"/>
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/385ed585-c12c-42e3-bb15-0d1acb757fe8" width="210"/>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/385ed585-c12c-42e3-bb15-0d1acb757fe8" width="210"/><p>
 
-## 5. 데모 영상
+> Bootstrap을 활용한 반응형 웹 디자인
 
-- 메인 페이지
+## 7. 데모 영상
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/e5b18f7c-08ca-48b7-a312-0de953180e61"/><p>
 
 > 동 이름 검색
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/e5b18f7c-08ca-48b7-a312-0de953180e61"/><br>
+---
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/dfe5465b-6a26-4611-839a-0f5b27c5f139"/><p>
 
 > 카테고리 버튼 클릭
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/dfe5465b-6a26-4611-839a-0f5b27c5f139"/><br>
+---
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/faaa924f-980f-46ec-bb0f-539d584ef68b"/><p>
+
+>  회원가입
 
 ---
 
-- 회원가입 페이지
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/eee76c66-dff8-42b2-a80e-227f60bb7ab9"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/faaa924f-980f-46ec-bb0f-539d584ef68b"/><br>
-
----
-
-- 로그인 페이지
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/eee76c66-dff8-42b2-a80e-227f60bb7ab9"/><br>
+> 로그인
 
 ---
 
-- 지도 페이지
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/7250c8f9-7cab-4da3-8eaa-6acc64b33c1c"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/7250c8f9-7cab-4da3-8eaa-6acc64b33c1c"/><br>
+> 지도 페이지
 
 ---
 
-- 게시판 페이지
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/62b34470-a58d-4f87-b6dc-9b6e81aa378d"/><p>
 
 > 게시글 및 댓글 조회
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/62b34470-a58d-4f87-b6dc-9b6e81aa378d"/><br>
+---
 
-> 게시글 및 댓글 작성, 수정, 삭제
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/c27edd3c-b77f-4046-93ef-40871c0944da"/><p>
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/c27edd3c-b77f-4046-93ef-40871c0944da"/><br>
+> 게시글 및 댓글 작성/수정/삭제
 
 ---
 
-- 마이페이지
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/211ed7f8-6ce1-4701-b062-77320e8100a1"/><p>
 
-> 북마크 탭
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/211ed7f8-6ce1-4701-b062-77320e8100a1"/><br>
-
-> 내 게시글 탭
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/7e080ec9-689b-418d-8c34-deab4b13fb77"/><br>
-
-> 회원정보 탭
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/817339c2-f40c-4269-bd52-4642698a8d1a"/><br>
-
-> 회원탈퇴
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/39516589-5703-400f-ac43-f02c024aee75"/><br>
+> 마이페이지의 북마크 탭
 
 ---
 
-- 관리페이지
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/7e080ec9-689b-418d-8c34-deab4b13fb77"/><p>
 
-> 게시글 관리 탭
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/6e66ee30-ff93-4e6b-93cf-cf15cb72d77e"/><br>
-
-> 회원 관리 탭
-
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/880bb5d6-381f-4093-80d6-85c1e4fda664"/><br>
+> 마이페이지의 내 게시글 탭
 
 ---
 
-- 부트스트랩을 활용한 반응형 웹 디자인
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/817339c2-f40c-4269-bd52-4642698a8d1a"/><p>
+
+> 마이페이지의 회원정보 탭
+
+---
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/39516589-5703-400f-ac43-f02c024aee75"/><p>
+
+> 회원 탈퇴
+
+---
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/6e66ee30-ff93-4e6b-93cf-cf15cb72d77e"/><p>
+
+> 관리페이지의 게시글 관리 탭
+
+---
+
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/880bb5d6-381f-4093-80d6-85c1e4fda664"/><p>
+
+> 관리페이지의 회원 관리 탭
+
+---
 
 <img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/2639eb7b-6223-4d4a-b52e-d2d65e3df1bd"/>
+
+> 부트스트랩을 활용한 반응형 웹 디자인
+
+---
+
+## 8. 회고
+
+### Back-end
+
+#### Spring Boot
+Spring Boot 프로젝트는 Controller, Service, DAO, Repository의 계층 구조로 구성하였으며 Service, DAO, Repository는 인터페이스로 구현하였고 Annotation을 사용하여 DI 하였음. View 단과 리소스를 주고받을 때는 DTO 클래스를 사용하였으며 직접 DB의 데이터를 처리할 때는 Entity 클래스와 JpaRepository 인터페이스를 사용하였음.
+
+#### Spring Security
+Spring Security 설정 클래스를 생성하고 HTTP 요청 메서드에 대한 권한 설정 및 JWT 필터를 추가한 SecurityFilterChain 인스턴스를 Bean으로 등록하였음. 또한 CORS 관련 설정을 특정 URL에 적용하는 UrlBasedCorsConfigurationSource 인스턴스, 회원 비밀번호 암호화 및 일치 여부를 확인하는 PasswordEncoder 인스턴스, 인증과 인가를 처리할 AuthenticationManager 인스턴스와 CustomAuthenticationProvider 인스턴스를 모두 Bean으로 등록하였음.
+
+#### JWT
+JwtTokenProvider 클래스를 생성하여 Access Token 생성 메서드, Refresh Token 생성 메서드, JWT 유효성 검사 메서드, JWT 인증을 완료한 Authentication 인스턴스를 반환하는 메서드를 구현하였음.<p><p>
+
+#### 인증과 인가
+JwtAuthenticationFilter 클래스는 JwtTokenProvider 클래스를 이용하여 HTTP 요청 메서드 Header에 포함된 JWT의 유효성을 검사하고 유효한 토큰인 경우 해당 토큰의 정보를 사용하여 Authenticaiton 인스턴스를 생성하고 인증된 사용자의 정보(아이디, 권한)를 SecurityContextHolder에 저장하도록 하였음.
+
+#### 이메일 인증
+회원가입 시 전송되는 이메일 인증 코드는 난수로 생성하며 MimeMessageHelper로 MimeMessage 인스턴스의 속성과 이메일 주소, 제목, 내용 등을 설정한 뒤 JavaMailSender 인터페이스를 통해 사용자의 이메일로 전송하도록 하였음.
+
+#### JWT 비밀 키 설정 문제
+JWT를 생성할 때 사용되는 Key 인스턴스는 생성 시 비밀 키(Secret Key)를 사용하는데 이 비밀 키를 단순히 클래스 내의 필드에 String 변수로 선언하여 사용한 것이 아쉬운 점으로 남아있음. 누군가가 이 비밀 키를 탈취하면 이를 통해 JWT를 생성하고 악용할 수 있기 때문인데 필드가 아닌 application.yml 파일에 비밀 키를 설정하여 사용하려고 시도하였으나 Gradle에서 JWT 관련 의존성 주입이 이루어졌음에도 불구하고 application.yml에서 jwt 속성 자체를 인식하지 못하는 문제가 발생하였음.
+
+---
+
+### Front-end
+
+#### 로그인
+Back-end 서버로 로그인 요청 시 응답 데이터로 수신한 Access Token과 권한 이름은 로컬 스토리지에 저장하여 새로고침 시에도 유지되도록 하였음. Refresh Token은 Cookie로 수신하는데 Back-end 서버에서 Cookie에 대해 httpOnly를 true로 설정하여 JavaScript로 접근할 수 없도록 하였음.
+
+#### 인증과 인가
+권한이 필요한 페이지는 접근 시 Vue Router의 Navigation Guards에서 로컬 스토리지의 Access Token 및 권한 이름을 확인하여 접근을 허용/거부하도록 하였음<p><p>
+권한이 필요한 HTTP 요청 메서드는 Header에 Access Token을 포함하여 요청하도록 구현했고 Access Token이 만료된 경우에는 Cookie의 Refresh Token을 통해 Access Token을 재발급 받도록 하였음. Refresh Token도 만료된 경우는 alert로 사용자에게 로그인이 만료되었음을 알리고 강제로 로그아웃 되도록 하였음.<p><p>
+
+#### 리소스 요청 후 렌더링 문제
+Back-end 서버에 리소스를 요청한 후 필요한 데이터를 모두 불러오기 전에 화면이 먼저 렌더링 되어 출력 데이터가 누락되는 문제가 있었음. 이를 해결하기 위해 필요한 데이터가 전부 수신되었는지를 체크할 변수를 사용하여 v-if로 해당 변수의 값이 true 일 때만 div 태그를 출력하도록 하여 문제를 해결하였음.
+
+#### 지도 API 성능 문제
+지도에 마커를 생성하고 출력할 때 개수가 많은 경우 출력까지 걸리는 시간이 오래 걸리고 지도를 확대/축소하거나 드래그할 때의 속도 또한 크게 저하되는 문제가 있었음. 이 문제를 해결하기 위해 여러 개의 마커를 하나의 큰 마커로 표시하는 마커 클러스터러 기능을 사용해 봤지만 여전히 동일한 문제가 발생하였음.<p><p>
+다른 방법으로 처음부터 모든 마커를 출력하는 것이 아니라 현재 출력 중인 지도 범위의 위도/경도 정보를 활용하여 해당 범위 내에 속하는 마커들만 생성/출력하도록 코드를 수정하였음. 지도를 확대/축소하거나 드래그할 때는 기존 생성 마커를 모두 제거하고 새로운 지도 범위 내에 속하는 마커들만 다시 생성/출력하도록 하였으며 지도 확대/축소 레벨을 제한하여 범위 내에 너무 많은 마커를 생성/출력되지 않도록 했음. 이를 통해 결과적으로 속도를 크게 향상시킬 수 있었음. 
+
+#### 이메일 인증 개선방안
+회원가입 시 인증 코드를 통해 이메일을 인증하는 과정에서 인증 코드 전송 후 인증까지 제한 시간을 설정하지 않은 것이 아쉬운 점으로 남아있음. Back-end 서버로 인증 코드 전송을 요청한 후 바로 제한 시간을 설정하여 이를 화면에 출력하고 이후 시간이 만료되면 인증 코드를 초기화한 후 사용자에게 다시 인증을 요청하는 방식으로 이메일 인증 절차를 개선할 수 있을 것으로 생각하고 있음.
+
+#### 게시글 작성 개선방안
+게시글 작성 페이지에 에디터와 파일 첨부 기능이 없어서 작성자가 게시글을 취향에 맞게 편집할 수 없고 이미지와 같은 파일을 첨부할 수 없는 부분이 아쉬운 점으로 남아있음. Vue.js와 연동되는 에디터 API와 v-file-input 등의 컴포넌트를 활용하여 게시글 편집 기능과 파일 첨부 기능을 추가할 수 있을 것으로 생각하고 있음.
 
 ---
