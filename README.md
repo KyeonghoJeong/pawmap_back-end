@@ -129,8 +129,6 @@ Bootstrap을 활용해 Front-end 화면을 반응형 웹으로 개발하였음.
 
 ## 6. 주요 기능
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/1ec5108e-ddbf-4469-bd07-b043fd74aa98" width="640"/><p>
-
 - #### 메인 페이지
 
     동 이름 검색 시 지도 페이지로 이동하여 목록과 지도에서 해당 시설 확인<br>
