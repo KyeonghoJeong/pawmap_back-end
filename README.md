@@ -1,4 +1,4 @@
-<h1><img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/477d5789-f58e-41ef-ad66-854f22bc8575" width="20"/> 반려동물 동반 가능 시설을 쉽게 찾을 수 있는 웹사이트 포맵</h1>
+<h2><img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/477d5789-f58e-41ef-ad66-854f22bc8575" width="20"/> 반려동물 동반 가능 시설을 쉽게 찾을 수 있는 웹사이트 포맵</h2>
 
 목차
 ----
