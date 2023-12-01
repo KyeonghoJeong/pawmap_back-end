@@ -72,7 +72,7 @@
 
 ## 5. 프로젝트 구조
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/d326d64f-0066-42a4-a82a-e4677615c5f6" width="800"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/d326d64f-0066-42a4-a82a-e4677615c5f6" width="640"/><p>
 
 > 프로젝트 구성도
 
