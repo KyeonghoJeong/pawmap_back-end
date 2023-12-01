@@ -13,7 +13,7 @@
 
 ## 1. 프로젝트 소개
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/93bb4aaf-c721-46ef-8c79-610a7b6e03c5" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/93bb4aaf-c721-46ef-8c79-610a7b6e03c5"/><p>
 
 > 우리나라의 반려가구 수 2022년 기준 552만 가구 (출처: KB경영연구소)
 
