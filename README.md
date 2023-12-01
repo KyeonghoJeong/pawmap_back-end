@@ -13,7 +13,7 @@
 
 ## 1. 프로젝트 소개
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/93bb4aaf-c721-46ef-8c79-610a7b6e03c5" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/93bb4aaf-c721-46ef-8c79-610a7b6e03c5" width="800"/><p>
 
 > 우리나라의 반려가구 수 2022년 기준 552만 가구 (출처: KB경영연구소)
 
@@ -99,31 +99,31 @@ Bootstrap을 활용해 Front-end 화면을 반응형 웹으로 개발하였음.
 
 ---
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/62e327d2-c078-4ff3-8ce2-3c462169da7d" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/62e327d2-c078-4ff3-8ce2-3c462169da7d" width="800"/><p>
 
 > ERD
 
 ---
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/968c6ed4-f04d-4f72-b63d-2d21d371faab" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/968c6ed4-f04d-4f72-b63d-2d21d371faab" width="800"/><p>
 
 > 지도 페이지 관련 REST API
 
 ---
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/bdba7202-4bc6-4dec-8c84-e3b1ea7dc459" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/bdba7202-4bc6-4dec-8c84-e3b1ea7dc459" width="800"/><p>
 
 > 게시판 페이지 관련 REST API
 
 ---
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/713f7f8a-4638-4ddc-84cd-fd180f216ba2" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/713f7f8a-4638-4ddc-84cd-fd180f216ba2" width="800"/><p>
 
 > 인증과 인가 관련 REST API
 
 ---
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/246702ae-a537-48c0-97d1-056384846311" width="640"/>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/246702ae-a537-48c0-97d1-056384846311" width="800"/>
 
 > 회원 관련 REST API
 
