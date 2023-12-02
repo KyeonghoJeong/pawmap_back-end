@@ -123,7 +123,7 @@ Bootstrap을 활용해 Front-end 화면을 반응형 웹으로 개발하였음.
 
 ---
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/246702ae-a537-48c0-97d1-056384846311" width="800"/>
+<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/246702ae-a537-48c0-97d1-056384846311" width="800"/><p>
 
 > 회원 관련 REST API
 
