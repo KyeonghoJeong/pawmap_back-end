@@ -286,7 +286,7 @@ JwtTokenProvider 클래스를 생성하여 Access Token 생성 메서드, Refres
 JwtAuthenticationFilter 클래스는 JwtTokenProvider 클래스를 이용하여 HTTP 요청 메서드 Header에 포함된 JWT의 유효성을 검사하고 유효한 토큰인 경우 해당 토큰의 정보를 사용하여 Authenticaiton 인스턴스를 생성하고 인증된 사용자의 정보(아이디, 권한)를 SecurityContextHolder에 저장하도록 하였음.
 
 #### 이메일 인증 기능
-이메일을 전송하는 계정에 대한 정보와 속성은 application.yml에 설정하였음. 전송되는 이메일 인증 코드는 난수로 생성하며 MimeMessageHelper 클래스를 통해 MimeMessage 인스턴스의 속성, 사용자 이메일 주소, 제목, 내용을 설정하고 JavaMailSender 인터페이스를 통해 해당 코드를 전송하도록 하였음.
+이메일을 전송하는 계정에 대한 정보와 속성은 application.yml에 설정하였음. 이메일 인증 코드는 난수로 생성하며 MimeMessageHelper 클래스를 통해 MimeMessage 인스턴스의 속성, 사용자 이메일 주소, 제목, 내용을 설정하고 JavaMailSender 인터페이스를 통해 해당 코드를 전송하도록 하였음.
 
 #### JWT 비밀 키 설정 문제
 JWT를 생성할 때 사용되는 Key 인스턴스는 생성 시 비밀 키(Secret Key)를 사용하는데 이 비밀 키를 클래스 내의 필드에 String 변수로 선언하여 사용한 것이 아쉬운 점으로 남아있음. 누군가가 이 비밀 키를 탈취하면 이를 통해 JWT를 생성하고 악용할 수 있기 때문인데 필드가 아닌 application.yml 파일에 비밀 키를 설정하여 사용하려고 시도하였으나 Gradle에서 JWT 관련 의존성 주입이 이루어졌음에도 불구하고 application.yml에서 jwt 속성 자체를 인식하지 못하는 문제가 발생하였음.
