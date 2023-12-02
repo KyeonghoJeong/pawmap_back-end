@@ -60,7 +60,7 @@
 
 - #### Back-end
 
-    Java, Spring Boot, Spring Security, Oracle, JPA, Gradle
+    Java, Spring Boot, Spring Security, JPA, Oracle, Gradle
 
 - #### Front-end
 
