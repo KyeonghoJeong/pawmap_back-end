@@ -60,7 +60,7 @@
 
 - #### Back-end
 
-    Java, Spring Boot, Spring Security, JPA, Oracle, Gradle
+    Java, Spring Boot, Spring Security, Spring Data JPA, Oracle, Gradle
 
 - #### Front-end
 
@@ -72,7 +72,7 @@
 
 ## 5. 프로젝트 구조
 
-<img src="https://github.com/KyeonghoJeong/pawmap_front-end/assets/128965451/d326d64f-0066-42a4-a82a-e4677615c5f6" width="640"/><p>
+<img src="https://github.com/KyeonghoJeong/pawmap_back-end/assets/128965451/9749b9fd-8130-4a97-9497-3c1bf2e9a8b4" width="640"/><p>
 
 > 프로젝트 구성도
 
