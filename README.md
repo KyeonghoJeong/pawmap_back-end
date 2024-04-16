@@ -68,7 +68,7 @@
 
 - #### Version Control
 
-    Git, Github
+    Git, GitHub
 
 ## 5. 프로젝트 구조
 
